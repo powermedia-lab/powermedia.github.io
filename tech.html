@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>技术规格 · PowerMedia 智能媒体服务器</title>
+<meta name="description" content="PowerMedia 技术规格：Go + React 架构、FFmpeg / Shaka Packager 媒体引擎、五种数据库、部署形态、性能指标与安全机制。">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+      <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span class="brand-text">
+        <span class="brand-name">PowerMedia</span>
+        <span class="brand-sub">智能媒体服务器</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品能力</a>
+      <a href="solutions.html">解决方案</a>
+      <a href="editions.html">版本与授权</a>
+      <a href="tech.html">技术规格</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn--ghost btn--sm" href="tech.html">技术文档</a>
+      <a class="btn btn--primary btn--sm" href="contact.html">预约演示</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobile-nav" aria-label="移动端导航">
+  <a href="index.html">首页</a>
+  <a href="features.html">产品能力</a>
+  <a href="solutions.html">解决方案</a>
+  <a href="editions.html">版本与授权</a>
+  <a href="tech.html">技术规格</a>
+  <a href="contact.html">联系我们</a>
+  <a class="btn btn--primary" href="contact.html">预约产品演示</a>
+</nav>
+
+<main>
+
+<section class="page-hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <div class="crumbs"><a href="index.html">首页</a><span>/</span>技术规格</div>
+    <h1>技术规格与<br>验收口径</h1>
+    <p>技术栈、部署形态、性能口径与安全机制。所有指标均注明统计边界，便于在验收时逐条对照。</p>
+  </div>
+</section>
+
+<!-- 技术栈 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">01 / 技术栈</div>
+      <h2>基于成熟组件构建</h2>
+      <p>媒体处理采用成熟引擎，自研部分聚焦任务调度、缓存治理与授权控制。</p>
+    </div>
+
+    <div class="table-scroll reveal">
+      <table class="compare">
+        <tbody>
+          <tr><td style="width:26%">后端</td><td>Go 1.25+ · Gin · 统一任务控制面 · 资源调度器</td></tr>
+          <tr><td>前端</td><td>React 19 · TypeScript · Ant Design 6 · Vite 8</td></tr>
+          <tr><td>媒体引擎</td><td>FFmpeg / FFprobe · Shaka Packager</td></tr>
+          <tr><td>数据存储</td><td>SQLite · PostgreSQL · MySQL · 达梦 DM8 · 金仓 KingbaseES（方言抽象层统一）</td></tr>
+          <tr><td>缓存与协调</td><td>本地文件缓存 · Redis（可选，用于分布式转码与调度）</td></tr>
+          <tr><td>鉴权</td><td>JWT · OAuth 客户端凭证 · Bearer / Query Token 双模式</td></tr>
+          <tr><td>部署</td><td>Windows / Linux / macOS / Docker，默认端口 <span class="mono">8200</span></td></tr>
+          <tr><td>接口</td><td>REST API（JSON）· Webhook 回调 · 嵌入播放器</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 指标 -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">02 / 性能口径</div>
+      <h2>指标与统计边界同步说明</h2>
+      <p>下表列出常用指标及其统计边界，验收时可据此统一口径。</p>
+    </div>
+
+    <div class="table-scroll reveal">
+      <table class="compare">
+        <thead>
+          <tr><th>指标</th><th>数值</th><th>统计边界</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>起播时延（热态）</td>
+            <td class="mono" style="color:var(--brand);font-weight:600">&lt; 1 s</td>
+            <td>服务端收到播放清单请求 → 播放器完成首帧渲染；切片已命中缓存或预热产物</td>
+          </tr>
+          <tr>
+            <td>起播时延（冷启动）</td>
+            <td class="mono" style="color:var(--brand);font-weight:600">&lt; 3 s</td>
+            <td>同上，但需现场生成首个分片，不含首次刮削与整片转码</td>
+          </tr>
+          <tr>
+            <td>集群任务分发延迟</td>
+            <td class="mono">&le; 500 ms</td>
+            <td>协调者决策完成 → 目标节点收到任务</td>
+          </tr>
+          <tr>
+            <td>协调者故障转移</td>
+            <td class="mono">&le; 60 s</td>
+            <td>原协调者失联 → 新协调者接管并继续派发</td>
+          </tr>
+          <tr>
+            <td>单机并发转码</td>
+            <td class="mono">2（GPU）/ 4（CPU）</td>
+            <td>默认值，可按硬件与业务调整；播放通道独立计</td>
+          </tr>
+          <tr>
+            <td>播放密钥有效期</td>
+            <td class="mono">15 min</td>
+            <td>AES-128 密钥签发后的可用时长，过期需重新申请</td>
+          </tr>
+          <tr>
+            <td>缓存沉降 / 回收</td>
+            <td class="mono">7 天 / 30 天</td>
+            <td>闲置 7 天转沉降层，30 天为硬上限；删除保留 24 小时软删宽限</td>
+          </tr>
+          <tr>
+            <td>元数据一致窗口</td>
+            <td class="mono">5 s</td>
+            <td>写入完成到各读取路径可见的最长间隔</td>
+          </tr>
+          <tr>
+            <td>预转码试用额度</td>
+            <td class="mono">10 个文件</td>
+            <td>未携带能力位时的试用上限，超出需开启授权</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:14px">上表为产品级目标值，实际表现与片源码率、硬件配置、网络条件相关，建议以你的片源实测为准。</p>
+  </div>
+</section>
+
+<!-- 部署 -->
+<section class="section">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-body reveal">
+        <div class="eyebrow">03 / 部署要求</div>
+        <h2>四种形态，<br>同一套数据模型</h2>
+        <p>从个人验证到多节点集群，部署形态可以随业务演进切换，不要求重做数据迁移方案。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>运行环境</b>：主流 Linux 发行版 / Windows Server / macOS；容器化部署推荐 Docker</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>外部依赖</b>：FFmpeg 与 Shaka Packager；商业版可配 Redis；对象存储可选 S3 兼容服务</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>存储规划</b>：媒体源、转码缓存、预览与字幕缓存建议分卷；缓存容量按最长 30 天保留周期规划</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>网络</b>：播放与转码节点建议同机房；对外仅暴露播放与接口端口，管理端口限内网</span></li>
+        </ul>
+      </div>
+      <div class="split-media reveal" data-d="1">
+        <div class="panel-dark">
+          <div class="ph">docker-compose · 最小可用</div>
+<pre><span class="c"># 单机启动（示意，实际以交付包为准）</span>
+<span class="k">services</span>:
+  <span class="k">powermedia</span>:
+    <span class="k">image</span>: <span class="s">powermedia/server:latest</span>
+    <span class="k">ports</span>: [<span class="s">"8200:8200"</span>]
+    <span class="k">volumes</span>:
+      - <span class="s">./data:/app/data</span>
+      - <span class="s">./media:/media</span>
+      - <span class="s">./cache:/app/cache</span>
+    <span class="k">environment</span>:
+      <span class="k">DB_DRIVER</span>: <span class="s">sqlite</span>
+      <span class="k">TZ</span>: <span class="s">Asia/Shanghai</span>
+
+<span class="c"># 首次启动后访问 http://localhost:8200</span>
+<span class="c"># 生产环境请立即修改默认账号与密钥</span></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 数据库与迁移 -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">04 / 数据库与迁移</div>
+      <h2>支持五种数据库，提供可控迁移</h2>
+      <p>方言抽象层统一处理查询、事务与分页差异，业务代码无需因更换数据库而修改。迁移工具逐表校验，减少数据遗漏风险。</p>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="card reveal" style="padding:24px">
+        <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">DEFAULT</div>
+        <h4 style="margin-top:10px">SQLite</h4>
+        <p class="small" style="margin-top:6px">零依赖，适合单机与试点；社区版默认。</p>
+      </div>
+      <div class="card reveal" data-d="1" style="padding:24px">
+        <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">STANDARD</div>
+        <h4 style="margin-top:10px">PostgreSQL</h4>
+        <p class="small" style="margin-top:6px">功能完整，适合中大型部署与只读扩展。</p>
+      </div>
+      <div class="card reveal" data-d="2" style="padding:24px">
+        <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">STANDARD</div>
+        <h4 style="margin-top:10px">MySQL</h4>
+        <p class="small" style="margin-top:6px">运维体系成熟，便于纳入既有数据库平台。</p>
+      </div>
+      <div class="card reveal" data-d="3" style="padding:24px">
+        <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">XINCHUANG</div>
+        <h4 style="margin-top:10px">DM8 / KingbaseES</h4>
+        <p class="small" style="margin-top:6px">国产化环境交付，随信创版授权提供。</p>
+      </div>
+    </div>
+
+    <div class="panel reveal" style="margin-top:24px">
+      <h4 style="margin-bottom:10px">迁移工具 <span class="mono" style="font-size:12px;color:var(--ink-3);font-weight:400">cmd/db-migrate</span></h4>
+      <p class="small" style="line-height:1.9">
+        支持 SQLite → PostgreSQL / MySQL / DM8 / KingbaseES 的全量与增量迁移，逐表校验行数与关键字段，
+        迁移前后可对比摘要。迁移期间原库保持只读，失败可回滚到切换点。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 安全 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">05 / 安全机制</div>
+      <h2>默认收紧，按需放开</h2>
+      <p>默认账号、密钥、跨域与分享策略采用偏安全的初始配置，再按业务需要逐项调整。</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <h3>身份与权限</h3>
+        <p>多角色模型 + 库级 ACL；管理端与用户端权限分离；OAuth 客户端凭证支持第三方系统对接，令牌可撤销。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <h3>传输与会话</h3>
+        <p>播放令牌随会话签发、短期有效；Query Token 模式便于播放器与嵌入场景，可配合域名白名单收紧。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <h3>存储与密钥</h3>
+        <p>落盘静态加密；DRM 打包与许可证服务分离；密钥单独存储、15 分钟过期，不随媒体文件下发。</p>
+      </article>
+      <article class="card reveal">
+        <h3>审计与配额</h3>
+        <p>管理操作变更留痕；分享访问可查；播放并发按授权配额门禁，超限返回明确错误码而非静默失败。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <h3>授权边界</h3>
+        <p>未授权能力不注册、不暴露；离线授权采用签名验签与机器指纹绑定，防止授权文件被复制到其他节点。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <h3>部署加固</h3>
+        <p>支持内网 / 离线部署；管理端口与播放入口分离；提供反向代理与边缘缓存配置建议。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 接口示意 -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="split split--rev">
+      <div class="split-media reveal">
+        <div class="panel-dark">
+          <div class="ph">接口形态示意 · 非最终字段</div>
+<pre><span class="c"># 1. 申请播放会话</span>
+<span class="k">POST</span> /api/v1/media/{id}/play
+{
+  <span class="k">"quality"</span>: <span class="s">"auto"</span>,
+  <span class="k">"subtitle"</span>: <span class="s">"zh-CN"</span>
+}
+
+<span class="c"># 2. 返回清单与短期凭证</span>
+{
+  <span class="k">"playlist"</span>: <span class="s">"/hls/{id}/master.m3u8"</span>,
+  <span class="k">"token"</span>: <span class="s">"..."</span>,
+  <span class="k">"expires_in"</span>: <span class="n">900</span>
+}
+
+<span class="c"># 3. 转码 / 预热任务查询</span>
+<span class="k">GET</span> /api/v1/tasks?type=prewarm
+<span class="k">GET</span> /api/v1/license/features</pre>
+        </div>
+      </div>
+      <div class="split-body reveal" data-d="1">
+        <div class="eyebrow">06 / 接口与集成</div>
+        <h2>接口支持完整业务集成</h2>
+        <p>上层平台通过 REST API 完成媒体入库、播放授权、任务查询与授权状态读取；前端可完全替换为自有界面。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>能力探测</b>：<span class="mono">/api/v1/license/features</span> 便于前端根据授权隐藏入口，避免用户操作后才收到错误提示</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>异步任务</b>：转码、预热、刮削均为可查询任务，带状态与失败原因，便于接入自有告警</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>回调</b>：Webhook 在入库、发布、任务结束时通知，需开启对应能力位</span></li>
+        </ul>
+        <p class="small muted" style="margin-top:18px">左侧为接口形态示意，完整字段与错误码以交付版接口文档为准。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 支持 -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">07 / 交付与支持</div>
+      <h2>覆盖部署、验收与升级的支持</h2>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>
+        </div>
+        <h3>部署支持</h3>
+        <p>提供部署清单、容器编排示例与反向代理配置建议；信创环境提供数据库与中间件适配说明。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.5-3.3 8.2-8 10-4.7-1.8-8-5.5-8-10V7z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3>验收协助</h3>
+        <p>按本页指标口径制定测试方案，配合你用真实片源完成起播、并发与故障转移的验收。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <h3>持续升级</h3>
+        <p>商业版本按版本节奏提供功能更新与安全修复；社区版可用于提前验证新能力。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-grid-bg" aria-hidden="true"></div>
+  <div class="wrap inner">
+    <div>
+      <h2>需要完整的接口文档或部署清单？</h2>
+      <p>留下你的邮箱与项目背景，我们会发送对应版本的文档包，并安排技术同事对接。</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--primary btn--lg" href="contact.html">索取技术文档</a>
+      <a class="btn btn--onDark btn--lg" href="editions.html">查看版本</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+          <span class="brand-text">
+            <span class="brand-name">PowerMedia</span>
+            <span class="brand-sub">智能媒体服务器</span>
+          </span>
+        </a>
+        <p>面向在线教育、企业培训与内容平台的智能媒体服务器。即传即播、智能预热、私有加密，支持私有化与信创环境部署。</p>
+      </div>
+      <div class="footer-col">
+        <h5>产品</h5>
+        <a href="features.html">产品能力</a>
+        <a href="features.html#playback">播放引擎</a>
+        <a href="features.html#protect">内容保护</a>
+        <a href="tech.html">技术规格</a>
+      </div>
+      <div class="footer-col">
+        <h5>方案与购买</h5>
+        <a href="solutions.html">解决方案</a>
+        <a href="editions.html">版本与授权</a>
+        <a href="contact.html">预约演示</a>
+        <a href="contact.html#faq">常见问题</a>
+      </div>
+      <div class="footer-col">
+        <h5>联系</h5>
+        <div class="footer-contact">
+          电话：<b>010-62129317</b><br>
+          邮箱：<b>marketing@powercom.net.cn</b><br>
+          官网：<b>www.powercom.net.cn</b>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> 宝丽通 PowerCOM · PowerMedia 智能媒体服务器</span>
+      <span><a href="contact.html">联系我们</a> · <a href="tech.html">技术规格</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

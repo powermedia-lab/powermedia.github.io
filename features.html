@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>产品能力 · PowerMedia 智能媒体服务器</title>
+<meta name="description" content="PowerMedia 能力详解：即传即播与 JIT 切片、HLS/DASH 播放引擎、预转码集群调度、Widevine/FairPlay/PowerDRM 内容保护、字幕 OCR 与 ASR、多数据库信创适配。">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+      <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span class="brand-text">
+        <span class="brand-name">PowerMedia</span>
+        <span class="brand-sub">智能媒体服务器</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品能力</a>
+      <a href="solutions.html">解决方案</a>
+      <a href="editions.html">版本与授权</a>
+      <a href="tech.html">技术规格</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn--ghost btn--sm" href="tech.html">技术文档</a>
+      <a class="btn btn--primary btn--sm" href="contact.html">预约演示</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobile-nav" aria-label="移动端导航">
+  <a href="index.html">首页</a>
+  <a href="features.html">产品能力</a>
+  <a href="solutions.html">解决方案</a>
+  <a href="editions.html">版本与授权</a>
+  <a href="tech.html">技术规格</a>
+  <a href="contact.html">联系我们</a>
+  <a class="btn btn--primary" href="contact.html">预约产品演示</a>
+</nav>
+
+<main>
+
+<section class="page-hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <div class="crumbs"><a href="index.html">首页</a><span>/</span>产品能力</div>
+    <h1>覆盖“上传到播放”<br>的完整链路</h1>
+    <p>六大能力域覆盖媒体资产的入库、处理、分发与保护，可整体部署，也可按需接入现有系统。</p>
+    <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:30px">
+      <a class="btn btn--onDark btn--sm" href="#playback">播放引擎</a>
+      <a class="btn btn--onDark btn--sm" href="#ingest">入库与元数据</a>
+      <a class="btn btn--onDark btn--sm" href="#transcode">转码与调度</a>
+      <a class="btn btn--onDark btn--sm" href="#protect">内容保护</a>
+      <a class="btn btn--onDark btn--sm" href="#subtitle">字幕与语音</a>
+      <a class="btn btn--onDark btn--sm" href="#platform">平台与集成</a>
+    </div>
+  </div>
+</section>
+
+<!-- 播放引擎 -->
+<section class="section" id="playback">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-body reveal">
+        <div class="eyebrow">01 / 播放引擎</div>
+        <h2>播放请求到达时，<br>才开始准备切片</h2>
+        <p>传统流程需要等待整片转码完成后才能播放。PowerMedia 在播放请求到达后先返回清单，再按需生成分片，并随播放进度继续处理，减少起播等待。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>JIT 按需切片</b>：首片生成即可起播，后续分片随播放进度补齐</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>多协议自适应</b>：直链 MP4、HLS、DASH，按终端能力自动选择</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>多引擎回退</b>：不同浏览器内核下自动切换播放器实现</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>体验细节</b>：跨端续播、进度缩略图雪碧图、多音轨切换</span></li>
+        </ul>
+      </div>
+      <div class="split-media reveal" data-d="1">
+        <div class="panel">
+          <h4 style="margin-bottom:16px">播放能力一览</h4>
+          <table class="compare" style="min-width:0;font-size:13.2px">
+            <tbody>
+              <tr><td style="width:44%">起播时延（热 / 冷）</td><td class="mono">&lt; 1 s / &lt; 3 s</td></tr>
+              <tr><td>自适应协议</td><td>HLS · DASH · 直链 MP4</td></tr>
+              <tr><td>编码 Profile</td><td>baseline · main · high</td></tr>
+              <tr><td>音轨</td><td>多音轨预提取，清单内切换</td></tr>
+              <tr><td>字幕轨</td><td>内嵌 · Sidecar · 转写生成</td></tr>
+              <tr><td>进度预览</td><td>雪碧图 + WebVTT 时间线</td></tr>
+              <tr><td>续播</td><td>跨端进度同步</td></tr>
+              <tr><td>并发门禁</td><td>按授权配额限制单机播放并发</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 入库 -->
+<section class="section section--soft" id="ingest">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">02 / 入库与元数据</div>
+      <h2>将媒体文件转化为可管理的资产</h2>
+      <p>扫描、识别、刮削、归并与发布均具备状态记录和恢复能力，服务重启后无需从头处理。</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h5l2 2h11v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M3 7V5a1 1 0 0 1 1-1h4l2 2"/></svg>
+        </div>
+        <h3>多库多路径</h3>
+        <p>电影、剧集、动漫、音乐、图片、文档分库管理，同一文件可归属多库，路径变更由扫描协调处理。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+        </div>
+        <h3>元数据刮削</h3>
+        <p>对接 TMDB、TVDB、豆瓣、Bangumi、OMDb；字段缺失时由 AI 辅助补全，海报在扫描期预捕获。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg>
+        </div>
+        <h3>可恢复摄入</h3>
+        <p>入队、认领、崩溃恢复三段式，不可变处理生命周期；重复文件按内容指纹去重，避免重复转码。</p>
+      </article>
+      <article class="card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg>
+        </div>
+        <h3>剧集与季集模型</h3>
+        <p>季 / 集结构、特别篇、多版本同片归并；剧集级封面与简介继承，避免逐集手工维护。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h7"/></svg>
+        </div>
+        <h3>发布策略 v2</h3>
+        <p>处理完成不等于对外可见。发布按 DAG 编排，元数据、海报、切片、字幕齐备才转“可播”，避免未完整处理的媒体提前上线。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h4"/></svg>
+        </div>
+        <h3>文档与图片</h3>
+        <p>PDF / Office / 电子书解析为可读页面，扫描件走 OCR 与版面还原；图片按人脸、地点、场景自动归类。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 转码与调度 -->
+<section class="section" id="transcode">
+  <div class="wrap">
+    <div class="split split--rev">
+      <div class="split-media reveal">
+        <div class="panel-dark">
+          <div class="ph">prewarm · 门控状态机</div>
+<pre><span class="c"># 资源充裕：放行预热</span>
+<span class="k">state</span>: <span class="s">OPEN</span>
+  cpu_idle >= <span class="n">30%</span>   → 允许启动新任务
+  interval: <span class="n">60s</span>     → 重新评估
+
+<span class="c"># 资源紧张：并发降至 1/4</span>
+<span class="k">state</span>: <span class="s">THROTTLE</span>
+  cpu >= <span class="n">70%</span> | gpu >= <span class="n">50%</span> | 即时池 >= <span class="n">80%</span>
+
+<span class="c"># 资源告急：立即暂停预热任务，不影响正在播放的请求</span>
+<span class="k">state</span>: <span class="s">PAUSE</span>
+  cpu >= <span class="n">85%</span> | mem &lt; <span class="n">15%</span> | 起播 &gt; <span class="n">1.2x</span> 基线
+
+<span class="c"># 恢复：连续 5 分钟达标后，每 60s 增加 1 个并发</span>
+<span class="k">state</span>: <span class="s">RESUME</span></pre>
+        </div>
+      </div>
+      <div class="split-body reveal" data-d="1">
+        <div class="eyebrow">03 / 转码与调度</div>
+        <h2>按热度分配算力，<br>优先保障播放</h2>
+        <p>预转码应根据实际播放热度分配算力，而不是对所有片源做全量处理。PowerMedia 通过热度候选、资源门控和集群并行控制成本与处理时长。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>候选闭包</b>：运营指定（P0）优先，其余按播放热度、收藏、入库时间等六组特征排序，默认 120 片</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>集群编排</b>：local / 数据库 / Redis 三种方案，跨节点并行不同清晰度，协调者故障 60 秒内接管</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>可解释准入</b>：每次拒绝均记录原因（容量、公平性、老化、库配额），便于排查</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>成本核算</b>：无人播放期间的预热成本单独统计，便于评估是否继续预热</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stats reveal" style="margin-top:56px">
+      <div class="stat">
+        <div class="v">500<span>ms</span></div>
+        <div class="k">集群任务分发延迟上限</div>
+      </div>
+      <div class="stat">
+        <div class="v">60<span>s</span></div>
+        <div class="k">协调者故障转移时间上限</div>
+      </div>
+      <div class="stat">
+        <div class="v">2 / 4</div>
+        <div class="k">单机默认并发转码（GPU / CPU）</div>
+      </div>
+      <div class="stat">
+        <div class="v">7 / 30<span>天</span></div>
+        <div class="k">缓存沉降阈值 / 硬上限回收</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 内容保护 -->
+<section class="section section--soft" id="protect">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">04 / 内容保护</div>
+      <h2>地址泄露不等于可以播放</h2>
+      <p>分别管理内容加密、播放授权与分享链接：文件保持加密，播放需要凭证，链接支持撤销。</p>
+    </div>
+
+    <div class="grid grid-4">
+      <article class="card reveal">
+        <span class="no">01</span>
+        <h3>Widevine</h3>
+        <p>面向浏览器与 Android 生态的主流 DRM，L1 / L3 按终端能力协商。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <span class="no">02</span>
+        <h3>FairPlay</h3>
+        <p>面向 Apple 生态，支持 iOS、iPadOS、macOS 与 Safari 播放。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <span class="no">03</span>
+        <h3>PowerDRM</h3>
+        <p>自有方案，适合私有化环境内闭环部署，不依赖外部许可证服务。</p>
+      </article>
+      <article class="card reveal" data-d="3">
+        <span class="no">04</span>
+        <h3>HLS AES-128</h3>
+        <p>轻量加密方案，部署成本低；密钥由内置服务签发，15 分钟过期。</p>
+      </article>
+    </div>
+
+    <div class="split" style="margin-top:64px">
+      <div class="split-body reveal">
+        <h3 style="font-size:24px;margin-bottom:14px">可管理、可审计的媒体分享</h3>
+        <p>媒体分享支持匿名访问、访问口令、有效期与嵌入代码；已发出的链接在授权变更后仍可访问（仅凭分享 token），新建分享则需要专业版及以上授权。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>访问控制</b>：口令、有效期、域名白名单、嵌入播放器</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>可审计</b>：我的分享集中管理，访问记录可查、可撤销</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>加密媒体可分享</b>：DRM 片源同样支持分享，无需为分享降低保护级别</span></li>
+        </ul>
+      </div>
+      <div class="split-media reveal" data-d="1">
+        <div class="panel">
+          <div class="eyebrow" style="margin-bottom:14px">分层保护</div>
+          <div style="display:grid;gap:12px">
+            <div style="display:flex;gap:14px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)">
+              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L1</span>
+              <div><b style="color:var(--ink);font-size:14.5px">传输层</b><p class="small" style="margin-top:4px">短期播放令牌，随会话签发，过期即失效</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)">
+              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L2</span>
+              <div><b style="color:var(--ink);font-size:14.5px">内容层</b><p class="small" style="margin-top:4px">DRM 打包或 AES-128 加密，密钥与内容分离存储</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)">
+              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L3</span>
+              <div><b style="color:var(--ink);font-size:14.5px">存储层</b><p class="small" style="margin-top:4px">落盘静态加密，断点续传保持加密会话，不落明文</p></div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L4</span>
+              <div><b style="color:var(--ink);font-size:14.5px">行为层</b><p class="small" style="margin-top:4px">访问审计、并发配额、异常播放告警</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 字幕与语音 -->
+<section class="section" id="subtitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">05 / 字幕与语音</div>
+      <h2>一个片源，服务多语种观众</h2>
+      <p>自动提取已有字幕、识别图形字幕与语音内容，并通过模型校对机器译稿，减少人工整理工作。</p>
+    </div>
+    <div class="grid grid-2">
+      <article class="card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 14h4M14 14h3"/></svg>
+        </div>
+        <h3>字幕提取与识别</h3>
+        <p>内嵌文本轨直接提取，Sidecar 文件自动扫描匹配；PGS 图形字幕通过 OCR 还原为文本，再统一转成 WebVTT。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </div>
+        <h3>语音转写（ASR）</h3>
+        <p>基于 Whisper 的本地转写，支持中英日韩等语种；长音频分段处理，时间轴与画面自动对齐。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 5v14M4 19h9"/><path d="M15 9h5M17.5 9v10M15 19h5"/></svg>
+        </div>
+        <h3>多语翻译</h3>
+        <p>中文（简 / 繁）、英语、日语、韩语互译，按语种生成独立字幕轨，播放器内自由切换。</p>
+      </article>
+      <article class="card reveal" data-d="3">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/><path d="M4 19h8"/></svg>
+        </div>
+        <h3>模型校对</h3>
+        <p>机器译稿经大模型校对术语、断句与人名，生成可供发布的版本，减少人工逐句校对工作。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 平台与集成 -->
+<section class="section section--soft" id="platform">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-body reveal">
+        <div class="eyebrow">06 / 平台与集成</div>
+        <h2>适配现有平台<br>与部署环境</h2>
+        <p>PowerMedia 可独立部署，也可作为媒体微服务被上层平台调用。数据库、认证方式与部署形态均可按需选择。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>五种数据库</b>：SQLite、PostgreSQL、MySQL、达梦 DM8、金仓 KingbaseES，方言层统一抽象</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>迁移工具</b>：从 SQLite 到目标库全量 / 增量迁移，逐表校验，降低迁移后数据遗漏的风险</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>接口鉴权</b>：JWT、OAuth 客户端凭证、Bearer / Query Token 双模式，适配播放器与后端调用</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>品牌定制</b>：站点名称、Logo、主题色可替换，对外呈现属于你的产品</span></li>
+        </ul>
+      </div>
+      <div class="split-media reveal" data-d="1">
+        <div class="grid grid-2" style="gap:16px">
+          <div class="card" style="padding:24px">
+            <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">DEPLOY</div>
+            <h4 style="margin-top:10px;font-size:16px">单机 Docker</h4>
+            <p class="small" style="margin-top:8px">一条命令启动，默认端口 8200，适合试点与中小规模。</p>
+          </div>
+          <div class="card" style="padding:24px">
+            <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">DEPLOY</div>
+            <h4 style="margin-top:10px;font-size:16px">嵌入式部署</h4>
+            <p class="small" style="margin-top:8px">作为子模块嵌入上层应用，共用进程与存储。</p>
+          </div>
+          <div class="card" style="padding:24px">
+            <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">SCALE</div>
+            <h4 style="margin-top:10px;font-size:16px">Redis 集群</h4>
+            <p class="small" style="margin-top:8px">多转码节点 + 分布式调度，横向扩容转码能力。</p>
+          </div>
+          <div class="card" style="padding:24px">
+            <div class="mono" style="font-size:11px;color:var(--ink-4);letter-spacing:.12em">XINCHUANG</div>
+            <h4 style="margin-top:10px;font-size:16px">信创环境</h4>
+            <p class="small" style="margin-top:8px">国产数据库，适配国产操作系统与中间件环境。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-grid-bg" aria-hidden="true"></div>
+  <div class="wrap inner">
+    <div>
+      <h2>需要验证某项具体能力？</h2>
+      <p>提供片源规格、终端类型与预计并发量，我们会给出相应的能力组合与部署建议。</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--primary btn--lg" href="contact.html">预约产品演示</a>
+      <a class="btn btn--onDark btn--lg" href="editions.html">版本与授权</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+          <span class="brand-text">
+            <span class="brand-name">PowerMedia</span>
+            <span class="brand-sub">智能媒体服务器</span>
+          </span>
+        </a>
+        <p>面向在线教育、企业培训与内容平台的智能媒体服务器。即传即播、智能预热、私有加密，支持私有化与信创环境部署。</p>
+      </div>
+      <div class="footer-col">
+        <h5>产品</h5>
+        <a href="features.html">产品能力</a>
+        <a href="features.html#playback">播放引擎</a>
+        <a href="features.html#protect">内容保护</a>
+        <a href="tech.html">技术规格</a>
+      </div>
+      <div class="footer-col">
+        <h5>方案与购买</h5>
+        <a href="solutions.html">解决方案</a>
+        <a href="editions.html">版本与授权</a>
+        <a href="contact.html">预约演示</a>
+        <a href="contact.html#faq">常见问题</a>
+      </div>
+      <div class="footer-col">
+        <h5>联系</h5>
+        <div class="footer-contact">
+          电话：<b>010-62129317</b><br>
+          邮箱：<b>marketing@powercom.net.cn</b><br>
+          官网：<b>www.powercom.net.cn</b>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> 宝丽通 PowerCOM · PowerMedia 智能媒体服务器</span>
+      <span><a href="contact.html">联系我们</a> · <a href="tech.html">技术规格</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

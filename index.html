@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PowerMedia 智能媒体服务器 · 上传即可播，媒体服务快人一步</title>
+<meta name="description" content="PowerMedia 是面向在线教育、企业培训与内容平台的智能媒体服务器：即传即播、智能预热降本、私有加密保护内容，支持私有化与信创环境部署。热态起播低于 1 秒。">
+<meta name="keywords" content="PowerMedia,智能媒体服务器,媒体服务器,视频转码,HLS,DRM,私有加密,信创媒体,在线教育视频,企业培训视频">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+<meta property="og:title" content="PowerMedia 智能媒体服务器">
+<meta property="og:description" content="上传即可播，资源更省、内容更安全。热态起播 &lt; 1 秒，支持私有化与信创部署。">
+<meta property="og:type" content="website">
+</head>
+<body>
+
+<!-- ======================= 顶部导航 ======================= -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+      <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span class="brand-text">
+        <span class="brand-name">PowerMedia</span>
+        <span class="brand-sub">智能媒体服务器</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品能力</a>
+      <a href="solutions.html">解决方案</a>
+      <a href="editions.html">版本与授权</a>
+      <a href="tech.html">技术规格</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn--ghost btn--sm" href="tech.html">技术文档</a>
+      <a class="btn btn--primary btn--sm" href="contact.html">预约演示</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobile-nav" aria-label="移动端导航">
+  <a href="index.html">首页</a>
+  <a href="features.html">产品能力</a>
+  <a href="solutions.html">解决方案</a>
+  <a href="editions.html">版本与授权</a>
+  <a href="tech.html">技术规格</a>
+  <a href="contact.html">联系我们</a>
+  <a class="btn btn--primary" href="contact.html">预约产品演示</a>
+</nav>
+
+<main>
+
+<!-- ======================= 首屏 ======================= -->
+<section class="hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge"><span class="dot"></span>即传即播 · 智能预热 · 私有加密</div>
+        <h1>上传即可播，<br>媒体服务<em>快人一步</em></h1>
+        <p class="hero-sub">
+          PowerMedia 是面向在线教育、企业培训与内容平台的智能媒体服务器。
+          上传即进入播放流程，按热度自动预热切片，内容全程加密分发——
+          <b>热态起播 &lt; 1 秒，冷启动 &lt; 3 秒</b>。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn--primary btn--lg" href="contact.html">
+            预约产品演示
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn--onDark btn--lg" href="features.html">查看产品能力</a>
+        </div>
+        <div class="hero-note">
+          <span><i></i>私有化 / 内网部署</span>
+          <span><i></i>Docker 单机到集群</span>
+          <span><i></i>Widevine · FairPlay · PowerDRM</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="console">
+          <div class="console-top">
+            <span class="d"></span><span class="d"></span><span class="d"></span>
+            <span class="tag">MEDIA CONSOLE</span>
+          </div>
+          <div class="console-body">
+            <div class="screen">
+              <div class="frame-lines" aria-hidden="true"></div>
+              <div class="play-btn" aria-hidden="true"></div>
+              <div class="timeline" aria-hidden="true"><i></i></div>
+              <div class="screen-meta">
+                <span class="chip chip--live">HLS</span>
+                <span class="chip">1080p · AES-128</span>
+              </div>
+            </div>
+            <div class="pipeline pipe-anim">
+              <div class="pl-row">
+                <span class="pl-name">接收与校验</span>
+                <span class="pl-bar"><i style="--w:96%"></i></span>
+                <span class="pl-val">96%</span>
+              </div>
+              <div class="pl-row">
+                <span class="pl-name">JIT 切片</span>
+                <span class="pl-bar"><i style="--w:62%"></i></span>
+                <span class="pl-val">62%</span>
+              </div>
+              <div class="pl-row">
+                <span class="pl-name">首帧就绪</span>
+                <span class="pl-bar"><i style="--w:88%"></i></span>
+                <span class="pl-val">0.8 s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="float-card">
+          <span class="ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.2H11l-1 8.8L19.5 10H13z"/></svg>
+          </span>
+          <span>
+            <span class="t">热态起播</span>
+            <span class="v">&lt; 1 s</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-bar">
+      <div class="kpi">
+        <div class="v">&lt; 1 <small>s</small></div>
+        <div class="k">热态起播时延<br><b>命中预热或缓存即可播</b></div>
+      </div>
+      <div class="kpi">
+        <div class="v">&lt; 3 <small>s</small></div>
+        <div class="k">冷启动起播时延<br><b>无预处理的首次播放</b></div>
+      </div>
+      <div class="kpi">
+        <div class="v">&le; 500 <small>ms</small></div>
+        <div class="k">集群任务分发延迟<br><b>跨节点并行切片</b></div>
+      </div>
+      <div class="kpi">
+        <div class="v">&le; 60 <small>s</small></div>
+        <div class="k">协调者故障转移<br><b>预转码集群自愈</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 适配条 ======================= -->
+<div class="strip">
+  <div class="wrap strip-inner">
+    <span class="strip-label">适配与集成</span>
+    <div class="strip-items">
+      <span class="strip-item">达梦 DM8</span>
+      <span class="strip-item">金仓 KingbaseES</span>
+      <span class="strip-item">MySQL / PostgreSQL</span>
+      <span class="strip-item">HLS / DASH</span>
+      <span class="strip-item">Widevine / FairPlay</span>
+      <span class="strip-item">Docker 私有化部署</span>
+      <span class="strip-item">OAuth / REST API</span>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= 01 问题 ======================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">01 / 为什么需要它</div>
+      <h2>媒体业务的<br>三类共性问题</h2>
+      <p>上传、转码、播放和保护是音视频项目的共性环节。PowerMedia 将这些能力整合为可独立部署的服务，减少重复建设。</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="card reveal">
+        <span class="no">01</span>
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </div>
+        <h3>上线等待长</h3>
+        <p>大文件上传后通常需要等待完整转码，课程、会议录像和直播素材难以及时上线，影响观看体验与内容发布效率。</p>
+      </article>
+      <article class="card reveal" data-d="1">
+        <span class="no">02</span>
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+        </div>
+        <h3>资源成本高</h3>
+        <p>对所有片源无差别转码、缓存和存储，而多数内容长期无人访问，会持续浪费算力与存储空间。</p>
+      </article>
+      <article class="card reveal" data-d="2">
+        <span class="no">03</span>
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </div>
+        <h3>内容保护难</h3>
+        <p>拿到地址就能播放、链接被随意转发，课程与内部资料一旦外流，损失难以挽回，事后也缺少审计依据。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 02 核心能力 ======================= -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="section-head section-head--center reveal">
+      <div class="eyebrow eyebrow--center">02 / 核心能力</div>
+      <h2>围绕播放主链路的四项核心能力</h2>
+      <p>围绕“上传到播放”主链路组织功能，分别改善上线效率、资源成本、内容安全与多语种体验。</p>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="card reveal">
+        <span class="no">A</span>
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.2H11l-1 8.8L19.5 10H13z"/></svg>
+        </div>
+        <h3>即传即播</h3>
+        <p>上传完成的文件无需等待整片转码：播放请求到达时按需生成切片与清单，边生成边播放。首次播放走 JIT 通道，重复播放直接命中缓存，不再启动转码。</p>
+        <span class="claim">冷启动 &lt; 3 s · 热态 &lt; 1 s</span>
+      </article>
+
+      <article class="card reveal" data-d="1">
+        <span class="no">B</span>
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2.5 3 5.5 5.6 5.5 9a5.5 5.5 0 0 1-11 0C6.5 8.6 9.5 6 12 3z"/><path d="M12 11.5c.9 1.1 1.8 2 1.8 3.2a1.8 1.8 0 1 1-3.6 0c0-1.2.9-2.1 1.8-3.2z"/></svg>
+        </div>
+        <h3>智能预热</h3>
+        <p>按热度与资源状况挑选候选片源，异步生成切片并写入与播放共用的缓存。资源紧张时自动降速或暂停，优先保障在线播放，避免与播放任务争抢算力。</p>
+        <span class="claim">四档门控 · 不占即时通道</span>
+      </article>
+
+      <article class="card reveal" data-d="2">
+        <span class="no">C</span>
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.2-2.9 7.6-7 9.5-4.1-1.9-7-5.3-7-9.5V6z"/><path d="M9.2 12.2l2 2 3.6-3.9"/></svg>
+        </div>
+        <h3>私有加密</h3>
+        <p>支持 Widevine、FairPlay、PowerDRM 与 HLS AES-128，内置许可证服务。播放需通过短期令牌与密钥授权，直接复制文件或转发地址均无法播放。</p>
+        <span class="claim">密钥 15 分钟过期</span>
+      </article>
+
+      <article class="card reveal" data-d="3">
+        <span class="no">D</span>
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15h4M14 15h3M7 11h2"/></svg>
+        </div>
+        <h3>多音轨 · 多字幕</h3>
+        <p>音轨预提取生成多音轨 HLS，自动识别内嵌字幕与 Sidecar 文件，PGS 图形字幕通过 OCR 还原，语音内容可转写并翻译，一个片源服务多语种观众。</p>
+        <span class="claim">zh-CN / zh-TW / en / ja / ko</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 03 能力矩阵 ======================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">03 / 能力矩阵</div>
+      <h2>从入库到分发，一条链路都覆盖</h2>
+      <p>各能力可独立启用，也可按需接入现有系统。</p>
+    </div>
+
+    <div class="flist">
+      <div class="frow reveal">
+        <span class="idx">01</span>
+        <div>
+          <h3>媒体库与元数据</h3>
+          <p class="desc">电影、剧集、动漫、音乐、图片、文档统一入库，多路径多库管理，各类型均有对应的浏览、播放或阅读界面。</p>
+        </div>
+        <ul>
+          <li><b>元数据刮削</b>：TMDB、TVDB、豆瓣、Bangumi、OMDb，字段缺失时由 AI 辅助补全</li>
+          <li><b>剧集模型</b>：季 / 集结构、特别篇、多版本同片归并</li>
+          <li><b>库级权限</b>：多角色、库级 ACL、家长控制（分级 + PIN + 时段）</li>
+        </ul>
+      </div>
+
+      <div class="frow reveal">
+        <span class="idx">02</span>
+        <div>
+          <h3>播放引擎</h3>
+          <p class="desc">直链 MP4、HLS、DASH 自适应，JIT 按需切片；多播放器引擎自动切换，兼容不同终端内核。</p>
+        </div>
+        <ul>
+          <li><b>进度同步</b>：跨端续播、播放历史与收藏</li>
+          <li><b>预览雪碧图</b>：进度条缩略图 + WebVTT 时间线，扫描期预捕获海报</li>
+          <li><b>多音轨</b>：音轨预提取，master playlist 内自由切换</li>
+        </ul>
+      </div>
+
+      <div class="frow reveal">
+        <span class="idx">03</span>
+        <div>
+          <h3>转码与调度</h3>
+          <p class="desc">按需转码、预转码优化与集群调度协同工作，根据资源水位决定任务启动、降速或暂缓。</p>
+        </div>
+        <ul>
+          <li><b>集群编排</b>：local / 数据库 / Redis 三种调度方案，跨节点清晰度并行</li>
+          <li><b>资源调度器</b>：容量预留、队列声明、准入决策可解释、老化与库公平</li>
+          <li><b>任务控制面</b>：统一概览与钻取、批量操作、审计变更</li>
+        </ul>
+      </div>
+
+      <div class="frow reveal">
+        <span class="idx">04</span>
+        <div>
+          <h3>内容保护</h3>
+          <p class="desc">DRM 打包与许可证服务一体化，加密媒体同样可以安全分享，链接可设口令与有效期。</p>
+        </div>
+        <ul>
+          <li><b>多方案 DRM</b>：Widevine、FairPlay、PowerDRM、HLS AES-128</li>
+          <li><b>分享管控</b>：匿名链接、访问口令、有效期、嵌入代码、访问审计</li>
+          <li><b>静态加密</b>：落盘即加密，断点续传不破坏加密会话</li>
+        </ul>
+      </div>
+
+      <div class="frow reveal">
+        <span class="idx">05</span>
+        <div>
+          <h3>智能分析</h3>
+          <p class="desc">把非结构化媒体变成可检索的资产：人脸、地点、场景分类，文档 OCR 与版面还原。</p>
+        </div>
+        <ul>
+          <li><b>照片管理</b>：人脸聚类、地理分布、场景分类</li>
+          <li><b>字幕与转写</b>：Whisper ASR，LLM 校对，多语翻译</li>
+          <li><b>文档阅读</b>：OCR、版面还原、电子书在线阅读</li>
+        </ul>
+      </div>
+
+      <div class="frow reveal">
+        <span class="idx">06</span>
+        <div>
+          <h3>平台与集成</h3>
+          <p class="desc">既能独立部署，也能作为媒体微服务嵌进现有平台，通过 REST API 与 OAuth 客户端对接。</p>
+        </div>
+        <ul>
+          <li><b>多数据库</b>：SQLite、PostgreSQL、MySQL、达梦 DM8、金仓 KingbaseES</li>
+          <li><b>接口鉴权</b>：JWT、OAuth 客户端凭证、Bearer / Query Token 双模式</li>
+          <li><b>交付形态</b>：内嵌部署 → Docker → 分布式 Redis 集群</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 04 引擎流程 ======================= -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">04 / 引擎如何工作</div>
+      <h2>一条主链路，五个可观测的环节</h2>
+      <p>每个环节均提供状态、进度与失败恢复信息，便于运维排查。</p>
+    </div>
+
+    <div class="arch reveal">
+      <div class="arch-step">
+        <div class="n">STEP 01</div>
+        <h4>入库与扫描</h4>
+        <p>多路径扫描、文件监控、持久化摄入队列，崩溃后可恢复认领。</p>
+      </div>
+      <div class="arch-step">
+        <div class="n">STEP 02</div>
+        <h4>识别与刮削</h4>
+        <p>解析容器与轨道信息，补齐元数据与海报，生成预览雪碧图。</p>
+      </div>
+      <div class="arch-step">
+        <div class="n">STEP 03</div>
+        <h4>预热与转码</h4>
+        <p>按热度挑选候选，异步生成多清晰度切片；资源紧张自动让路。</p>
+      </div>
+      <div class="arch-step">
+        <div class="n">STEP 04</div>
+        <h4>打包与加密</h4>
+        <p>HLS / DASH 打包，DRM 或 AES-128 加密，密钥与许可证分离管理。</p>
+      </div>
+      <div class="arch-step">
+        <div class="n">STEP 05</div>
+        <h4>分发与播放</h4>
+        <p>清单与切片经缓存分发，播放凭短期令牌鉴权，行为可审计。</p>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:24px">
+      <div class="panel reveal">
+        <h4 style="margin-bottom:14px">资源门控：优先保障播放</h4>
+        <p class="small" style="line-height:1.85">
+          预热任务按实时水位在四档间迁移：<b>OPEN</b> 空闲时放行（CPU 可用 ≥ 30%），
+          <b>THROTTLE</b> 紧张时降速（CPU ≥ 70% 降至 1/4），
+          <b>PAUSE</b> 告急时立即暂停（≥ 85%），
+          <b>RESUME</b> 恢复需连续 5 分钟达标、每 60 秒只加 1 个并发。
+          在播请求永远优先，预热只使用剩余容量。
+        </p>
+      </div>
+      <div class="panel reveal" data-d="1">
+        <h4 style="margin-bottom:14px">缓存生命周期：按需保留，到期回收</h4>
+        <p class="small" style="line-height:1.85">
+          切片缓存与播放共用同一套键，<b>不存在第二套预热缓存</b>；
+          闲置 <b>7 天</b>沉降、<b>30 天</b>硬上限回收、删除保留 <b>24 小时</b>软删宽限，
+          元数据一致窗口 <b>5 秒</b>。命中率仅统计“鉴权通过的切片请求”，避免重复请求放大指标。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 05 场景 ======================= -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">05 / 应用场景</div>
+      <h2>四类典型业务，同一套媒体底座</h2>
+      <p>可根据并发规模、内容形态与合规要求按需组合能力。</p>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="scene reveal">
+        <span class="no">01</span>
+        <h3>在线教育与知识付费</h3>
+        <p>课程上传后快速上线，学习高峰稳定播放；课程内容加密分发，降低录屏外传与盗链风险。</p>
+        <div class="tags"><span>即传即播</span><span>私有加密</span><span>多字幕</span></div>
+      </article>
+      <article class="scene reveal" data-d="1">
+        <span class="no">02</span>
+        <h3>企业培训与内部协作</h3>
+        <p>培训视频、会议录像、产品资料集中管理，按部门与角色授权，兼顾使用效率与内容安全。</p>
+        <div class="tags"><span>库级 ACL</span><span>统一检索</span><span>内网部署</span></div>
+      </article>
+      <article class="scene reveal" data-d="2">
+        <span class="no">03</span>
+        <h3>媒体平台与内容社区</h3>
+        <p>应对持续增长的内容量与波动访问，通过预热与缓存使处理成本匹配实际热度，避免全量预转码。</p>
+        <div class="tags"><span>智能预热</span><span>集群调度</span><span>HLS / DASH</span></div>
+      </article>
+      <article class="scene reveal" data-d="3">
+        <span class="no">04</span>
+        <h3>应用开发商与系统集成商</h3>
+        <p>把成熟的媒体能力接入自有产品，省掉底层重复建设；信创环境可交付国产数据库与私有化部署。</p>
+        <div class="tags"><span>REST API</span><span>OAuth</span><span>信创适配</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 06 交付形态 ======================= -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-media reveal">
+        <div class="panel-dark">
+          <div class="ph">
+            <span style="width:7px;height:7px;border-radius:50%;background:#E4635B;display:inline-block"></span>
+            <span style="width:7px;height:7px;border-radius:50%;background:#E2B14A;display:inline-block"></span>
+            <span style="width:7px;height:7px;border-radius:50%;background:#40C08A;display:inline-block"></span>
+            <span style="margin-left:8px">POST /api/v1/media/play</span>
+          </div>
+<pre><span class="c">// 申请播放：服务端返回清单与短期令牌</span>
+{
+  <span class="k">"media_id"</span>: <span class="s">"med_8f2c1a"</span>,
+  <span class="k">"quality"</span>: <span class="s">"auto"</span>,
+  <span class="k">"drm"</span>: { <span class="k">"scheme"</span>: <span class="s">"aes-128"</span> }
+}
+
+<span class="c">// 响应</span>
+{
+  <span class="k">"playlist"</span>: <span class="s">"/hls/med_8f2c1a/master.m3u8"</span>,
+  <span class="k">"token_expires_in"</span>: <span class="n">900</span>,
+  <span class="k">"first_frame_budget_ms"</span>: <span class="n">1000</span>,
+  <span class="k">"tracks"</span>: [<span class="s">"zh-CN"</span>, <span class="s">"en"</span>, <span class="s">"ja"</span>]
+}</pre>
+        </div>
+      </div>
+      <div class="split-body reveal" data-d="1">
+        <div class="eyebrow">06 / 交付与集成</div>
+        <h2>从单机部署，<br>平滑扩展到集群</h2>
+        <p>可先以单机 Docker 部署，业务增长后再接入 Redis 调度并增加转码节点，接口与数据模型保持不变。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>部署</b>：Windows / Linux / macOS / Docker，默认端口 8200</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>数据</b>：五种数据库可选，提供 SQLite 到目标库的逐表校验迁移工具</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>扩展</b>：任务控制面、资源调度、Webhook 回调，接入既有运维体系</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>信创</b>：达梦 DM8 / 金仓 KingbaseES，可运行于国产化基础环境</span></li>
+        </ul>
+        <div style="margin-top:28px">
+          <a class="link-arrow" href="tech.html">查看技术规格与部署要求
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= CTA ======================= -->
+<section class="cta-band">
+  <div class="cta-grid-bg" aria-hidden="true"></div>
+  <div class="wrap inner">
+    <div>
+      <h2>用你自己的片源，验证起播与成本</h2>
+      <p>预约产品演示，使用真实片源完成上传、切片、加密和并发播放，并现场记录指标。</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--primary btn--lg" href="contact.html">预约产品演示</a>
+      <a class="btn btn--onDark btn--lg" href="editions.html">了解版本与授权</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======================= 页脚 ======================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+          <span class="brand-text">
+            <span class="brand-name">PowerMedia</span>
+            <span class="brand-sub">智能媒体服务器</span>
+          </span>
+        </a>
+        <p>面向在线教育、企业培训与内容平台的智能媒体服务器。即传即播、智能预热、私有加密，支持私有化与信创环境部署。</p>
+      </div>
+      <div class="footer-col">
+        <h5>产品</h5>
+        <a href="features.html">产品能力</a>
+        <a href="features.html#playback">播放引擎</a>
+        <a href="features.html#protect">内容保护</a>
+        <a href="tech.html">技术规格</a>
+      </div>
+      <div class="footer-col">
+        <h5>方案与购买</h5>
+        <a href="solutions.html">解决方案</a>
+        <a href="editions.html">版本与授权</a>
+        <a href="contact.html">预约演示</a>
+        <a href="contact.html#faq">常见问题</a>
+      </div>
+      <div class="footer-col">
+        <h5>联系</h5>
+        <div class="footer-contact">
+          电话：<b>010-62129317</b><br>
+          邮箱：<b>marketing@powercom.net.cn</b><br>
+          官网：<b>www.powercom.net.cn</b>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> 宝丽通 PowerCOM · PowerMedia 智能媒体服务器</span>
+      <span><a href="contact.html">联系我们</a> · <a href="tech.html">技术规格</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
