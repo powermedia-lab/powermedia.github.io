@@ -22,6 +22,7 @@
     <nav class="nav" aria-label="主导航">
       <a href="index.html">首页</a>
       <a href="features.html">产品能力</a>
+      <a href="security.html">内容保护</a>
       <a href="solutions.html">解决方案</a>
       <a href="editions.html">版本与授权</a>
       <a href="tech.html">技术规格</a>
@@ -39,6 +40,7 @@
 <nav class="mobile-nav" id="mobile-nav" aria-label="移动端导航">
   <a href="index.html">首页</a>
   <a href="features.html">产品能力</a>
+  <a href="security.html">内容保护</a>
   <a href="solutions.html">解决方案</a>
   <a href="editions.html">版本与授权</a>
   <a href="tech.html">技术规格</a>
@@ -220,7 +222,7 @@
     <div class="section-head reveal">
       <div class="eyebrow">04 / 内容保护</div>
       <h2>地址泄露不等于可以播放</h2>
-      <p>分别管理内容加密、播放授权与分享链接：文件保持加密，播放需要凭证，链接支持撤销。</p>
+      <p>六层纵深防御覆盖视频、音频、图片与文档：分别管理内容加密、播放授权与分享链接——文件保持加密，播放需要凭证，链接支持撤销，输出带溯源水印。</p>
     </div>
 
     <div class="grid grid-4">
@@ -258,27 +260,57 @@
       </div>
       <div class="split-media reveal" data-d="1">
         <div class="panel">
-          <div class="eyebrow" style="margin-bottom:14px">分层保护</div>
-          <div style="display:grid;gap:12px">
-            <div style="display:flex;gap:14px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)">
-              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L1</span>
-              <div><b style="color:var(--ink);font-size:14.5px">传输层</b><p class="small" style="margin-top:4px">短期播放令牌，随会话签发，过期即失效</p></div>
+          <div class="eyebrow" style="margin-bottom:14px">六层纵深防御</div>
+          <div class="mini-layer">
+            <span class="lb">L1</span>
+            <div>
+              <h4>传输加密</h4>
+              <p>TLS 1.3 全链路加密，防中间人嗅探</p>
             </div>
-            <div style="display:flex;gap:14px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)">
-              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L2</span>
-              <div><b style="color:var(--ink);font-size:14.5px">内容层</b><p class="small" style="margin-top:4px">DRM 打包或 AES-128 加密，密钥与内容分离存储</p></div>
+          </div>
+          <div class="mini-layer">
+            <span class="lb">L2</span>
+            <div>
+              <h4>令牌访问</h4>
+              <p>签名 URL 绑定用户与 IP，15 分钟过期，防转发与重放</p>
             </div>
-            <div style="display:flex;gap:14px;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--line)">
-              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L3</span>
-              <div><b style="color:var(--ink);font-size:14.5px">存储层</b><p class="small" style="margin-top:4px">落盘静态加密，断点续传保持加密会话，不落明文</p></div>
+          </div>
+          <div class="mini-layer">
+            <span class="lb">L3</span>
+            <div>
+              <h4>分片加密</h4>
+              <p>HLS AES-128 加密分片，客户端拿不到完整明文</p>
             </div>
-            <div style="display:flex;gap:14px;align-items:flex-start">
-              <span class="mono" style="font-size:11px;color:var(--ink-4);padding-top:3px">L4</span>
-              <div><b style="color:var(--ink);font-size:14.5px">行为层</b><p class="small" style="margin-top:4px">访问审计、并发配额、异常播放告警</p></div>
+          </div>
+          <div class="mini-layer">
+            <span class="lb">L4</span>
+            <div>
+              <h4>污染输出</h4>
+              <p>图片双水印加降质，文档逐页渲染为图片</p>
+            </div>
+          </div>
+          <div class="mini-layer">
+            <span class="lb">L5</span>
+            <div>
+              <h4>客户端加固</h4>
+              <p>安全响应头与行为拦截，防截取与调试</p>
+            </div>
+          </div>
+          <div class="mini-layer">
+            <span class="lb">L6</span>
+            <div>
+              <h4>溯源水印</h4>
+              <p>可见与隐写双层水印，泄露后可定位来源</p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div style="margin-top:32px" class="reveal">
+      <a class="link-arrow" href="security.html">查看防泄露方案详解：分片加密 · 双重水印 · 逐页渲染 · 客户端加固
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -400,7 +432,8 @@
         <h5>产品</h5>
         <a href="features.html">产品能力</a>
         <a href="features.html#playback">播放引擎</a>
-        <a href="features.html#protect">内容保护</a>
+        <a href="security.html">内容保护</a>
+        <a href="security.html#trace">溯源水印</a>
         <a href="tech.html">技术规格</a>
       </div>
       <div class="footer-col">

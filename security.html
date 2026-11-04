@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>内容保护 · PowerMedia 智能媒体服务器</title>
+<meta name="description" content="PowerMedia 内容保护与防泄露：六层纵深防御（TLS 1.3、签名 URL 令牌、HLS AES-128 分片加密、污染输出、客户端加固、溯源水印），覆盖视频、音频、图片与文档，泄露内容可定位来源。">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+      <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span class="brand-text">
+        <span class="brand-name">PowerMedia</span>
+        <span class="brand-sub">智能媒体服务器</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品能力</a>
+      <a href="security.html">内容保护</a>
+      <a href="solutions.html">解决方案</a>
+      <a href="editions.html">版本与授权</a>
+      <a href="tech.html">技术规格</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn--ghost btn--sm" href="tech.html">技术文档</a>
+      <a class="btn btn--primary btn--sm" href="contact.html">预约演示</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobile-nav" aria-label="移动端导航">
+  <a href="index.html">首页</a>
+  <a href="features.html">产品能力</a>
+  <a href="security.html">内容保护</a>
+  <a href="solutions.html">解决方案</a>
+  <a href="editions.html">版本与授权</a>
+  <a href="tech.html">技术规格</a>
+  <a href="contact.html">联系我们</a>
+  <a class="btn btn--primary" href="contact.html">预约产品演示</a>
+</nav>
+
+<main>
+
+<section class="page-hero">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <div class="crumbs"><a href="index.html">首页</a><span>/</span>内容保护</div>
+    <h1>六层纵深防御，<br>泄露可防、可溯</h1>
+    <p>从传输、访问、内容、输出、客户端到溯源，六层防线逐层兜底：拿到地址放不出来，录屏下载带标记，内容外流后仍能定位到具体用户与会话。</p>
+    <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:30px">
+      <a class="btn btn--onDark btn--sm" href="#layers">六层防御</a>
+      <a class="btn btn--onDark btn--sm" href="#defense">分类防线</a>
+      <a class="btn btn--onDark btn--sm" href="#trace">溯源水印</a>
+      <a class="btn btn--onDark btn--sm" href="#harden">客户端加固</a>
+      <a class="btn btn--onDark btn--sm" href="#config">配置与默认值</a>
+    </div>
+  </div>
+</section>
+
+<!-- 六层纵深防御 -->
+<section class="section" id="layers">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">01 / 六层纵深防御</div>
+      <h2>每层只解决一类威胁，层层兜底</h2>
+      <p>单层防护总会被绕过，纵深的意义在于：任何一层失效，下一层仍然有效。六层全部由服务端统一配置，不依赖某个客户端自觉。</p>
+    </div>
+
+    <div class="layer-stack reveal">
+      <div class="layer">
+        <span class="lb">L1</span>
+        <h4>TLS 1.3 · 传输加密</h4>
+        <p>全链路 HTTPS 传输，防止中间人嗅探与流量劫持，是所有上层防线的入口条件。</p>
+      </div>
+      <div class="layer">
+        <span class="lb">L2</span>
+        <h4>签名 URL 令牌 · 访问控制</h4>
+        <p>播放与资源请求凭签名令牌访问，令牌<b>绑定用户、IP 与会话</b>，默认 <b>15 分钟过期</b>，Nonce 防重放——转发 URL 给他人、过期重放均无法访问。</p>
+      </div>
+      <div class="layer">
+        <span class="lb">L3</span>
+        <h4>HLS AES-128 · 分片加密</h4>
+        <p>视频与音频以<b>加密分片</b>下发，客户端只能拿到碎片与一把会过期的解密密钥，<b>拿不到完整明文</b>；密钥与内容分离管理，并可升级 Widevine / FairPlay / PowerDRM。</p>
+      </div>
+      <div class="layer">
+        <span class="lb">L4</span>
+        <h4>污染输出 · 输出防护</h4>
+        <p>无法分片的类型直接改写输出：图片<b>双水印加降质</b>输出、文档<b>逐页渲染为图片</b>。内容即使离开平台，也已带上标识且不可直接复用。</p>
+      </div>
+      <div class="layer">
+        <span class="lb">L5</span>
+        <h4>客户端加固 · 端侧防线</h4>
+        <p>安全响应头（HSTS、X-Frame-Options、CSP 等）配合前端拦截：禁止右键 / 拖拽 / 文本选择，打印时模糊或隐藏，检测到 DevTools 调试即模糊画面。</p>
+      </div>
+      <div class="layer">
+        <span class="lb">L6</span>
+        <h4>溯源水印 · 泄露追责</h4>
+        <p>可见水印 + 隐写水印双层标识观众与会话。内容一旦外流，可从截图中<b>提取载荷</b>，定位到具体用户、会话与时间，为追责提供依据。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 分类防线 -->
+<section class="section section--soft" id="defense">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">02 / 分类防线</div>
+      <h2>四类媒体，四种针对性策略</h2>
+      <p>视频可以分片，图片必须完整渲染，文档的威胁是文本可复制——威胁模型不同，防线设计也不同。</p>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="card reveal">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
+        </div>
+        <h3>视频与音频：分片加密 + 会话水印</h3>
+        <p>加密存储的源文件按需解密、经 HLS 打包为 AES-128 加密分片，播放凭短期令牌与密钥授权。水印跟随单个观众：可见水印标出用户，隐写层以块级亮度芯片嵌入标记编号，翻录内容仍可提取溯源。</p>
+        <span class="claim">客户端拿不到完整明文</span>
+      </article>
+
+      <article class="card reveal" data-d="1">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m5 18 5-4 3 2 4-4 2 2"/></svg>
+        </div>
+        <h3>图片：原图永不离开服务端</h3>
+        <p>图片无法分片加密，改为污染输出：解密后叠加<b>可见水印平铺</b>与<b>隐写溯源信息</b>，再经 JPEG 压缩输出并禁止缓存。浏览器拿到的是带标降质图，原图始终留在服务端，缩略图不打标。</p>
+        <span class="claim">双水印 + 降质 + no-store</span>
+      </article>
+
+      <article class="card reveal" data-d="2">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+        </div>
+        <h3>文档：逐页渲染，文本不出服务端</h3>
+        <p>文档的威胁是文本天然可复制。开启逐页渲染后，阅读器不再接收原始 PDF，而是逐页加载带水印的页图，<b>正文文本不进入浏览器</b>；可同时禁止 PDF 原件预览与下载，整包导出无从谈起。</p>
+        <span class="claim">每页水印 · 可禁原件</span>
+      </article>
+
+      <article class="card reveal" data-d="3">
+        <div class="ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 12h6M9 15h3"/></svg>
+        </div>
+        <h3>全类型底座：信封加密存储</h3>
+        <p>所有类型共用同一加密底座：每个文件使用独立的随机 DEK 加密，DEK 由 KEK 包装后入库，<b>密钥与密文分离存放</b>；KEK 定期轮换只需更新数据库中的包装结果，无需重新加密文件。缩略图等中间产物同样加密落盘，明文从不落盘。</p>
+        <span class="claim">DEK / KEK 分离 · 密钥轮换</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 溯源水印 -->
+<section class="section" id="trace">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-body reveal">
+        <div class="eyebrow">03 / 溯源水印</div>
+        <h2>泄露之后，<br>答案在截图里</h2>
+        <p>水印不是装饰性威慑，而是一条可执行的取证链路：每一份输出都携带观众身份，管理端可直接对泄露材料提取与比对。</p>
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>可见层</b>：半透明文字水印（默认按用户标识生成），支持自定义模板、位置、字号与透明度</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>隐写层</b>：块级亮度芯片嵌入 48 bit 载荷（同步字节 + 标记编号 + CRC 校验），肉眼不可见、有损压缩后仍可提取</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>提取与查询</b>：管理端提交泄露片段即可提取标记，支持有参考帧的知情解码与无参考的盲提取；可按用户、会话、媒体、任务检索水印记录</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>覆盖范围</b>：视频、图片、文档页图共用同一水印引擎，载荷格式统一，一处泄露、全类型可查</span></li>
+        </ul>
+      </div>
+      <div class="split-media reveal" data-d="1">
+        <div class="panel-dark">
+          <div class="ph">watermark · 载荷与提取（示意）</div>
+<pre class="wrap"><span class="c"># 每份输出携带的溯源载荷</span>
+<span class="s">"KNOX:{userID}:{sessionID}:{timestamp}:{checksum}"</span>
+
+<span class="c"># 管理端对泄露片段提取标记</span>
+<span class="k">POST</span> /api/v1/admin/watermark/extract
+  <span class="k">clip</span>: <span class="s">&lt;泄露视频片段 / 截图&gt;</span>
+  <span class="k">reference</span>: <span class="s">&lt;可选参考帧&gt;</span>   <span class="c"># 知情解码</span>
+
+<span class="c"># 无参考时走盲提取，多帧平均提升信噪比</span>
+
+<span class="c"># 按人 / 会话 / 媒体检索水印记录</span>
+<span class="k">GET</span> /api/v1/admin/watermark/marks
+  ?user=&lt;uid&gt; | ?media=&lt;mid&gt;</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats reveal" style="margin-top:56px">
+      <div class="stat">
+        <div class="v">48<span>bit</span></div>
+        <div class="k">隐写层单芯片载荷（同步字节 + 标记编号 + CRC-8）</div>
+      </div>
+      <div class="stat">
+        <div class="v">2</div>
+        <div class="k">解码模式：有参考帧知情解码 / 无参考盲提取</div>
+      </div>
+      <div class="stat">
+        <div class="v">4</div>
+        <div class="k">可溯源类型：视频 · 图片 · 音频会话 · 文档页图</div>
+      </div>
+      <div class="stat">
+        <div class="v">1–8</div>
+        <div class="k">隐写强度可调（默认 4，兼顾画质与提取成功率）</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 客户端加固 -->
+<section class="section section--soft" id="harden">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">04 / 客户端加固</div>
+      <h2>让“随手保存”失效</h2>
+      <p>端侧防线挡不住专业工具，但足以拦截绝大多数日常泄露路径；配合 L6 溯源水印，绕过加固的行为仍会留下证据。</p>
+    </div>
+
+    <div class="split">
+      <div class="split-body reveal">
+        <ul class="checklist">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>交互拦截</b>：禁用右键菜单、拖拽与文本选择，图片和文档页上方覆盖透明防护层，长按与“另存图片”失效</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>快捷键与打印</b>：拦截 Ctrl/Cmd+S、P、C、U 等保存与查看源码快捷键；打印时页面模糊或直接隐藏</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>调试检测</b>：检测到 DevTools 打开后自动模糊画面，阻止 DOM 抓取与资源导出</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>离开清理</b>：页面关闭时暂停播放并清空媒体地址，减少缓存残留</span></li>
+        </ul>
+      </div>
+      <div class="split-media reveal" data-d="1">
+        <div class="panel">
+          <h4 style="margin-bottom:14px">HTTP 安全响应头</h4>
+          <div class="table-scroll" style="border:0;border-radius:0;overflow:hidden">
+            <table class="compare" style="min-width:0;font-size:13px">
+              <tbody>
+                <tr><td style="width:52%">HSTS</td><td>强制 HTTPS 长期生效</td></tr>
+                <tr><td>X-Content-Type-Options</td><td>阻止 MIME 嗅探</td></tr>
+                <tr><td>X-Frame-Options</td><td>禁止被第三方页面嵌入</td></tr>
+                <tr><td>Referrer-Policy</td><td>不向外部泄露来源地址</td></tr>
+                <tr><td>COOP / CORP / COEP</td><td>跨源隔离，防侧信道读取</td></tr>
+                <tr><td>CSP</td><td>限制脚本与资源加载范围</td></tr>
+                <tr><td>Cache-Control</td><td>受保护内容 no-store，不留本地缓存</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small muted" style="margin-top:12px">播放类请求（切片、清单、字幕）不受 no-store 限制，兼顾防泄露与播放性能。输入框与文本域不做按键拦截，不影响正常使用。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 配置与默认值 -->
+<section class="section" id="config">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">05 / 配置与默认值</div>
+      <h2>默认关闭，按合规要求开启</h2>
+      <p>防泄露各模块默认不启用，升级不会改变现有站点行为；按项目的合规等级逐项开启，参数范围如下。</p>
+    </div>
+
+    <div class="table-scroll reveal">
+      <table class="compare">
+        <thead>
+          <tr><th>模块</th><th>默认状态</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>视频 / 音频水印（watermark）</td>
+            <td class="no">关闭</td>
+            <td>可见与隐写两层可独立开关，未指定时两层同时开启</td>
+          </tr>
+          <tr>
+            <td>图片防护（image_protect）</td>
+            <td class="no">关闭</td>
+            <td>双水印输出；可选放行带授权参数的原图下载</td>
+          </tr>
+          <tr>
+            <td>文档逐页渲染（doc_protect）</td>
+            <td class="no">关闭</td>
+            <td>开启后阅读器改用页图，可同时禁止 PDF 原件预览</td>
+          </tr>
+          <tr>
+            <td>客户端加固（client_harden）</td>
+            <td class="no">关闭</td>
+            <td>安全响应头与前端拦截整体开关，各子项可细调</td>
+          </tr>
+          <tr class="cat"><td colspan="3">常用参数</td></tr>
+          <tr>
+            <td>可见水印透明度</td>
+            <td class="mono">0.10</td>
+            <td>范围 0.05–0.6，按观感与醒目程度权衡</td>
+          </tr>
+          <tr>
+            <td>输出 JPEG 质量</td>
+            <td class="mono">85</td>
+            <td>范围 60–95，压低可进一步降低盗用价值</td>
+          </tr>
+          <tr>
+            <td>隐写强度</td>
+            <td class="mono">4</td>
+            <td>范围 1–8，数值越高越抗压缩，对画质影响越大</td>
+          </tr>
+          <tr>
+            <td>图片输出宽度上限</td>
+            <td class="mono">2560 px</td>
+            <td>范围 640–8192，超出先缩放再输出</td>
+          </tr>
+          <tr>
+            <td>访问令牌有效期</td>
+            <td class="mono">15 min</td>
+            <td>与 HLS 密钥生命周期配合</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted" style="margin-top:14px">各模块的开启与参数以项目交付配置为准；演示时可用你的真实片源验证水印提取流程。</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="cta-grid-bg" aria-hidden="true"></div>
+  <div class="wrap inner">
+    <div>
+      <h2>用真实片源验证防泄露链路</h2>
+      <p>上传你的课程或内部资料，现场跑一遍分片加密、双水印输出与泄露截图提取，防线是否有效当场可验。</p>
+    </div>
+    <div class="actions">
+      <a class="btn btn--primary btn--lg" href="contact.html">预约产品演示</a>
+      <a class="btn btn--onDark btn--lg" href="features.html#protect">产品能力总览</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+          <span class="brand-text">
+            <span class="brand-name">PowerMedia</span>
+            <span class="brand-sub">智能媒体服务器</span>
+          </span>
+        </a>
+        <p>面向在线教育、企业培训与内容平台的智能媒体服务器。即传即播、智能预热、私有加密，支持私有化与信创环境部署。</p>
+      </div>
+      <div class="footer-col">
+        <h5>产品</h5>
+        <a href="features.html">产品能力</a>
+        <a href="features.html#playback">播放引擎</a>
+        <a href="security.html">内容保护</a>
+        <a href="security.html#trace">溯源水印</a>
+        <a href="tech.html">技术规格</a>
+      </div>
+      <div class="footer-col">
+        <h5>方案与购买</h5>
+        <a href="solutions.html">解决方案</a>
+        <a href="editions.html">版本与授权</a>
+        <a href="contact.html">预约演示</a>
+        <a href="contact.html#faq">常见问题</a>
+      </div>
+      <div class="footer-col">
+        <h5>联系</h5>
+        <div class="footer-contact">
+          电话：<b>010-62129317</b><br>
+          邮箱：<b>marketing@powercom.net.cn</b><br>
+          官网：<b>www.powercom.net.cn</b>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> 宝丽通 PowerCOM · PowerMedia 智能媒体服务器</span>
+      <span><a href="contact.html">联系我们</a> · <a href="tech.html">技术规格</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
