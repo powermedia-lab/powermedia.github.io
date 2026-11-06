@@ -140,8 +140,50 @@
       var target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', id);
+      }
       var top = target.getBoundingClientRect().top + window.scrollY - 84;
       window.scrollTo({ top: top, behavior: 'smooth' });
     });
   });
+
+  /* ---------- 8. 技术文档页：目录检索与滚动高亮 ---------- */
+  var docToc = document.querySelector('.doc-toc');
+  if (docToc) {
+    var tocInput = document.getElementById('toc-search');
+    var tocEmpty = document.getElementById('toc-empty');
+    var tocLinks = Array.prototype.slice.call(docToc.querySelectorAll('a[href^="#"]'));
+    var tocGroups = Array.prototype.slice.call(docToc.querySelectorAll('.toc-group'));
+
+    if (tocInput) {
+      tocInput.addEventListener('input', function () {
+        var q = (tocInput.value || '').trim().toLowerCase();
+        var visible = 0;
+        tocLinks.forEach(function (a) {
+          var hit = !q || (a.textContent || '').toLowerCase().indexOf(q) !== -1;
+          a.classList.toggle('is-hidden', !hit);
+          if (hit) visible++;
+        });
+        tocGroups.forEach(function (g) {
+          g.style.display = g.querySelectorAll('a:not(.is-hidden)').length ? '' : 'none';
+        });
+        if (tocEmpty) tocEmpty.hidden = visible !== 0;
+      });
+    }
+
+    function syncToc() {
+      var line = window.scrollY + 130;
+      var current = null;
+      tocLinks.forEach(function (a) {
+        if (a.classList.contains('is-hidden')) return;
+        var t = document.getElementById(a.getAttribute('href').slice(1));
+        if (t && t.getBoundingClientRect().top + window.scrollY <= line) current = a;
+      });
+      tocLinks.forEach(function (a) { a.classList.toggle('is-current', a === current); });
+    }
+    window.addEventListener('scroll', syncToc, { passive: true });
+    window.addEventListener('resize', syncToc, { passive: true });
+    syncToc();
+  }
 })();

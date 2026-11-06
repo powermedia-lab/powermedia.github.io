@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>开发者文档 · PowerMedia 智能媒体服务器</title>
+<meta name="description" content="PowerMedia 开发者文档：API 参考（按功能模块分组，含请求/响应字段、参数类型、必填项、权限要求、状态码与错误码）、系统对接说明（上传 / 转码 / 分享 / AI 媒体处理）、Webhook 事件、术语说明与更新记录。">
+<meta name="keywords" content="PowerMedia,开发者文档,API 参考,接口文档,系统对接,Webhook,幂等,错误码,技术文档">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<!-- ======================= 顶部导航 ======================= -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+      <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+      <span class="brand-text">
+        <span class="brand-name">PowerMedia</span>
+        <span class="brand-sub">智能媒体服务器</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="features.html">产品能力</a>
+      <a href="security.html">内容保护</a>
+      <a href="solutions.html">解决方案</a>
+      <a href="editions.html">版本与授权</a>
+      <a href="tech.html">技术规格</a>
+      <a href="contact.html">联系我们</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn--ghost btn--sm is-current" href="docs.html" aria-current="page">技术文档</a>
+      <a class="btn btn--primary btn--sm" href="contact.html">预约演示</a>
+    </div>
+    <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-nav" id="mobile-nav" aria-label="移动端导航">
+  <a href="index.html">首页</a>
+  <a href="features.html">产品能力</a>
+  <a href="security.html">内容保护</a>
+  <a href="solutions.html">解决方案</a>
+  <a href="editions.html">版本与授权</a>
+  <a href="tech.html">技术规格</a>
+  <a href="docs.html">技术文档</a>
+  <a href="contact.html">联系我们</a>
+  <a class="btn btn--primary" href="contact.html">预约产品演示</a>
+</nav>
+
+<main>
+
+<!-- ======================= 页首 ======================= -->
+<section class="page-hero page-hero--doc">
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <div class="crumbs"><a href="index.html">首页</a><span>/</span>技术文档</div>
+    <div class="doc-hero-badges">
+      <span class="stamp stamp--ok">文档状态 · 源码核对版</span>
+      <span class="mono doc-hero-ver">DOC v0.3.2</span>
+    </div>
+    <h1>开发者文档</h1>
+    <p>面向集成方、实施与运维人员的接口参考与系统对接说明。接口路径、字段、状态码与流程可直接对接。接口未规定的组织时效与合规策略，正文直接说明。</p>
+    <div class="doc-hero-links">
+      <a class="link-arrow" href="tech.html">查看技术规格与部署要求
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="link-arrow" href="contact.html">索取交付版文档包
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 文档元信息条 ======================= -->
+<div class="doc-meta">
+  <div class="wrap doc-meta-inner">
+    <div class="m"><span class="k">文档版本</span><span class="v mono">v0.3.2</span></div>
+    <div class="m"><span class="k">文档状态</span><span class="v">源码核对版</span></div>
+    <div class="m"><span class="k">适用产品版本</span><span class="v">PowerMedia 服务端</span></div>
+    <div class="m"><span class="k">最后更新</span><span class="v mono">2026-11-06</span></div>
+    <div class="m"><span class="k">维护责任方</span><span class="v">见第 8 节公开联系方式</span></div>
+  </div>
+</div>
+
+<div class="wrap doc-shell">
+
+  <!-- ======================= 侧边目录 ======================= -->
+  <aside class="doc-side">
+    <div class="toc-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+      <input id="toc-search" type="search" placeholder="检索目录…" aria-label="检索文档目录" autocomplete="off">
+    </div>
+    <nav class="doc-toc" aria-label="文档目录">
+      <p class="toc-empty" id="toc-empty" hidden>无匹配的目录项</p>
+
+      <div class="toc-group">
+        <div class="toc-h">导读</div>
+        <a class="lv1" href="#s1"><span class="n">01</span>文档说明</a>
+        <a class="lv2" href="#s1-1"><span class="n">1.1</span>适用范围与读者</a>
+        <a class="lv2" href="#s1-2"><span class="n">1.2</span>版本与状态标识</a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-h">规范</div>
+        <a class="lv1" href="#s2"><span class="n">02</span>通用约定</a>
+        <a class="lv2" href="#s2-1"><span class="n">2.1</span>服务地址与通信协议</a>
+        <a class="lv2" href="#s2-2"><span class="n">2.2</span>身份鉴权与权限模型</a>
+        <a class="lv2" href="#s2-3"><span class="n">2.3</span>请求与响应通用结构</a>
+        <a class="lv2" href="#s2-4"><span class="n">2.4</span>参数类型、必填与限流</a>
+        <a class="lv2" href="#s2-5"><span class="n">2.5</span>幂等、重试与回调约定</a>
+        <a class="lv1" href="#s3"><span class="n">03</span>术语说明</a>
+        <a class="lv2" href="#s3-1"><span class="n">3.1</span>产品术语</a>
+        <a class="lv2" href="#s3-2"><span class="n">3.2</span>接口与对接术语</a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-h">API 参考</div>
+        <a class="lv1" href="#s4"><span class="n">04</span>API 参考</a>
+        <a class="lv2" href="#s4-0"><span class="n">4.0</span>分组索引与条目规范</a>
+        <a class="lv2" href="#s4-1"><span class="n">4.1</span>媒体与入库</a>
+        <a class="lv2" href="#s4-2"><span class="n">4.2</span>播放与授权</a>
+        <a class="lv2" href="#s4-3"><span class="n">4.3</span>转码与任务</a>
+        <a class="lv2" href="#s4-4"><span class="n">4.4</span>内容保护与分享</a>
+        <a class="lv2" href="#s4-5"><span class="n">4.5</span>AI 媒体处理</a>
+        <a class="lv2" href="#s4-6"><span class="n">4.6</span>平台与系统</a>
+        <a class="lv2" href="#s4-7"><span class="n">4.7</span>其他</a>
+        <a class="lv1" href="#s5"><span class="n">05</span>响应状态与错误码</a>
+        <a class="lv2" href="#s5-1"><span class="n">5.1</span>HTTP 状态通用语义</a>
+        <a class="lv2" href="#s5-2"><span class="n">5.2</span>统一错误信封与错误码表</a>
+        <a class="lv2" href="#s5-3"><span class="n">5.3</span>错误处理与排查约定</a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-h">系统对接</div>
+        <a class="lv1" href="#s6"><span class="n">06</span>系统对接说明</a>
+        <a class="lv2" href="#s6-0"><span class="n">6.0</span>通用对接框架</a>
+        <a class="lv2" href="#s6-1"><span class="n">6.1</span>上传对接</a>
+        <a class="lv2" href="#s6-2"><span class="n">6.2</span>转码对接</a>
+        <a class="lv2" href="#s6-3"><span class="n">6.3</span>分享对接</a>
+        <a class="lv2" href="#s6-4"><span class="n">6.4</span>AI 媒体处理对接</a>
+        <a class="lv2" href="#s6-5"><span class="n">6.5</span>Webhook 事件订阅</a>
+      </div>
+      <div class="toc-group">
+        <div class="toc-h">维护</div>
+        <a class="lv1" href="#s7"><span class="n">07</span>版本与更新记录</a>
+        <a class="lv1" href="#s8"><span class="n">08</span>反馈与文档获取</a>
+      </div>
+    </nav>
+    <div class="doc-side-foot">
+      <span class="mono">DOC v0.3.2 · 2026-11-06</span>
+      <a href="#s8">反馈与文档获取 <span aria-hidden="true">→</span></a>
+    </div>
+  </aside>
+
+  <!-- ======================= 正文 ======================= -->
+  <article class="doc-main">
+
+    <!-- ============ 01 文档说明 ============ -->
+    <section class="doc-section" id="s1">
+      <h2 class="doc-h2" id="h-s1"><span class="doc-num">01</span>文档说明<a class="doc-anchor" href="#s1" aria-label="本节锚点">#</a></h2>
+
+      <h3 class="doc-h3" id="s1-1"><span class="doc-num">1.1</span>适用范围与读者</h3>
+      <p>本页面向需要与 PowerMedia 智能媒体服务器进行系统集成或二次开发的技术人员，覆盖以下读者：</p>
+      <ul class="doc-list">
+        <li><b>集成方开发人员</b>：需要调用上传、查询、播放授权、分享与任务类接口完成业务系统对接。</li>
+        <li><b>实施与运维人员</b>：需要了解鉴权模型、限流阈值、状态机流转、回调机制与异常处理约定。</li>
+        <li><b>测试与验收人员</b>：需要依据状态码、错误码与幂等语义设计用例并核对结果。</li>
+      </ul>
+      <p>本页不覆盖产品功能说明与部署拓扑，相关内容见 <a href="features.html">产品能力</a>、<a href="tech.html">技术规格</a> 与 <a href="security.html">内容保护</a>。</p>
+
+      <h3 class="doc-h3" id="s1-2"><span class="doc-num">1.2</span>版本与状态标识</h3>
+      <p>文档版本采用三段式编号，独立于产品版本演进：</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>版本号语义</span><span class="mono">MAJOR.MINOR.PATCH</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>字段</th><th>含义</th><th>变更触发</th></tr></thead>
+          <tbody>
+            <tr><td>MAJOR</td><td>结构性调整：分组重组、错误码体系变更、鉴权模型变化</td><td>需重新评估既有集成</td></tr>
+            <tr><td>MINOR</td><td>新增接口、新增字段、新增事件类型</td><td>向后兼容，可增量接入</td></tr>
+            <tr><td>PATCH</td><td>勘误、表述修正、补充示例</td><td>不影响调用行为</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p>本页当前为 <span class="mono">v0.3.2</span>。文档状态取值：</p>
+      <ul class="doc-list">
+        <li><b>源码核对版</b>（当前）：路径、字段与状态码已写明；接口未规定的组织时效与合规策略也已直接标明，不再占位。</li>
+        <li><b>正式版</b>：在核对版之上补齐每个端点的完整调用示例。</li>
+        <li><b>历史版</b>：仅供回溯，不作为对接依据。</li>
+      </ul>
+    </section>
+
+    <!-- ============ 02 通用约定 ============ -->
+    <section class="doc-section" id="s2">
+      <h2 class="doc-h2" id="h-s2"><span class="doc-num">02</span>通用约定<a class="doc-anchor" href="#s2" aria-label="本节锚点">#</a></h2>
+
+      <h3 class="doc-h3" id="s2-1"><span class="doc-num">2.1</span>服务地址与通信协议</h3>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>接入基线</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>项目</th><th>取值</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>默认监听</td><td class="mono">0.0.0.0:8200</td><td>服务端默认绑定地址与端口，可由部署配置调整</td></tr>
+            <tr><td>API 前缀</td><td class="mono">/api/v1</td><td>除健康检查与静态资源外，业务接口统一挂载于此前缀</td></tr>
+            <tr><td>传输协议</td><td>HTTP（明文监听）</td><td>服务本身以 HTTP 提供；生产环境建议由反向代理终止 TLS 后对外暴露 HTTPS</td></tr>
+            <tr><td>报文编码</td><td>UTF-8</td><td>请求与响应均按 UTF-8 编码</td></tr>
+            <tr><td>结构化请求体</td><td class="mono">Content-Type: application/json</td><td>文件上传除外，见 4.1</td></tr>
+            <tr><td>文件上传</td><td class="mono">Content-Type: multipart/form-data</td><td>走独立处理器，不受 JSON 体积上限约束</td></tr>
+            <tr><td>健康检查</td><td class="mono">GET /health</td><td>公开、无鉴权，用于存活探测</td></tr>
+            <tr><td>持久化</td><td>SQLite 单文件库</td><td>默认位于数据目录下的媒体库文件，随部署配置变更</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>公开静态挂载</b>（鉴权分组之外，知道路径即可访问）</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>静态前缀</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>URL 前缀</th><th>默认目录</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">/uploads</td><td class="mono">{data.dir}/upload</td><td>图片上传接口返回的 <span class="mono">/uploads/&lt;文件名&gt;</span> 落在此目录。媒体正片播放不走该前缀，走 <span class="mono">/api/v1/media/:id/play</span></td></tr>
+            <tr><td class="mono">/atracks</td><td class="mono">{data.dir}/atracks</td><td>预提取音轨</td></tr>
+            <tr><td class="mono">/static/*</td><td class="mono">{data.dir}/static</td><td>内置 <span class="mono">/static/powerplayer6</span> 优先于数据目录中的同名文件</td></tr>
+            <tr><td class="mono">/metadata/library</td><td class="mono">{data.dir}/metadata/library</td><td>刮削得到的海报、背景与标识</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p class="small muted">分片暂存目录默认 <span class="mono">{data.dir}/upload/chunks</span>，不对外挂载。HLS / DASH 清单与分片走 <span class="mono">/api/v1</span> 播放通道，不走上述静态前缀。</p>
+
+      <h3 class="doc-h3" id="s2-2"><span class="doc-num">2.2</span>身份鉴权与权限模型</h3>
+      <p>PowerMedia 采用 <b>JWT 令牌</b>作为统一身份凭证，按访问面划分为四类鉴权通道。接入方必须明确自身调用落在哪一通道，因为令牌传递方式与可用端点不同。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>鉴权通道</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>通道</th><th>令牌传递</th><th>适用端点</th><th>约束</th></tr></thead>
+          <tbody>
+            <tr><td>标准用户 / 机器令牌</td><td class="mono">Authorization: Bearer &lt;JWT&gt;</td><td>媒体库、上传、分享管理、任务管理等</td><td>仅接受请求头传令牌</td></tr>
+            <tr><td>播放通道</td><td class="mono">Authorization: Bearer &lt;JWT&gt;<br>或 ?access_token=&lt;JWT&gt;</td><td>HLS / DASH / 预览 / 取图等 GET 类播放资源</td><td>额外允许查询参数传令牌，便于播放器直接拉流</td></tr>
+            <tr><td>分享匿名通道</td><td class="mono">/api/v1/share/:token/…</td><td>分享查看、校验、播放、下载与分享面 DRM 许可</td><td>凭分享令牌鉴权，无需用户 JWT；见 4.4</td></tr>
+            <tr><td>JIT 会话通道</td><td>会话作用域令牌</td><td class="mono">/api/v1/jit/session/:sessionID/…</td><td>会话级授权，配合幂等键使用</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>令牌与身份属性</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>项目</th><th>取值 / 说明</th></tr></thead>
+          <tbody>
+            <tr><td>令牌算法</td><td>HS256 签名 JWT，密钥由部署配置提供（<span class="mono">security.jwt_secret</span>）</td></tr>
+            <tr><td>令牌有效期</td><td>默认 <span class="mono">168</span> 小时（7 天），由 <span class="mono">security.token_hours</span> 配置</td></tr>
+            <tr><td>身份字段</td><td><span class="mono">user_id</span> / <span class="mono">username</span> / <span class="mono">role</span>；机器令牌另带 <span class="mono">app_id</span></td></tr>
+            <tr><td>角色</td><td><span class="mono">admin</span> 为管理员；管理端点在标准鉴权之上再校验该角色</td></tr>
+            <tr><td>机器令牌</td><td>由 OAuth2 <span class="mono">client_credentials</span> 签发，<span class="mono">app_id &gt; 0</span> 即判定为 API 客户端；<b>不允许创建分享</b></td></tr>
+            <tr><td>登录获取令牌</td><td><span class="ep"><span class="meth meth--post">POST</span><span class="p">/api/v1/user/login</span></span>、<span class="ep"><span class="meth meth--post">POST</span><span class="p">/api/v1/oauth/token</span></span>（公开，无需令牌）</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>登录与令牌签发</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>端点</th><th>请求</th><th>成功响应</th><th>失败</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">POST /api/v1/user/login</td><td>JSON：<span class="mono">username</span>、<span class="mono">password</span>，均为必填</td><td><span class="mono">200</span>：<span class="mono">token</span>（JWT）、<span class="mono">expires_in_hours</span>（默认 168）</td><td>缺字段 <span class="mono">400</span>；账号或密码错误 <span class="mono">401 {"error":"invalid credentials"}</span></td></tr>
+            <tr><td class="mono">POST /api/v1/oauth/token</td><td>JSON 或表单：<span class="mono">grant_type=client_credentials</span>、<span class="mono">client_id</span>、<span class="mono">client_secret</span></td><td><span class="mono">200</span>：<span class="mono">access_token</span>、<span class="mono">token_type=Bearer</span>、<span class="mono">expires_in</span>（秒，默认 168×3600）</td><td>授权类型不符 <span class="mono">400 unsupported_grant_type</span>；缺凭据 <span class="mono">400 invalid_request</span>；凭据错误或已吊销 <span class="mono">401 invalid_client</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p class="small muted">用户登录在 <span class="mono">can_manage=1</span> 时把令牌角色写成 <span class="mono">admin</span>。机器令牌若绑定了用户，则继承该用户的用户名与角色；绑定用户不存在时退回通用机器身份。</p>
+
+      <h3 class="doc-h3" id="s2-3"><span class="doc-num">2.3</span>请求与响应通用结构</h3>
+      <p><b>请求头通用项</b></p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>通用请求头</span><span>均可选，除标注外</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>请求头</th><th>类型</th><th>必填</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">Authorization</td><td>string</td><td>条件必填</td><td><span class="mono">Bearer &lt;JWT&gt;</span>；公开端点与分享匿名面除外</td></tr>
+            <tr><td class="mono">Content-Type</td><td>string</td><td>条件必填</td><td>有请求体时必填；上传用 <span class="mono">multipart/form-data</span></td></tr>
+            <tr><td class="mono">Idempotency-Key</td><td>string</td><td>可选</td><td>写操作幂等键，见 2.5；格式 <span class="mono">[A-Za-z0-9._:-]{8,128}</span></td></tr>
+            <tr><td class="mono">X-Request-Id</td><td>string</td><td>可选</td><td>调用方侧追踪标识；服务端会在响应中回填自身 <span class="mono">request_id</span>，用于对齐访问日志</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>错误响应信封</b>　服务端存在<b>两套并行</b>的错误响应形态，接入方必须同时处理，不可只解析其一。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>形态 A · 统一错误信封（播放协议面）</span><span class="mono">code + message + request_id + retryable + details</span></div>
+        <pre class="wrap">{
+  "code": "session_expired",
+  "message": "session expired",
+  "request_id": "…",
+  "retryable": false,
+  "details": null
+}</pre>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>形态 B · 简洁错误对象（业务管理面）</span><span class="mono">error + 可选 reason</span></div>
+        <pre class="wrap">{
+  "error": "share quota exceeded for this media (max 20 active shares)",
+  "reason": "share_quota_exceeded"
+}</pre>
+      </div>
+      <ul class="doc-list">
+        <li><b>形态 A</b> 用于播放协议相关端点，字段固定五项，<span class="mono">details</span> 无内容时为 <span class="mono">null</span> 而非缺省；响应强制携带 <span class="mono">Cache-Control: private, no-store</span>。</li>
+        <li><b>形态 B</b> 用于媒体库、上传、分享管理、管理端等业务路由，<span class="mono">reason</span> 为稳定的机器可读短码，<span class="mono">error</span> 为人读信息，两者均可能随版本演进。</li>
+        <li>建议接入方按「先取 <span class="mono">code</span>，再取 <span class="mono">reason</span>，最后取 <span class="mono">error</span>/message」的顺序解析，避免形态差异导致漏判。</li>
+      </ul>
+      <p><b>成功响应</b>　不存在统一成功包装；响应体直接返回资源对象或结果对象。</p>
+      <ul class="doc-list">
+        <li>媒体列表 <span class="mono">GET /api/v1/media</span> 返回 <span class="mono">{"items":[…]}</span>。查询参数：<span class="mono">library_id</span>、<span class="mono">file_type</span>、<span class="mono">q</span>、<span class="mono">sort</span>（<span class="mono">id_desc</span> / <span class="mono">created_desc</span> / <span class="mono">taken_desc</span>，默认 <span class="mono">id_desc</span>）、<span class="mono">limit</span>（默认并上限 500；<span class="mono">file_type=image</span> 时上限 5000）、<span class="mono">cursor</span>（仅 <span class="mono">sort=id_desc</span> 时为上一条 <span class="mono">id</span>）。管理端未发布列表额外返回 <span class="mono">has_more</span> 与 <span class="mono">next_cursor</span>。</li>
+        <li>统一任务列表使用不透明游标（Base64 的版本、排序、过滤摘要与快照），<span class="mono">limit</span> 默认 50、上限 200，并带回同一快照下的总数。</li>
+        <li>分享列表使用 <span class="mono">page</span> 与 <span class="mono">page_size</span>，响应含 <span class="mono">items</span>、<span class="mono">total</span>、<span class="mono">page</span>、<span class="mono">page_size</span>。</li>
+        <li>没有全站统一的 <span class="mono">offset</span> 参数，也没有 <span class="mono">{"data":…,"success":true}</span> 这类外壳。</li>
+      </ul>
+
+      <h3 class="doc-h3" id="s2-4"><span class="doc-num">2.4</span>参数类型、必填与限流</h3>
+      <p><b>参数类型约定</b>（全页统一使用）：</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>类型字典</span><span>字段表通用</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>类型</th><th>含义</th><th>取值约束</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">string</td><td>字符串</td><td>长度上限以字段说明为准</td></tr>
+            <tr><td class="mono">int</td><td>整数</td><td>按字段说明取值域</td></tr>
+            <tr><td class="mono">bool</td><td>布尔</td><td><span class="mono">true</span> / <span class="mono">false</span></td></tr>
+            <tr><td class="mono">float</td><td>浮点数</td><td>按字段说明取值域</td></tr>
+            <tr><td class="mono">enum</td><td>枚举</td><td>取值集合以字段说明为准，未知取值一律拒绝</td></tr>
+            <tr><td class="mono">timestamp</td><td>时间</td><td>RFC 3339 / ISO 8601</td></tr>
+            <tr><td class="mono">object</td><td>嵌套对象</td><td>结构以字段说明为准</td></tr>
+            <tr><td class="mono">array</td><td>数组</td><td>元素类型以字段说明为准</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>必填标记</b>：<span class="mono">必填</span> = 缺失即拒绝；<span class="mono">条件必填</span> = 视其他字段取值而定，条件写在说明列；<span class="mono">可选</span> = 可缺省，缺省时取服务端默认值。</p>
+      <p><b>请求级限额</b></p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>请求护栏</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>限制项</th><th>默认阈值</th><th>超限行为</th></tr></thead>
+          <tbody>
+            <tr><td>请求 URL 长度</td><td class="mono">8 KiB</td><td>鉴权前直接拒绝，不进入路由与请求体解析</td></tr>
+            <tr><td>JSON 请求体</td><td class="mono">1 MiB</td><td>拒绝；文件上传走 multipart，不受此项约束</td></tr>
+            <tr><td>每 IP 请求数</td><td class="mono">1200 次 / 分钟</td><td>拒绝，用于抑制单一来源请求洪泛</td></tr>
+            <tr><td>每 IP 并发</td><td class="mono">256</td><td>拒绝，避免突发请求占满处理槽</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>端点级限额</b>（独立于上表）</p>
+      <ul class="doc-list">
+        <li>外部播放计划：每 IP 默认 30 次/分钟，超限 <span class="mono">429</span>、<span class="mono">code=rate_limited</span>、<span class="mono">retryable=true</span>，并带 <span class="mono">Retry-After</span>。并发会话默认 4/IP。密钥拉取失败默认 30 次/分钟后封锁 120 秒。详见 4.2。</li>
+        <li>分享口令校验 <span class="mono">POST /share/:token/verify</span>：每 IP 默认 20 次/分钟（系统选项可调，钳制在 5–120），超限 <span class="mono">429</span>、<span class="mono">reason=rate_limited</span>、<span class="mono">Retry-After: 60</span>。</li>
+        <li>其余业务端点没有另一套独立配额；它们只受本节请求护栏约束。</li>
+      </ul>
+
+      <h3 class="doc-h3" id="s2-5"><span class="doc-num">2.5</span>幂等、重试与回调约定</h3>
+      <p><b>幂等</b></p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>Idempotency-Key 语义</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>项目</th><th>约定</th></tr></thead>
+          <tbody>
+            <tr><td>请求头</td><td class="mono">Idempotency-Key</td></tr>
+            <tr><td>取值格式</td><td><span class="mono">[A-Za-z0-9._:-]{8,128}</span>，8–128 位</td></tr>
+            <tr><td>生效方法</td><td><span class="mono">POST</span> / <span class="mono">PUT</span> / <span class="mono">PATCH</span> / <span class="mono">DELETE</span>；<span class="mono">GET</span> 不参与</td></tr>
+            <tr><td>判定指纹</td><td>SHA-256（<span class="mono">方法 + "\n" + 路径 + "\n" + 请求体</span>）</td></tr>
+            <tr><td>作用域</td><td>「方法 + 路径 + 幂等键」三元组，同键不同路径互不影响</td></tr>
+            <tr><td>有效期</td><td>默认 10 分钟，超时后自动遗忘</td></tr>
+            <tr><td>请求体上限</td><td><span class="mono">1 MiB</span>，超出直接拒绝</td></tr>
+            <tr><td>同键同体重放</td><td>放行至业务处理，用于安全重试</td></tr>
+            <tr><td>同键异体</td><td><span class="mono">409 idempotency_key_conflict</span>，拒绝以防止重试时误用不同意图</td></tr>
+            <tr><td>键格式非法</td><td><span class="mono">400 invalid_idempotency_key</span></td></tr>
+            <tr><td>请求体超限</td><td><span class="mono">413 request_body_too_large</span></td></tr>
+            <tr><td>请求体不可读</td><td><span class="mono">400 invalid_request_body</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>作用范围</b>：幂等中间件挂载于 JIT 会话写操作与管理端生命周期触发接口（<span class="mono">/admin/jit/lifecycle/run</span>、<span class="mono">/admin/jit/keys/lifecycle/run</span>）。<b>未挂载幂等中间件的写接口不保证重试安全</b>，接入方须自行做前置查询或业务侧去重。各端点是否启用幂等，以 4.x 各节标注为准。</p>
+      <p><b>重试约定</b>　客户端重试建议：仅对 <span class="mono">retryable = true</span> 或 <span class="mono">5xx</span> / <span class="mono">429</span> 重试，采用指数退避并带上同一 <span class="mono">Idempotency-Key</span>。<span class="mono">4xx</span>（除 429）视为调用方错误，不应重试。服务端侧的重试策略见 6.x 各场景。</p>
+      <p><b>回调约定</b>　服务端提供 <b>Webhook 主动推送</b>能力用于状态回传（事件清单、签名与重试见 <a href="#s6-5">6.5</a>）；同时提供任务状态查询接口作为兜底（见 4.3）。二者可并用，建议以 Webhook 为主、查询为辅。</p>
+    </section>
+
+    <!-- ============ 03 术语说明 ============ -->
+    <section class="doc-section" id="s3">
+      <h2 class="doc-h2" id="h-s3"><span class="doc-num">03</span>术语说明<a class="doc-anchor" href="#s3" aria-label="本节锚点">#</a></h2>
+
+      <h3 class="doc-h3" id="s3-1"><span class="doc-num">3.1</span>产品术语</h3>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>产品与业务术语</span><span>按实现语义整理</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>术语</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>媒体库（Library）</td><td>媒体资产的归集单元，拥有独立的目录、扫描任务与分类维度</td></tr>
+            <tr><td>媒体（Media）</td><td>单个可播放/可查看的资产记录，含文件路径、类型、时长、尺寸、码率与元数据</td></tr>
+            <tr><td>入库（Ingest）</td><td>文件落盘后登记为媒体记录并触发后续处理的阶段</td></tr>
+            <tr><td>后处理（Post-Ingest）</td><td>入库完成后自动触发的处理链，如打包、预处理、元数据提取</td></tr>
+            <tr><td>预转码 / 预处理（Pretranscode）</td><td>提前生成多码率播放产物的能力，属授权门槛功能</td></tr>
+            <tr><td>转码产物（Rendition）</td><td>一个码率/分辨率档位的输出，多档构成阶梯（ladder）</td></tr>
+            <tr><td>即时转码（JIT）</td><td>按播放请求即时产出播放产物并建立会话的机制，含会话生命周期控制</td></tr>
+            <tr><td>播放计划（Playback Plan）</td><td>播放前获取播放地址、能力协商与降级状态的接口返回</td></tr>
+            <tr><td>降级（Degradation）</td><td>产能/容量受限时阶梯档位受限的状态，会随播放计划一并返回</td></tr>
+            <tr><td>分享（Share）</td><td>为媒体生成的对外访问凭证，含有效期、口令、下载开关与访问日志</td></tr>
+            <tr><td>内容保护 / DRM</td><td>播放链路的加密与许可控制，含 AES-128、Widevine、FairPlay 与私有方案</td></tr>
+            <tr><td>取证水印（Forensic Watermark）</td><td>面向溯源的水印嵌入与提取、匹配能力</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="doc-h3" id="s3-2"><span class="doc-num">3.2</span>接口与对接术语</h3>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>接口与对接术语</span><span>全页统一</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>术语</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>端点（Endpoint）</td><td>一个「HTTP 方法 + 路径」的组合，对应一个接口</td></tr>
+            <tr><td>请求体（Body）</td><td>随请求提交的结构化数据，字段与类型见各接口字段表</td></tr>
+            <tr><td>错误信封（Error Envelope）</td><td>错误响应的固定结构，见 2.3；本服务存在 A / B 两套形态</td></tr>
+            <tr><td>幂等键（Idempotency-Key）</td><td>调用方生成的重试标识，见 2.5</td></tr>
+            <tr><td>机器令牌（Machine Token）</td><td>由 OAuth2 客户端凭证签发的 JWT，<span class="mono">app_id &gt; 0</span></td></tr>
+            <tr><td>Webhook</td><td>服务端向调用方登记的回调地址主动推送事件的机制，见 6.5</td></tr>
+            <tr><td>事件（Event）</td><td>Webhook 推送的最小单元，带类型名、事件标识与时间戳</td></tr>
+            <tr><td>状态机（State Machine）</td><td>任务在各状态间的合法流转规则，非法流转被拒绝</td></tr>
+            <tr><td>授权门槛功能（License-Gated）</td><td>需有效授权方可使用的能力；未授权时接口返回拒绝</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 API 参考 ============ -->
+    <section class="doc-section" id="s4">
+      <h2 class="doc-h2" id="h-s4"><span class="doc-num">04</span>API 参考<a class="doc-anchor" href="#s4" aria-label="本节锚点">#</a></h2>
+
+      <h3 class="doc-h3" id="s4-0"><span class="doc-num">4.0</span>分组索引与条目规范</h3>
+      <p>全部业务接口挂载于 <span class="mono">/api/v1</span> 之下，按<b>鉴权通道</b>先分组、再按<b>功能域</b>归类。下表为通道索引，各域端点见 4.1–4.6。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>鉴权通道与路由分组索引</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>通道 / 分组</th><th>鉴权要求</th><th>覆盖范围</th></tr></thead>
+          <tbody>
+            <tr><td>公开面</td><td>无鉴权</td><td>健康检查、品牌信息、登录、令牌签发、播放密钥、静态资源、外部播放计划</td></tr>
+            <tr><td>分享匿名组<br><span class="mono">/share/:token</span></td><td>分享令牌</td><td>分享查看 / 校验 / 播放 / 预览 / 下载 / 分享面 DRM 许可</td></tr>
+            <tr><td>标准用户组</td><td>JWT（仅请求头）</td><td>用户资料、媒体库与目录、媒体查询、收藏、播放列表、分享管理、阅读进度</td></tr>
+            <tr><td>播放组</td><td>JWT（请求头或 <span class="mono">?access_token=</span>）</td><td>播放入口、HLS / DASH / 取证清单、预览与封面、字幕、音轨、任务状态查询</td></tr>
+            <tr><td>JIT 会话组<br><span class="mono">/jit/session/:sessionID</span></td><td>会话令牌 + 幂等键</td><td>会话内资源拉取与会话控制（暂停 / 恢复 / 跳转 / 结束）</td></tr>
+            <tr><td>文档解析组<br><span class="mono">/docreader</span></td><td>JWT</td><td>解析引擎、解析任务提交与结果获取</td></tr>
+            <tr><td>管理组<br><span class="mono">/admin/…</span></td><td>JWT + 管理员角色</td><td>媒体库管理、入库重试、上传、任务编排、刮削与 AI 提供方、系统选项、水印、监控、用户与客户端、调度策略</td></tr>
+            <tr><td>预转码组</td><td>JWT + 管理员 + <b>授权门槛</b></td><td>预设与档位、统一转码任务、产物清理、优化媒体、Webhook 配置、转码集群</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <p><b>接口条目规范</b>　每个接口按下列结构描述，字段缺失即表示该维度尚未核实：</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>条目必备维度</span><span>七项</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>维度</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td>用途</td><td>接口解决什么问题、在流程中的位置</td></tr>
+            <tr><td>方法与路径</td><td>HTTP 方法 + 完整路径</td></tr>
+            <tr><td>权限要求</td><td>所属鉴权通道 + 角色 / 授权门槛约束</td></tr>
+            <tr><td>请求字段</td><td>字段名、类型、必填性、取值约束、默认值</td></tr>
+            <tr><td>响应字段</td><td>字段名、类型、含义</td></tr>
+            <tr><td>响应状态</td><td>成功状态码与关键失败状态码</td></tr>
+            <tr><td>错误码</td><td>触发的 <span class="mono">code</span> / <span class="mono">reason</span> 及处置建议</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- ---------- 4.1 ---------- -->
+      <h3 class="doc-h3" id="s4-1"><span class="doc-num">4.1</span>媒体与入库<a class="doc-anchor" href="#s4-1" aria-label="本节锚点">#</a></h3>
+      <p>本域覆盖文件上传、入库登记、媒体查询与目录浏览。上传成功后服务端自动触发打包、（视频）即时转码预处理与入库后处理，接入方无需另行调起。</p>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>端点索引 · 媒体与入库</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>用途</th><th>权限</th></tr></thead>
+          <tbody>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/upload</td><td>单文件上传入库</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/upload/dedupe-check</td><td>上传前查重</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/upload/reuse</td><td>复用既有文件登记新媒体</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/upload/mkdir</td><td>创建上传目标目录</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/upload/image</td><td>图片上传</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/upload/chunk</td><td>分片上传</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/upload/merge</td><td>分片合并</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media</td><td>媒体列表</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id</td><td>媒体详情</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/meta</td><td>媒体元数据</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/stats</td><td>媒体统计</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/library</td><td>媒体库列表</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/library/:id/…</td><td>库内系列 / 专辑 / 艺人 / 流派 / 曲目 / 照片 / 文档等分面查询</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/library</td><td>创建媒体库</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/library/:id/scan</td><td>发起目录扫描</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/scan/task</td><td>扫描任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/media</td><td>管理端媒体列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/media/:id/ingest</td><td>入库状态查询</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/admin/media/:id/ingest/retry</td><td>入库重试</td><td>管理</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <p><b>单文件上传</b>　<span class="ep"><span class="meth meth--post">POST</span><span class="p">/api/v1/upload</span></span></p>
+      <p>用途：上传单个文件并登记为媒体记录；服务端自动计算 MD5 与感知哈希、探测媒体参数，并触发后续处理链。</p>
+      <p>权限要求：管理通道（JWT + 管理员）。请求体类型：<span class="mono">multipart/form-data</span>。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>请求字段</span><span class="mono">multipart/form-data</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>字段</th><th>类型</th><th>必填</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">file</td><td>file</td><td>必填</td><td>上传文件本体；缺失时返回 <span class="mono">400 {"error":"file required"}</span></td></tr>
+            <tr><td class="mono">library_id</td><td>int</td><td>可选</td><td>目标媒体库标识；缺省时按上传目标目录解析</td></tr>
+            <tr><td class="mono">target_dir</td><td>string</td><td>可选</td><td>目标目录；与 <span class="mono">library_id</span> 共同决定落盘位置</td></tr>
+            <tr><td class="mono">title</td><td>string</td><td>可选</td><td>媒体标题；缺省时取上传文件名</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>响应字段</span><span class="mono">200 OK</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>字段</th><th>类型</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">id</td><td>int</td><td>新媒体记录标识</td></tr>
+            <tr><td class="mono">file_id</td><td>string</td><td>文件标识</td></tr>
+            <tr><td class="mono">path</td><td>string</td><td>文件落盘路径；命中去重时指向既有物理文件</td></tr>
+            <tr><td class="mono">md5</td><td>string</td><td>文件 MD5</td></tr>
+            <tr><td class="mono">deduped</td><td>bool</td><td>可选。命中感知哈希去重时返回 <span class="mono">true</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <ul class="doc-list">
+        <li><b>去重语义</b>：相同字节内容只保留一份物理文件，但<b>每次上传仍新建一条媒体记录</b>，各自独立维护元数据。</li>
+        <li><b>自动触发</b>：上传成功后自动入队打包任务；视频类型额外触发即时转码预处理；并提交入库后处理任务。</li>
+        <li><b>服务端探测</b>：自动计算 MD5、感知哈希，并探测时长、宽、高、码率与容器格式。</li>
+        <li><b>响应状态</b>：成功 <span class="mono">200</span>；缺文件 <span class="mono">400</span>；存储失败 <span class="mono">500</span>。</li>
+        <li><b>大小与类型</b>：单文件与分片上传都没有应用层字节上限；1 MiB 上限只约束 JSON 请求体。扩展名不作为拒绝条件，只用于分类：视频、音频、图片、文档，其余为 <span class="mono">other</span>。分类表可由 <span class="mono">scan.file_extensions</span> 整类替换，省略则用内置表。扫描入库才按扩展名过滤；上传接口本身不拒收未知扩展名。</li>
+        <li><b>临时文件</b>：命中感知哈希去重时删除刚写入的副本。分片在合并成功后删除该 <span class="mono">upload_id</span> 目录。没有分片目录的定时清扫，未合并的分片会留在 <span class="mono">{data.dir}/upload/chunks</span>。</li>
+      </ul>
+
+      <details class="doc-fold">
+        <summary>分片上传（<span class="mono">/upload/chunk</span> · <span class="mono">/upload/merge</span>）字段定义</summary>
+        <div class="fold-body">
+          <p><span class="mono">POST /upload/chunk</span> 为 <span class="mono">multipart/form-data</span>：<span class="mono">upload_id</span>（可选，缺省由服务端生成 UUID）、<span class="mono">index</span>（必填整数）、<span class="mono">file</span>（必填分片）。成功 <span class="mono">200</span> 返回 <span class="mono">upload_id</span> 与 <span class="mono">index</span>。分片落盘为 <span class="mono">{chunks}/{upload_id}/{index:08d}.part</span>，同一序号再次上传会覆盖该分片。没有单分片字节上限。</p>
+          <p><span class="mono">POST /upload/merge</span> 为 JSON：<span class="mono">upload_id</span>、<span class="mono">filename</span>、<span class="mono">total_parts</span> 必填；<span class="mono">library_id</span>、<span class="mono">target_dir</span>、<span class="mono">title</span> 可选。服务端按 <span class="mono">0 … total_parts-1</span> 顺序拼接，缺任一分片返回 <span class="mono">400</span>。成功响应在单文件字段之外多一个整文件 <span class="mono">sha256</span>。合并成功后删除该分片目录。</p>
+          <ul class="doc-list">
+            <li>没有「查询已收分片」接口。客户端保存每次 <span class="mono">200</span> 回执中的 <span class="mono">upload_id</span> 与 <span class="mono">index</span>，缺片时用同一 <span class="mono">upload_id</span> 重传对应序号，即可续传。</li>
+            <li>没有独立秒传协议。合并或单文件上传在写入后按感知哈希查找已有文件，命中则删掉新副本并新建一条媒体记录，响应 <span class="mono">deduped=true</span>。</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="doc-fold">
+        <summary>入库与后处理状态机（Ingest / Post-Ingest）</summary>
+        <div class="fold-body">
+          <p><span class="mono">GET /admin/media/:id/ingest</span> 返回当前代际的入库运行。媒体不存在 <span class="mono">404 media not found</span>；没有当前运行 <span class="mono">404 current ingest run not found</span>。重试 <span class="mono">POST …/ingest/retry</span>：无可重试工作 <span class="mono">409 no retryable work</span>，成功后再返回同一份入库视图。</p>
+          <ul class="doc-list">
+            <li><b>媒体发布状态</b>：<span class="mono">processing</span>、<span class="mono">published</span>、<span class="mono">degraded</span>、<span class="mono">failed</span>、<span class="mono">cancelled</span>。扫描或上传创建运行后为 <span class="mono">processing</span>；发布策略在必选步骤完成后写成 <span class="mono">published</span>，部分失败为 <span class="mono">degraded</span>，无法完成为 <span class="mono">failed</span>，被新代际取代为 <span class="mono">cancelled</span>。查询接口拒绝这五个之外的过滤值。</li>
+            <li><b>运行 <span class="mono">run.status</span></b>：与发布状态同一组取值，进行中为 <span class="mono">processing</span>。Webhook 在 <span class="mono">published</span> 或 <span class="mono">degraded</span> 时发 <span class="mono">run.completed</span>，在 <span class="mono">failed</span> 时发 <span class="mono">run.failed</span>；<span class="mono">processing</span> 与 <span class="mono">cancelled</span> 不发运行级事件。</li>
+            <li><b>步骤 <span class="mono">steps[].status</span></b>：<span class="mono">waiting</span> → <span class="mono">running</span> → <span class="mono">done</span> / <span class="mono">failed</span> / <span class="mono">skipped</span> / <span class="mono">cancelled</span>。工作者认领后进入 <span class="mono">running</span>；成功为 <span class="mono">done</span>，耗尽尝试为 <span class="mono">failed</span>，可选步骤跳过为 <span class="mono">skipped</span>，代际被取代为 <span class="mono">cancelled</span>。步骤类型顺序：<span class="mono">poster</span>、<span class="mono">thumbnail</span>、<span class="mono">scrape</span>、<span class="mono">preview</span>、<span class="mono">keyframe</span>、<span class="mono">subtitle</span>、<span class="mono">atrack</span>、<span class="mono">encrypt</span>、<span class="mono">prepare</span>。</li>
+            <li><b>响应</b>：<span class="mono">media</span>（<span class="mono">id</span>、<span class="mono">publication_state</span>、<span class="mono">publication_error</span>、<span class="mono">published_at</span>、<span class="mono">ingest_generation</span>）、<span class="mono">run</span>（<span class="mono">id</span>、<span class="mono">generation</span>、<span class="mono">status</span>、<span class="mono">reason</span>、<span class="mono">preserve_visibility</span>、<span class="mono">error</span>、时间戳、<span class="mono">policy_version</span>、<span class="mono">terminal_reason</span>）、<span class="mono">steps[]</span>（<span class="mono">id</span>、<span class="mono">type</span>、<span class="mono">required</span>、<span class="mono">status</span>、<span class="mono">attempts</span>、<span class="mono">max_attempts</span>、租约与错误）、以及 <span class="mono">dependencies</span>、<span class="mono">evidence</span>、<span class="mono">metadata_diagnostics</span>、<span class="mono">adapter_unavailable</span>、<span class="mono">unresolved_recovery_errors</span>。</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- ---------- 4.2 ---------- -->
+      <h3 class="doc-h3" id="s4-2"><span class="doc-num">4.2</span>播放与授权<a class="doc-anchor" href="#s4-2" aria-label="本节锚点">#</a></h3>
+      <p>本域覆盖播放计划获取、播放入口、HLS / DASH 资源拉取、预览与封面、字幕与音轨。播放类 GET 资源允许通过 <span class="mono">?access_token=</span> 传递令牌，便于播放器直接拉流。</p>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>端点索引 · 播放与授权</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>用途</th><th>权限</th></tr></thead>
+          <tbody>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/public/playback/plan</td><td>外部播放计划（第三方源即时播放）</td><td>公开 / 可配置关闭</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/play/keys/:keyID</td><td>HLS AES-128 密钥下发</td><td>公开（按密钥作用域校验）</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/play</td><td>播放入口</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/playback/start</td><td>上报播放开始</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/playback/end</td><td>上报播放结束</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/hls</td><td>HLS 信息</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/hls/*asset</td><td>HLS 清单与分片</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/dash/*asset</td><td>DASH 清单与分片</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/pretranscode/info</td><td>预转码产物信息</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/forensic/…</td><td>取证播放清单 / 初始化 / 分片</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/preview</td><td>预览信息</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/preview/sprite.jpg</td><td>预览雪碧图</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/preview/thumbs.vtt</td><td>预览缩略图索引</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/poster.jpg</td><td>封面图</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/photo/…</td><td>照片预览 / 缩略 / 中图</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/document/…</td><td>文档封面 / 预览 PDF / 分页图</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/subtitles/:sid/vtt</td><td>字幕 VTT</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/subtitles/translate</td><td>字幕翻译</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/atrack/:stream/…</td><td>独立音轨清单与分片</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/transcode/task/:id/status</td><td>转码任务状态查询</td><td>播放</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <p><b>外部播放计划</b>　<span class="ep"><span class="meth meth--post">POST</span><span class="p">/api/v1/public/playback/plan</span></span></p>
+      <p>用途：对第三方 URL 源发起即时播放，由服务端探测源、建立会话并返回播放地址与能力协商结果。该接口不在标准 JWT 通道内，可由部署配置整体关闭或要求匿名访问开关。<span class="mono">GET</span> 调用返回 <span class="mono">405</span>。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>响应字段</span><span class="mono">200 OK · application/json</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>字段</th><th>类型</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">mode</td><td>string</td><td>播放模式，固定为 <span class="mono">jit_hls</span></td></tr>
+            <tr><td class="mono">play_url</td><td>string</td><td>可直接播放的地址</td></tr>
+            <tr><td class="mono">hls_master</td><td>string</td><td>HLS 主清单地址（与 <span class="mono">play_url</span> 同值）</td></tr>
+            <tr><td class="mono">session_id</td><td>string</td><td>播放会话标识</td></tr>
+            <tr><td class="mono">expires_in</td><td>int</td><td>剩余有效秒数</td></tr>
+            <tr><td class="mono">expires_at</td><td>timestamp</td><td>会话到期时刻，RFC 3339</td></tr>
+            <tr><td class="mono">profile_version</td><td>string</td><td>输出配置版本</td></tr>
+            <tr><td class="mono">rendition</td><td>string</td><td>本次选定的档位名</td></tr>
+            <tr><td class="mono">degradation</td><td>object</td><td>降级状态，含 <span class="mono">level</span> 等；随响应头 <span class="mono">X-Degradation-Level</span> 同步下发</td></tr>
+            <tr><td class="mono">capabilities</td><td>object</td><td><span class="mono">adaptive</span> / <span class="mono">seek</span> / <span class="mono">resume</span> / <span class="mono">drm</span></td></tr>
+            <tr><td class="mono">p2p</td><td>object</td><td>P2P 能力，当前恒为 <span class="mono">{"enabled": false}</span></td></tr>
+            <tr><td class="mono">source</td><td>object</td><td>源信息：<span class="mono">duration_ms</span> / <span class="mono">width</span> / <span class="mono">height</span></td></tr>
+            <tr><td class="mono">cache</td><td>object</td><td>缓存命中信息（含 <span class="mono">hit</span> / <span class="mono">served_from_cache</span>）</td></tr>
+            <tr><td class="mono">compatibility</td><td>object</td><td><span class="mono">direct_play</span>（恒为 <span class="mono">false</span>）、<span class="mono">source_video</span>、<span class="mono">output_profile</span>、<span class="mono">profile_reused</span>；被拒绝复用时另含 <span class="mono">profile_invalidated</span></td></tr>
+            <tr><td class="mono">encryption</td><td>object</td><td>可选。仅受保护内容返回，否则不出现</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>接口独立限额</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>限制项</th><th>默认值</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>计划请求频率</td><td class="mono">30 次 / 分钟 / IP</td><td>独立于全局限流</td></tr>
+            <tr><td>并发会话</td><td class="mono">4 / IP　200 / 节点</td><td>租户级上限可配</td></tr>
+            <tr><td>源文件大小</td><td class="mono">≤ 50 GiB</td><td>超出拒绝</td></tr>
+            <tr><td>源时长</td><td class="mono">≤ 24 小时</td><td>超出拒绝</td></tr>
+            <tr><td>源端口</td><td class="mono">仅 80 / 443</td><td>其余端口拒绝</td></tr>
+            <tr><td>重定向次数</td><td class="mono">≤ 3</td><td>超出拒绝</td></tr>
+            <tr><td>内网源</td><td>默认禁止</td><td>防 SSRF</td></tr>
+            <tr><td>会话令牌有效期</td><td class="mono">900 秒</td><td>会话空闲超时同为 900 秒</td></tr>
+            <tr><td>源探测缓存</td><td class="mono">600 秒</td><td>探测结果复用时长</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>响应状态</b>：成功 <span class="mono">200</span>；方法不符 <span class="mono">405</span>；触发独立限额时按限流处理；源不可达 / 探测失败 / 产能不足按 5.2 错误码返回。</p>
+
+      <details class="doc-fold">
+        <summary>播放入口与 HLS / DASH 资源字段定义</summary>
+        <div class="fold-body">
+          <p><span class="mono">GET /media/:id/play</span> 成功一律 <span class="mono">200</span> JSON，没有单独的档位协商请求。下表是各分支都会出现或按模式出现的键。</p>
+          <ul class="doc-list">
+            <li><span class="mono">mode</span>：<span class="mono">native</span>、<span class="mono">hls</span>、<span class="mono">hls_aes_128</span>、<span class="mono">hls_powerdrm</span>、<span class="mono">hls_drm</span>、<span class="mono">dash</span>、<span class="mono">jit_hls</span>。进程内会话选择 DASH 时为 <span class="mono">jit_dash</span>，此时用 <span class="mono">dash_mpd</span> 替换 <span class="mono">hls_master</span>（把 <span class="mono">master.m3u8</span> 换成 <span class="mono">manifest.mpd</span>）。</li>
+            <li>直链：<span class="mono">playUrl</span>、<span class="mono">mime_type</span>、<span class="mono">media_profile</span>、<span class="mono">client_caps</span>、<span class="mono">message</span>。</li>
+            <li>HLS：<span class="mono">hls_master</span>（绝对 URL，指向 <span class="mono">/api/v1/media/:id/hls/master.m3u8</span>）、<span class="mono">status</span>（已完成产物为 <span class="mono">done</span>，即时转码为 <span class="mono">processing</span>）、<span class="mono">fallback</span>（再次请求本播放入口）、可选 <span class="mono">task_id</span>。</li>
+            <li>DASH：<span class="mono">mode=dash</span> 时另给清单 URL <span class="mono">/api/v1/media/:id/dash/manifest.mpd</span>。</li>
+            <li>即时转码：<span class="mono">session_id</span>，<span class="mono">hls_master</span> 指向 <span class="mono">/api/v1/jit/session/:sessionID/master.m3u8</span>。只有 <span class="mono">jit.legacy_fallback_enabled</span> 为 true、且进程内会话创建失败时，才回退到 Redis 旧链路：<span class="mono">mode</span> 仍是 <span class="mono">jit_hls</span>，<span class="mono">hls_master</span> 指向 <span class="mono">/api/v1/jit/master/:fileId</span>，并另给 <span class="mono">jit_session_pause_url</span>、<span class="mono">jit_session_resume_url</span>、<span class="mono">jit_session_end_url</span>、<span class="mono">jit_session_seek_url</span>。该开关默认关闭。</li>
+            <li>加密：<span class="mono">drm</span> 对象可含 <span class="mono">widevine_license_url</span>、<span class="mono">widevine_transport</span>（<span class="mono">json_local</span> 或 <span class="mono">raw</span>）、<span class="mono">powerdrm_key_url</span>、<span class="mono">fairplay_cert_url</span>、<span class="mono">fairplay_license_url</span>，配置开启时还有 <span class="mono">widevine_service_cert_url</span>。请求若带了 <span class="mono">access_token</span>，这些 URL 会原样附上同一查询参数。</li>
+            <li>清单与分片本身是 HLS / DASH 字节，不是 JSON。分片未就绪见 5.2 <span class="mono">segment_not_ready</span>。</li>
+            <li>播放协议面错误走 2.3 形态 A 信封，码表见 5.2。</li>
+            <li><b>查询参数令牌</b>：播放通道接受的 <span class="mono">access_token</span> 就是登录或 OAuth 签发的同一枚 JWT，声明仍是 <span class="mono">user_id</span> / <span class="mono">username</span> / <span class="mono">role</span> / 可选 <span class="mono">app_id</span>，有效期仍是 <span class="mono">security.token_hours</span>（默认 168 小时）。它不绑定到单个媒体。标准用户组与管理组不接受查询参数，只认 <span class="mono">Authorization</span>。查询参数会出现在访问日志与播放器引用中，只应放在播放 GET 上。</li>
+            <li>外部播放的 <span class="mono">play_token</span> 是另一枚会话令牌，寿命默认等于会话空闲时间加 60 秒，并且不超过 900 秒、不低于 60 秒。它只用于外部播放计划建立的会话，不能当作用户 JWT。</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- ---------- 4.3 ---------- -->
+      <h3 class="doc-h3" id="s4-3"><span class="doc-num">4.3</span>转码与任务<a class="doc-anchor" href="#s4-3" aria-label="本节锚点">#</a></h3>
+      <p>本域覆盖转码任务提交与编排、各类处理任务队列（预览 / 字幕 / 歌词 / 音轨 / 关键帧 / 加密）以及统一任务控制。任务控制面提供注册表、总览、列表、详情与动作执行。</p>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>端点索引 · 转码与任务</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>用途</th><th>权限</th></tr></thead>
+          <tbody>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/transcode/task/:id/status</td><td>转码任务状态</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/transcode/async</td><td>提交异步转码</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/transcode/task</td><td>转码任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/transcode/task/:id/cancel|retry</td><td>取消 / 重试</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/transcode/task/batch</td><td>批量转码</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/preview/task</td><td>预览任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/subtitle/task</td><td>字幕任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/lyric/task</td><td>歌词任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/atrack/task</td><td>音轨提取任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/keyframe/task</td><td>关键帧任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/encrypt/task</td><td>加密任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/encrypt-assets</td><td>触发媒体资源加密</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/atrack</td><td>触发音轨提取</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/keyframe</td><td>触发关键帧提取</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/tasks/registry</td><td>任务注册表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/tasks/overview</td><td>任务总览</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/tasks</td><td>任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/tasks/:task_id</td><td>任务详情</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/admin/tasks/:task_id/actions</td><td>任务动作执行</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/admin/tasks/batch</td><td>批量任务动作</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/tasks/stream</td><td>任务流式推送</td><td>播放通道</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/schedule/task</td><td>定时任务列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/schedule/task</td><td>创建定时任务</td><td>管理</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <p><b>统一任务控制</b>　<span class="ep"><span class="meth meth--get">GET</span><span class="p">/api/v1/admin/tasks/:task_id</span></span></p>
+      <p>用途：按任务标识查询任意类型处理任务的详情，是状态回传的兜底通道（Webhook 见 6.5）。权限：管理通道。</p>
+      <p>请求字段：<span class="mono">task_id</span>（路径参数，string，必填）。控制面不可用 <span class="mono">500 task_control_unavailable</span>；不存在 <span class="mono">404 task_not_found</span>。</p>
+      <ul class="doc-list">
+        <li><b>详情</b>：<span class="mono">row</span> 为投影行，含 <span class="mono">task_id</span>、<span class="mono">source_kind</span>、<span class="mono">source_id</span>、<span class="mono">task_type</span>、<span class="mono">family</span>、<span class="mono">normalized_status</span>、<span class="mono">raw_status</span>、<span class="mono">revision</span>、<span class="mono">generation</span>、<span class="mono">retry_round</span>、<span class="mono">attempt</span>、<span class="mono">max_attempts</span>、优先级、时间、<span class="mono">media_id</span>、<span class="mono">library_id</span>、<span class="mono">admission</span>、<span class="mono">owner_lease</span>、<span class="mono">terminal_reason</span>、<span class="mono">allowed_actions</span>（<span class="mono">abort</span> / <span class="mono">remove</span> / <span class="mono">reset</span> / <span class="mono">run_now</span> / <span class="mono">skip</span> / <span class="mono">reopen</span> 布尔值）。同级还有 <span class="mono">attempts</span>、<span class="mono">dependencies</span>、<span class="mono">evidence</span>、<span class="mono">audit_events</span>。</li>
+        <li><b>规范化状态</b>：<span class="mono">waiting</span>、<span class="mono">running</span>、<span class="mono">done</span>、<span class="mono">failed</span>、<span class="mono">cancelled</span>、<span class="mono">skipped</span>。原始值 <span class="mono">pending/queued/ready</span> 归入 <span class="mono">waiting</span>，<span class="mono">processing/active/in_progress</span> 归入 <span class="mono">running</span>，<span class="mono">completed/success/finished</span> 归入 <span class="mono">done</span>，<span class="mono">error/abandoned</span> 归入 <span class="mono">failed</span>。终态是后四者。各队列表的原始状态经这一映射对外展示，不另维护第二套状态机。</li>
+        <li><b>动作</b> <span class="mono">POST …/actions</span>，JSON：<span class="mono">action</span> 取 <span class="mono">abort</span>、<span class="mono">cancel</span>、<span class="mono">remove</span>、<span class="mono">reset</span>、<span class="mono">run_now</span>、<span class="mono">skip</span>、<span class="mono">reopen</span>；<span class="mono">reason</span> 必填。可选期望值 <span class="mono">expected_revision</span>、<span class="mono">expected_generation</span>、<span class="mono">expected_retry_round</span>。未知动作 <span class="mono">400 unknown_action</span>；缺原因 <span class="mono">400 missing_reason</span>；版本冲突 <span class="mono">409 stale_revision</span> 或 <span class="mono">conflict</span>；当前状态不允许 <span class="mono">400 invalid_operation</span>。成功 <span class="mono">200</span>，含 <span class="mono">status=ok</span>、<span class="mono">action</span>、<span class="mono">task_id</span> 与更新后的 <span class="mono">row</span>。</li>
+        <li><b>重试</b>：入库步骤的 <span class="mono">max_attempts</span> 在入队时写入。刮削（网络步骤）默认 3 次，海报、预览、字幕、音轨、关键帧、加密等本地步骤默认 1 次。这是行为默认值；旧库列表的列默认值仍可能是 3，以行上的 <span class="mono">max_attempts</span> 为准。失败后由调度器按 <span class="mono">available_at</span> 再次认领，接口不承诺固定的秒级退避公式。客户端不要对 <span class="mono">failed</span> 自行空转重试，应调用 <span class="mono">reset</span> 或对应队列的 retry 端点。播放侧 <span class="mono">capacity_exceeded</span> 与 <span class="mono">segment_not_ready</span> 才按 <span class="mono">retryable=true</span> 退避。</li>
+        <li><b>SSE</b> <span class="mono">GET /admin/tasks/stream</span>：<span class="mono">text/event-stream</span>。查询参数 <span class="mono">since_revision</span> 用于断线续传。帧类型为 <span class="mono">snapshot</span>、<span class="mono">delta</span>、<span class="mono">heartbeat</span>、<span class="mono">resync</span>，JSON 含 <span class="mono">id</span>、<span class="mono">revision</span>、<span class="mono">type</span>、<span class="mono">payload</span>。有 <span class="mono">id</span> 时写成 SSE <span class="mono">id:</span> 行。心跳默认 30 秒；无负载的心跳是注释行 <span class="mono">: heartbeat</span>。订阅开始时先推当前快照。</li>
+      </ul>
+
+      <!-- ---------- 4.4 ---------- -->
+      <h3 class="doc-h3" id="s4-4"><span class="doc-num">4.4</span>内容保护与分享<a class="doc-anchor" href="#s4-4" aria-label="本节锚点">#</a></h3>
+      <p>本域覆盖分享的创建与管理、分享匿名访问面，以及播放链路的内容保护（密钥与许可下发）。<b>分享功能属授权门槛能力</b>：未授权或被管理员关闭时，相关接口直接拒绝。机器令牌不得创建分享。</p>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>端点索引 · 分享管理（标准用户组）</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/shares　或　/api/v1/media/:id/shares</td><td>创建分享</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/shares　或　/api/v1/media/:id/shares</td><td>分享列表</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/shares/:id</td><td>分享详情</td></tr>
+            <tr><td><span class="meth meth--put">PUT</span></td><td class="mono">/api/v1/shares/:id</td><td>更新分享</td></tr>
+            <tr><td><span class="meth meth--delete">DELETE</span></td><td class="mono">/api/v1/shares/:id</td><td>删除分享</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/shares/:id/revoke</td><td>撤销分享</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/shares/:id/rotate</td><td>轮换分享令牌</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/shares/:id/regenerate-code</td><td>重置访问口令</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/shares/:id/unlock</td><td>解锁访问口令</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/shares/:id/access-log</td><td>分享访问日志</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/shares/batch-revoke</td><td>批量撤销</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/shares/audit.csv</td><td>导出分享审计</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <p><b>创建分享</b>　<span class="ep"><span class="meth meth--post">POST</span><span class="p">/api/v1/shares</span></span></p>
+      <p>用途：为指定媒体生成对外分享凭证。媒体标识既可放在请求体，也可放在路径（<span class="mono">/api/v1/media/:id/shares</span>），二者取其一。</p>
+      <p>权限要求：标准用户组（JWT）；<b>机器令牌（<span class="mono">app_id &gt; 0</span>）调用返回 403</b>，<span class="mono">reason = share_not_allowed_for_api_client</span>。请求体类型：<span class="mono">application/json</span>。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>请求字段</span><span class="mono">application/json</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>字段</th><th>类型</th><th>必填</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">media_id</td><td>int</td><td>条件必填</td><td>媒体标识；可由路径参数 <span class="mono">:id</span> 提供。两者皆缺时返回 <span class="mono">400</span></td></tr>
+            <tr><td class="mono">expire_hours</td><td>int</td><td>可选</td><td>有效期小时数；缺省取默认值，<span class="mono">-1</span> 表示永不过期</td></tr>
+            <tr><td class="mono">expires_in</td><td>string</td><td>可选</td><td>有效期别名：<span class="mono">60m</span> / <span class="mono">24h</span> / <span class="mono">7d</span> / <span class="mono">never</span> / <span class="mono">first_view_24h</span>。与 <span class="mono">expire_hours</span> 二选一，非法取值返回 <span class="mono">reason=invalid_expires_in</span></td></tr>
+            <tr><td class="mono">expire_after_first_view_minutes</td><td>int</td><td>可选</td><td>首次访问后多少分钟过期；<span class="mono">expires_in</span> 使用 <span class="mono">first_view_24h</span> 时由服务端换算写入</td></tr>
+            <tr><td class="mono">use_access_code</td><td>bool</td><td>可选</td><td>是否启用访问口令</td></tr>
+            <tr><td class="mono">enable_code</td><td>bool</td><td>可选</td><td>别名，等价于 <span class="mono">use_access_code</span>，同时提供时以后者为准</td></tr>
+            <tr><td class="mono">access_code</td><td>string</td><td>条件必填</td><td>访问口令；启用口令时提供</td></tr>
+            <tr><td class="mono">allow_download</td><td>bool</td><td>可选</td><td>是否允许下载</td></tr>
+            <tr><td class="mono">autoplay</td><td>bool</td><td>可选</td><td>是否自动播放，仅对音视频生效；缺省为 <span class="mono">true</span></td></tr>
+            <tr><td class="mono">note</td><td>string</td><td>可选</td><td>备注，去除首尾空白后不超过 <b>50 个字符</b>，超出返回 <span class="mono">reason=note_too_long</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>服务端约束</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>约束</th><th>行为</th></tr></thead>
+          <tbody>
+            <tr><td>功能开关</td><td>分享功能被管理员关闭时返回 <span class="mono">503</span>，<span class="mono">reason=share_disabled</span></td></tr>
+            <tr><td>活跃分享配额</td><td>单个媒体的活跃分享数达到上限（默认 20）返回 <span class="mono">409</span>，<span class="mono">reason=share_quota_exceeded</span></td></tr>
+            <tr><td>不可分享类型</td><td>无可分享入口的媒体类型被拒绝，<span class="mono">reason=nothing_shareable_for_type</span></td></tr>
+            <tr><td>仅下载型媒体</td><td>无内联预览入口的类型必须允许下载，否则拒绝</td></tr>
+            <tr><td>有效期越界</td><td><span class="mono">reason=expire_hours_out_of_range</span> / <span class="mono">expires_exceeds_max_days</span> / <span class="mono">allow_never_expiry_disabled</span></td></tr>
+            <tr><td>首访有效期越界</td><td><span class="mono">reason=first_view_out_of_range</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>响应状态</b>：成功 <span class="mono">200</span>（创建不返回 201）；参数缺失或非法 <span class="mono">400</span>；机器令牌 <span class="mono">403</span>；配额超限 <span class="mono">409</span>；功能关闭 <span class="mono">503</span>。未授权分享能力时管理面返回 <span class="mono">403</span>。</p>
+      <ul class="doc-list">
+        <li>创建成功在分享对象上额外给出明文 <span class="mono">token</span>（仅此一次；库中只存 SHA-256）、<span class="mono">share_url</span> 与同值的 <span class="mono">url</span>、<span class="mono">embed_url</span>（<span class="mono">url + /embed</span>）、允许下载时的 <span class="mono">download_url</span>，否则为 <span class="mono">null</span>、带口令时的 <span class="mono">url_with_code</span>，以及 <span class="mono">server_now</span>（RFC 3339 UTC）。</li>
+        <li>对象字段：<span class="mono">id</span>、<span class="mono">media_id</span>、<span class="mono">media_title</span>、<span class="mono">media_type</span>、<span class="mono">created_by</span>、<span class="mono">created_by_name</span>、<span class="mono">scope</span>（固定 <span class="mono">play,preview,download</span>）、<span class="mono">has_access_code</span>、<span class="mono">access_code</span>（创建或显式揭示时才有明文）、<span class="mono">allow_download</span>、<span class="mono">autoplay</span>、<span class="mono">expires_at</span>、<span class="mono">expire_after_first_view_minutes</span>、<span class="mono">first_viewed_at</span>、<span class="mono">effective_expires_at</span>、<span class="mono">status</span>、<span class="mono">invalid_reason</span>、<span class="mono">access_count</span>、<span class="mono">last_access_at</span>、<span class="mono">locked</span>、<span class="mono">locked_until</span>、<span class="mono">note</span>、<span class="mono">created_at</span>、<span class="mono">updated_at</span>。</li>
+        <li>令牌是 16 字节随机数的 Base64 URL 编码（128 位熵）。撤销或轮换后，下一次匿名请求按库中当前哈希校验，没有额外的失效延迟。</li>
+      </ul>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>端点索引 · 分享匿名访问面 <span class="mono">/api/v1/share/:token</span></span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径（相对分享前缀）</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/info</td><td>分享基本信息</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/verify</td><td>口令校验（<span class="mono">GET</span> 返回 405）</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/play</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/play/*asset</td><td>播放资源</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/preview</td><td>预览</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/preview/sprite.jpg</td><td>预览雪碧图</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/preview/thumbs.vtt</td><td>预览缩略索引</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/poster</td><td>封面</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/lyrics</td><td>歌词</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/document/preview.pdf</td><td>文档预览</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/document/page/:page</td><td>文档分页图</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/document/cover</td><td>文档封面</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/download</td><td>下载（受分享下载开关约束）</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/drm/key</td><td>HLS AES-128 密钥</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/drm/widevine/service-cert</td><td>Widevine 服务证书</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/drm/widevine/license</td><td>Widevine 许可</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/drm/fairplay/cert</td><td>FairPlay 证书</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/drm/fairplay/license</td><td>FairPlay 许可</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>内容保护能力矩阵</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方案</th><th>默认状态</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>HLS AES-128</td><td>启用</td><td>密钥经专用端点下发，按作用域校验</td></tr>
+            <tr><td>Widevine</td><td>默认关闭</td><td>需配置私有合规模块端点；可选下发服务证书</td></tr>
+            <tr><td>FairPlay</td><td>启用</td><td>证书与许可端点齐备</td></tr>
+            <tr><td>私有方案（PowerDRM）</td><td>默认开启</td><td>与自有播放器配合</td></tr>
+            <tr><td>打包引擎</td><td>Shaka 优先，ffmpeg 回退</td><td>CENC fMP4 HLS，分片默认 4 秒</td></tr>
+            <tr><td>取证水印</td><td>独立能力</td><td>嵌入、提取、溯源匹配，见 4.6</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>匿名面字段</b>匿名响应不返回内部媒体 id 或用户 id。</p>
+      <ul class="doc-list">
+        <li><span class="mono">GET /info</span>：<span class="mono">status</span>、<span class="mono">require_code</span>、<span class="mono">verified</span>、<span class="mono">allow_download</span>、<span class="mono">has_access_code</span>、<span class="mono">server_time</span>，以及算出的 <span class="mono">effective_expires_at</span>。未校验口令时只加 <span class="mono">media_type</span>；管理员打开「校验前预览」后，音视频还可看到 <span class="mono">title</span> 与 <span class="mono">poster_url</span>。校验通过后增加 <span class="mono">title</span>、<span class="mono">duration</span>、<span class="mono">width</span>、<span class="mono">height</span>、<span class="mono">created_at</span>、<span class="mono">access_count</span>，音视频还有 <span class="mono">autoplay</span>、<span class="mono">poster_url</span> 与容器 <span class="mono">mime_type</span>。令牌无效 <span class="mono">404 reason=invalid_token</span>；媒体已不存在 <span class="mono">410 reason=media_missing</span>。</li>
+        <li><span class="mono">POST /verify</span>，JSON <span class="mono">code</span>。无口令或校验成功均为 <span class="mono">200 {"ok":true,"verified":true}</span>，成功时写分享会话 Cookie。跨站 <span class="mono">403 origin_mismatch</span>；口令错 <span class="mono">403 code_invalid</span>；锁定 <span class="mono">403 code_locked</span> 并带 <span class="mono">Retry-After</span>。GET 该路径 <span class="mono">405 method_not_allowed</span>。</li>
+        <li><span class="mono">GET /play</span> 在已有 HLS 主清单时直接返回 <span class="mono">application/vnd.apple.mpegurl</span>，否则以内联方式输出媒体字节（加密源在内存中解密）。它不是 JSON 播放计划。<span class="mono">/play/*asset</span> 返回对应分片或初始化段。</li>
+        <li>播放令牌见 4.2。分享令牌为 16 字节随机数的 Base64 URL 编码，库中只存 SHA-256。撤销、轮换或过期在下一次请求生效，没有单独的失效延迟。</li>
+      </ul>
+
+      <!-- ---------- 4.5 ---------- -->
+      <h3 class="doc-h3" id="s4-5"><span class="doc-num">4.5</span>AI 媒体处理<a class="doc-anchor" href="#s4-5" aria-label="本节锚点">#</a></h3>
+      <p>本域覆盖 AI 任务的提交与查询、AI 服务提供方配置、刮削与元数据补全、字幕 / 歌词 / 文档解析、照片人脸与分类等智能处理。本机引擎可离线运行；只有打开的刮削站点或大模型提供方才会把文本发到服务之外。</p>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>端点索引 · AI 媒体处理</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>用途</th><th>权限</th></tr></thead>
+          <tbody>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/ai-provider</td><td>AI 提供方列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--put">PUT</span></td><td class="mono">/api/v1/ai-provider/:id</td><td>保存 AI 提供方</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/ai-provider/:id/test</td><td>连通性测试</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/scrape</td><td>触发元数据刮削</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/scrape/…</td><td>刮削配置、任务、历史、检索</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/subtitle/process</td><td>字幕处理</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/subtitles/import</td><td>字幕导入</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/media/:id/subtitles/:sid/cues</td><td>字幕字幕条查询</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--put">PUT</span></td><td class="mono">/api/v1/media/:id/subtitles/:sid/cues</td><td>字幕条保存</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/media/:id/lyrics/recognize</td><td>歌词识别</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/subtitles/translate</td><td>字幕翻译</td><td>播放</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/docreader/engines</td><td>文档解析引擎</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/docreader/parse</td><td>提交文档解析</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/docreader/task/:id</td><td>解析任务查询</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/docreader/task/:id/result</td><td>解析结果</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/docreader/task/:id/cancel</td><td>取消解析</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/library/:id/photo/classify</td><td>触发照片分类</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/library/:id/photo/faces/backfill</td><td>人脸回填</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/photo/face/:id/thumb.jpg</td><td>人脸缩略图</td><td>播放</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>AI 引擎配置与测试</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>能力域</th><th>配置 / 测试端点</th></tr></thead>
+          <tbody>
+            <tr><td>语音识别（ASR）</td><td class="mono">/admin/system-options/test|install/asr</td></tr>
+            <tr><td>文字识别（OCR）</td><td class="mono">/admin/system-options/test|install/ocr</td></tr>
+            <tr><td>照片分类</td><td class="mono">/admin/system-options/test|install/photo-classify</td></tr>
+            <tr><td>人脸识别</td><td class="mono">/admin/system-options/test|install/photo-face</td></tr>
+            <tr><td>文档转换</td><td class="mono">/admin/system-options/test|install/doc-trans</td></tr>
+            <tr><td>文档解析</td><td class="mono">/admin/system-options/test|install/docreader</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <ul class="doc-list">
+        <li><b>数据出域</b>：没有保留期限或合规策略字段。出域与否由启用的引擎决定。本机工具（FFmpeg、Whisper / Paraformer、字幕 OCR、照片分类、InsightFace、LibreOffice 文档转换）在进程所在机器上读写文件，不另建外发通道。刮削提供方（TMDB、TVDB、豆瓣、Bangumi、OMDb 等）与已配置的大模型（OpenAI、DeepSeek、通义、Ollama）只在对应提供方开启时，把检索词、字幕或校对文本发往该提供方；关闭提供方即不再调用。结果写回媒体元数据、字幕或任务行，不另设云端副本。</li>
+        <li>AI 与后处理任务的状态与结果位置见 4.3 的规范化状态和 4.1 的入库步骤。字幕、歌词、预览等队列各自有 retry 端点；重试次数见 4.3 入库步骤的默认次数。</li>
+        <li><b>可离线运行的引擎</b>：ASR、OCR、照片分类、人脸、文档转换、文档解析。系统选项里对应 <span class="mono">/admin/system-options/test|install/…</span>。未安装或检测失败时任务失败，不会自动改走公网。</li>
+      </ul>
+
+      <!-- ---------- 4.6 ---------- -->
+      <h3 class="doc-h3" id="s4-6"><span class="doc-num">4.6</span>平台与系统<a class="doc-anchor" href="#s4-6" aria-label="本节锚点">#</a></h3>
+      <p>本域覆盖账号与令牌、授权与授权门槛查询、系统选项、水印与取证、监控与日志、用户与 API 客户端管理、调度策略与转码集群。</p>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>端点索引 · 平台与系统</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>用途</th><th>权限</th></tr></thead>
+          <tbody>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/health</td><td>存活探测</td><td>公开</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/user/login</td><td>用户登录</td><td>公开</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/oauth/token</td><td>OAuth2 令牌签发</td><td>公开</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/branding</td><td>品牌信息</td><td>公开</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/user/info</td><td>当前用户信息</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--put">PUT</span></td><td class="mono">/api/v1/user/profile</td><td>更新资料</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--put">PUT</span></td><td class="mono">/api/v1/user/password</td><td>修改密码</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/user/logout</td><td>登出</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/license/features</td><td>授权功能清单</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/client-guard</td><td>客户端防护配置</td><td>标准用户</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/system-options</td><td>系统选项</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--put">PUT</span></td><td class="mono">/api/v1/admin/system-options</td><td>更新系统选项</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/watermark/capabilities</td><td>水印能力</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/admin/watermark/extract</td><td>水印提取</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/admin/forensic/match</td><td>取证匹配</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/overview</td><td>管理总览</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/access-log</td><td>访问日志</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/system-logs/…</td><td>运行日志 / 访问日志查询与下载</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/monitoring/metrics</td><td>监控指标</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/api-clients</td><td>API 客户端列表</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/admin/api-clients</td><td>创建 API 客户端</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/users</td><td>用户管理</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/scheduler/policy</td><td>调度策略</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--post">POST</span></td><td class="mono">/api/v1/admin/scheduler/control|explain</td><td>调度控制 / 任务解释</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/security/key-material-scan</td><td>密钥材料扫描</td><td>管理</td></tr>
+            <tr><td><span class="meth meth--get">GET</span></td><td class="mono">/api/v1/admin/jit/overview|cost|budget|lifecycle|degradation</td><td>即时转码治理</td><td>管理</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>预转码组（授权门槛）</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>能力</th><th>代表端点</th></tr></thead>
+          <tbody>
+            <tr><td>预设与档位管理</td><td class="mono">/admin/settings/pretranscode-presets…</td></tr>
+            <tr><td>统一转码任务</td><td class="mono">/admin/transcode/tasks…　/admin/transcode/batch</td></tr>
+            <tr><td>档位作业控制</td><td class="mono">/admin/transcode/tasks/:id/renditions…</td></tr>
+            <tr><td>产物与存储清理</td><td class="mono">/admin/transcode/storage　/admin/transcode/cleanup…</td></tr>
+            <tr><td>优化媒体管理</td><td class="mono">/admin/optimization/media…</td></tr>
+            <tr><td>Webhook 配置</td><td class="mono">/admin/settings/pretranscode-webhooks…</td></tr>
+            <tr><td>转码集群</td><td class="mono">/admin/transcode/cluster/nodes|stats|baseline　/admin/transcode/encoders</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <ul class="doc-list">
+        <li><b>未授权</b>：预转码组一律 <span class="mono">403</span>。许可证模块未初始化：<span class="mono">{"error":"license module not initialized"}</span>。许可证过期：<span class="mono">code=license_expired</span>。功能未包含：<span class="mono">code=feature_not_licensed</span>，并带 <span class="mono">feature</span> 与 <span class="mono">reason</span>。试用额度用尽：<span class="mono">code=trial_limit_reached</span>。分享管理面在未授权时同样 <span class="mono">403</span>，<span class="mono">code=feature_not_licensed</span>、<span class="mono">error=Share Not Licensed</span>；已经发出的匿名链接不因授权降级而失效。播放并发或播放授权失败走 <span class="mono">403</span>，码为 <span class="mono">license_expired</span>、<span class="mono">license_concurrency_exceeded</span> 或 <span class="mono">license_not_entitled</span>。</li>
+        <li><b>系统选项</b>：<span class="mono">GET/PUT /admin/system-options</span> 读写单行 JSON。顶层键为 <span class="mono">general</span>、<span class="mono">playback</span>、<span class="mono">transcoder</span>、<span class="mono">recognition</span>、<span class="mono">photo_classify</span>、<span class="mono">photo_face</span>、<span class="mono">doc_trans</span>、<span class="mono">share</span>、<span class="mono">watermark</span>、<span class="mono">image_protect</span>、<span class="mono">doc_protect</span>、<span class="mono">client_harden</span>。分享段默认：开启、默认有效期 24 小时、不允许永久、不强制口令、默认不允许下载、口令校验 20 次/分钟、5 次失败锁定 15 分钟、口令 4 位、最长 30 天、会话 2 小时、每媒体 20 条活跃分享、校验前不展示预览、访问日志保留 90 天。其余段以 GET 返回的当前值为准，本页不另抄一份会随版本变化的嵌套默认值。</li>
+        <li><b>API 客户端</b>：<span class="mono">POST /admin/api-clients</span>，JSON <span class="mono">name</span>（必填）、<span class="mono">description</span>、<span class="mono">user_id</span>（可选，须是已有用户）。成功 <span class="mono">201</span>，返回 <span class="mono">app_id</span>、<span class="mono">client_id</span>（<span class="mono">knox_</span> 加 16 字节十六进制）、<span class="mono">client_secret</span>（32 字节十六进制，仅本次）。库中只存 bcrypt 哈希。没有轮换接口：吊销是 <span class="mono">DELETE /api/v1/admin/api-clients/:id</span>（成功 <span class="mono">{"ok":true}</span>），之后新建一条。吊销后换票返回 <span class="mono">401 invalid_client</span>。</li>
+      </ul>
+      <h3 class="doc-h3" id="s4-7"><span class="doc-num">4.7</span>其他<a class="doc-anchor" href="#s4-7" aria-label="本节锚点">#</a></h3>
+      <p>4.1–4.6 里用省略号带过的路径，以及只在商业模块注册的路径，在此按路径补全。除另行注明外，路径都在 <span class="mono">/api/v1</span> 下。同一行用 <span class="mono">|</span> 连接的是同一资源的不同方法或别名，行为相同。</p>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>账号、收藏、播放列表与阅读</span><span>标准用户</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>POST / DELETE</td><td class="mono">/user/avatar</td><td>上传或删除头像</td></tr>
+            <tr><td>GET</td><td class="mono">/user/history</td><td>当前用户播放记录</td></tr>
+            <tr><td>GET</td><td class="mono">/playback-history</td><td>播放历史列表</td></tr>
+            <tr><td>POST</td><td class="mono">/user/parental/unlock</td><td>家长控制解锁</td></tr>
+            <tr><td>GET / POST / DELETE</td><td class="mono">/favorites　/media/:id/favorite</td><td>收藏列表、单条状态、加入与取消</td></tr>
+            <tr><td>GET / POST / PUT / DELETE</td><td class="mono">/favorite-folders　/favorite-folders/:id　/favorite-folders/:id/items　/favorite-folders/:id/items/:itemId</td><td>收藏夹及其条目</td></tr>
+            <tr><td>GET / POST / PUT / DELETE</td><td class="mono">/playlists　/playlists/:id　/playlists/:id/items　/playlists/:id/items/:itemId　/playlists/:id/reorder　/playlists/:id/images/:field</td><td>播放列表、条目排序与封面</td></tr>
+            <tr><td>POST / DELETE</td><td class="mono">/media/:id/progress</td><td>保存或清除播放进度</td></tr>
+            <tr><td>PUT / DELETE</td><td class="mono">/media/:id/watched</td><td>标记或取消已看，两个方法走同一处理</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>库内浏览、音乐、剧集、图片、文档与人物</span><span>标准用户，写操作另注</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>GET</td><td class="mono">/library/:id/series|albums|artists|genres|tracks</td><td>剧集、专辑、艺人、流派、曲目</td></tr>
+            <tr><td>GET</td><td class="mono">/library/:id/genre/albums</td><td>某流派下的专辑</td></tr>
+            <tr><td>PATCH</td><td class="mono">/library/:id/genre</td><td>修改库内流派</td></tr>
+            <tr><td>GET / PATCH</td><td class="mono">/album/:id　/album/:id/play-target　/album/:id/image-candidates　/artist/:id　/artist/:id/albums　/artist/:id/image-candidates</td><td>专辑与艺人详情、起播目标和候选图</td></tr>
+            <tr><td>GET / PATCH</td><td class="mono">/series/:id　/series/:id/play-target　/series/:id/image-candidates　/season/:id/episodes</td><td>剧集系列、季内分集</td></tr>
+            <tr><td>GET</td><td class="mono">/library/:id/photo/categories|places|persons</td><td>照片分类、地点、人物</td></tr>
+            <tr><td>POST / GET</td><td class="mono">/library/:id/photo/locations/backfill　…/locations/progress　…/faces/backfill　…/faces/progress　…/classify/progress</td><td>地点回填、人脸回填与各自进度。分类入队仍是管理端 <span class="mono">POST /library/:id/photo/classify</span></td></tr>
+            <tr><td>PATCH</td><td class="mono">/library/:id/photo/persons/:personId　/media/:id/photo/tags</td><td>改人物名称、改照片标签</td></tr>
+            <tr><td>GET / PATCH / POST</td><td class="mono">/library/:id/documents|document/nodes|document/facets|documents/recent　/media/:id/document　/media/:id/document/preview/info　/media/:id/read-progress　/documents/download　/documents/tags</td><td>文档列表、目录、分面、详情、阅读进度、批量下载与批量改标签</td></tr>
+            <tr><td>GET</td><td class="mono">/scan-logs</td><td>扫描日志</td></tr>
+            <tr><td>GET / POST / PATCH / DELETE</td><td class="mono">/persons　/persons/search　/person/:id　/person/:id/works|collaborators</td><td>演职人员检索与作品。创建、修改、删除和刮削入队在管理通道：<span class="mono">POST /persons</span>、<span class="mono">PATCH|DELETE /person/:id</span>、<span class="mono">POST /person/:id/scrape</span>、<span class="mono">/person/scrape/tasks</span>、<span class="mono">GET /cast/stats</span></td></tr>
+            <tr><td>GET / POST / PATCH / DELETE</td><td class="mono">/media/:id/persons　/media/:id/persons/:linkId　/media/:id/import-credits　/library/:id/import-credits</td><td>媒体演职员关联与从 TMDB 导入。写操作在管理通道</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>播放资源与即时转码会话</span><span>播放通道</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>GET</td><td class="mono">/media/:id/preview　/preview/sprite.jpg　/preview/thumbs.vtt　/poster.jpg</td><td>进度条预览、雪碧图、WebVTT 与海报</td></tr>
+            <tr><td>GET</td><td class="mono">/album/:id/artwork　/artist/:id/artwork　/person/:id/avatar</td><td>专辑、艺人、人物图片</td></tr>
+            <tr><td>GET</td><td class="mono">/media/:id/photo　/photo/thumb.jpg　/photo/medium.jpg　/photo/face/:id/thumb.jpg</td><td>照片预览与人脸缩略图</td></tr>
+            <tr><td>GET</td><td class="mono">/media/:id/document/cover.jpg　/document/preview.pdf　/document/page/:page</td><td>文档封面、PDF 预览与单页图</td></tr>
+            <tr><td>GET</td><td class="mono">/media/:id/subtitles/:sid/vtt　/media/:id/atrack/:stream/index.m3u8　/atrack/:stream/seg/:seg</td><td>字幕 WebVTT 与分离音轨 HLS</td></tr>
+            <tr><td>GET</td><td class="mono">/media/:id/forensic/master.m3u8|manifest.mpd|init/:rendition|seg/:rendition/:index|/:rendition/index.m3u8</td><td>取证播放清单、初始化段与分片</td></tr>
+            <tr><td>GET</td><td class="mono">/proxy/image</td><td>按查询参数代理远程图片</td></tr>
+            <tr><td>GET / POST</td><td class="mono">/jit/session/:sessionID/*asset　/pause　/resume　/seek　/end</td><td>即时转码会话拉流，以及暂停、恢复、跳转、结束。写操作使用幂等键</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>分享补全与匿名资源</span><span>见各行权限</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>GET / POST / PUT / DELETE</td><td class="mono">/shares/:id　/shares/:id/revoke|rotate|rotate-token|regenerate-code|unlock　/shares/batch-revoke　/shares/batch/revoke　/shares/export</td><td>分享详情、修改、删除、撤销、轮换令牌、重设口令、解锁。<span class="mono">rotate-token</span>、<span class="mono">batch/revoke</span>、<span class="mono">export</span> 分别是轮换、批量撤销和 <span class="mono">audit.csv</span> 的别名。标准用户，且受分享授权门槛约束</td></tr>
+            <tr><td>GET / POST / PUT</td><td class="mono">/admin/shares　/admin/shares/stats　/admin/shares/:id/revoke　/admin/settings/share</td><td>管理端分享列表、统计、撤销和分享设置。未授权时 403</td></tr>
+            <tr><td>GET</td><td class="mono">/share/:token/preview|preview/sprite.jpg|preview/thumbs.vtt|poster|lyrics|download　/document/preview.pdf|page/:page|cover</td><td>匿名预览、海报、歌词、下载和文档页。仍受分享令牌与口令约束</td></tr>
+            <tr><td>GET / POST</td><td class="mono">/share/:token/drm/key　/share/:token/drm/widevine/service-cert　/share/:token/drm/widevine/license　/share/:token/drm/fairplay/cert　/share/:token/drm/fairplay/license</td><td>分享令牌下的 AES-128 密钥、Widevine 与 FairPlay。DRM 模块未加载时这些路径不注册</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>任务队列、刮削与媒体维护</span><span>管理</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>POST</td><td class="mono">/scan/task/:id/cancel　/admin/media/:id/ingest/steps/:step_id/retry</td><td>取消扫描；重试可选的刮削、预览、字幕或预处理步骤</td></tr>
+            <tr><td>POST / DELETE</td><td class="mono">/transcode/task/:id/retry　/transcode/task/cleanup-failed|cleanup-failed-before</td><td>重试转码，清理失败任务</td></tr>
+            <tr><td>POST</td><td class="mono">/preview/task/:mediaId/retry　/preview/task/batch</td><td>预览任务重试与批量入队</td></tr>
+            <tr><td>POST / DELETE</td><td class="mono">/subtitle/task/:mediaId/reset|retry|cancel|run-now　/subtitle/task/:mediaId　/subtitle/task/batch|cleanup-failed|cleanup-before</td><td>字幕任务控制、删除与清理</td></tr>
+            <tr><td>POST</td><td class="mono">/lyric/task/:mediaId/retry　/lyric/task/batch|cleanup-failed|cleanup-before</td><td>歌词任务重试、批量与清理</td></tr>
+            <tr><td>POST</td><td class="mono">/atrack/task/:mediaId/retry　/atrack/task/batch　/keyframe/task/:mediaId/retry　/keyframe/task/batch</td><td>音轨与关键帧任务</td></tr>
+            <tr><td>POST / DELETE</td><td class="mono">/encrypt/task/:id/cancel|reset　/encrypt/task/:id　/encrypt/task/batch</td><td>加密任务取消、重置、删除与批量</td></tr>
+            <tr><td>GET / POST / PUT / DELETE</td><td class="mono">/schedule/task/:id　/schedule/task/:id/run　/schedule/task/cleanup-duplicates</td><td>修改、删除、立即运行定时任务，清理重复项</td></tr>
+            <tr><td>GET / PUT / POST</td><td class="mono">/scrape/config　/scrape/config/test　/scrape/task　/scrape/task/run　/scrape/artwork/backfill　/scrape/history　/scrape/search　/scrape/parse-title　/scrape/tmdb/images　/scrape/person/search</td><td>刮削配置、测试、任务、历史、检索、标题解析和候选图</td></tr>
+            <tr><td>POST / DELETE / PATCH / PUT / GET</td><td class="mono">/media/:id/manual-match　/media/:id/match　/media/:id/meta　/media/:id/images　/media/:id/image-candidates　/media/:id　/media/:id/deletion-plan　/media/:id/lyrics　/media/:id/lyrics/import　/media/:id/subtitles/:sid</td><td>手工匹配与解除、改元数据和图、删除媒体前的删除计划、保存或导入歌词、删除字幕。管理端 <span class="mono">PUT /media/:id</span> 更新媒体记录</td></tr>
+            <tr><td>GET / POST / DELETE</td><td class="mono">/media/:id/optimization　/media/:id/optimization/renditions　/media/:id/optimization/renditions/:rid</td><td>单媒体优化产物的查询、提交和删除。属预转码授权门槛</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>系统、日志、调度与预转码细项</span><span>管理</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>GET</td><td class="mono">/favicon.svg　/favicon.ico</td><td>站点图标，无 <span class="mono">/api/v1</span> 前缀，无鉴权</td></tr>
+            <tr><td>PUT</td><td class="mono">/admin/branding</td><td>保存品牌名与图标。<span class="mono">GET /branding</span> 为公开读取</td></tr>
+            <tr><td>GET</td><td class="mono">/admin/overview/stream</td><td>管理概览 SSE。与任务流同在允许查询参数令牌的管理流分组</td></tr>
+            <tr><td>GET / PUT</td><td class="mono">/admin/system-logs/settings　/runtime　/runtime/stream　/access　/access/:date　/access/:date/download</td><td>运行级别与访问日志开关、运行日志快照与 SSE、按天访问日志的列表、查看和下载。流只接受 <span class="mono">Authorization: Bearer</span></td></tr>
+            <tr><td>POST</td><td class="mono">/admin/system-options/test/asr|ocr|photo-classify|photo-face|doc-trans|docreader　/install/asr|ocr|photo-classify|photo-face|doc-trans|docreader|libreoffice</td><td>检测或安装对应本机引擎。路径是 <span class="mono">test/</span> 或 <span class="mono">install/</span> 加引擎名</td></tr>
+            <tr><td>GET / POST</td><td class="mono">/admin/watermark/marks　/marks/:id　/traces</td><td>水印标记列表、单条标记和追踪记录。提取与取证匹配见 4.6</td></tr>
+            <tr><td>GET / POST</td><td class="mono">/admin/jit/overview|cost|budget|lifecycle|keys/lifecycle|degradation　/lifecycle/run　/keys/lifecycle/run</td><td>即时转码概览、成本、预算、生命周期和降级。两个 <span class="mono">run</span> 挂了幂等中间件</td></tr>
+            <tr><td>GET / PUT / PATCH / POST</td><td class="mono">/admin/scheduler/policy　/admin/scheduler/control|explain</td><td>读取、整份保存或局部修改调度策略；控制与解释见 4.6 的合并行</td></tr>
+            <tr><td>GET / POST / PUT / DELETE</td><td class="mono">/admin/users　/admin/users/:id　/admin/users/:id/reset-password</td><td>用户列表、创建、修改、删除和重置密码</td></tr>
+            <tr><td>GET / POST / PUT / DELETE</td><td class="mono">/admin/settings/pretranscode-presets/:id　…/clone　…/toggle　…/renditions　…/renditions/:rid　…/renditions/sort　/admin/settings/pretranscode-watermark-image</td><td>预设详情、克隆、开关、档位增删改与排序、水印图。授权门槛</td></tr>
+            <tr><td>GET / POST / DELETE</td><td class="mono">/admin/transcode/tasks/:id　…/cancel|retry|pause|resume　…/renditions/:job_id/cancel|retry　/admin/transcode/cleanup-failed</td><td>预转码任务详情与控制、单档取消或重试、清理失败任务</td></tr>
+            <tr><td>GET / DELETE</td><td class="mono">/admin/optimization/media/:id/plays　…/renditions/:rid　…/renditions　/admin/optimization/media/:id</td><td>优化媒体的播放次数，以及按档或整片清除产物</td></tr>
+            <tr><td>PUT / DELETE / POST / GET</td><td class="mono">/admin/settings/pretranscode-webhooks/:id　…/test　…/logs</td><td>更新、删除、测试 Webhook 并查看投递日志</td></tr>
+            <tr><td>POST / DELETE</td><td class="mono">/admin/transcode/cluster/nodes/:id/drain|resume　/admin/transcode/cluster/nodes/:id</td><td>排空、恢复或退役集群节点</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="doc-template">
+        <div class="doc-template-h"><span>商业模块才注册的端点</span><span>社区构建不挂这些路由</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>GET / POST</td><td class="mono">/drm/widevine/service-cert|license　/drm/powerdrm/key　/drm/hls/aes128/key　/drm/hls-key/:taskID　/drm/fairplay/cert|license</td><td>播放通道上的许可证与密钥。模块未加载时这些路径不存在</td></tr>
+            <tr><td>POST / GET</td><td class="mono">/transcode/drm/repair　/admin/drm-license-audit　/admin/drm/license/verify</td><td>修复 DRM 产物、许可证审计和校验</td></tr>
+            <tr><td>GET / POST / DELETE</td><td class="mono">/admin/license/status　/admin/license/file　/admin/license/fingerprint</td><td>许可证状态、导入或删除许可文件、机器指纹。由许可证模块注册</td></tr>
+            <tr><td>POST</td><td class="mono">/upload-studio/series　/upload-studio/series/:id/episodes</td><td>上传工作室创建系列并追加分集。由对应企业模块注册</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>Redis 旧即时转码路由</span><span>播放通道；独立进程另见说明</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>GET</td><td class="mono">/jit/master/:fileId</td><td>旧链路主清单。可选查询 <span class="mono">max_height</span>。媒体未写入 Redis 时 <span class="mono">404</span>，<span class="mono">error</span> 为 Video not prepared。响应 <span class="mono">Cache-Control: no-store</span></td></tr>
+            <tr><td>GET</td><td class="mono">/jit/playlist/:fileId/video/:bitrate　/jit/playlist/:fileId/audio/:lang</td><td>视频或音频变体清单。主清单会把本次请求的 <span class="mono">access_token</span> 或 Bearer 接到这些 URL 上</td></tr>
+            <tr><td>GET</td><td class="mono">/jit/segment/:fileId/video/:bitrate/:segId　/jit/segment/:fileId/audio/:lang/:segId</td><td>对应分片</td></tr>
+            <tr><td>POST</td><td class="mono">/jit/session/pause|resume|end|seek</td><td>请求头 <span class="mono">X-Session-ID</span> 必填。暂停、恢复、跳转在会话不存在时 <span class="mono">404</span>；结束会话即使不存在也返回 <span class="mono">{"ok":true}</span>。路径里没有会话号，与 <span class="mono">/jit/session/:sessionID/…</span> 不是同一套</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p class="small muted">媒体服务在装配了即时调度器时，把上表挂到播放通道（Bearer 或 <span class="mono">access_token</span>）。同一组处理函数也可由独立进程（默认 <span class="mono">:8300</span>）提供，该入口没有这层鉴权。播放计划默认不指向这些 URL；只有打开 <span class="mono">jit.legacy_fallback_enabled</span> 才会。日常即时转码走 <span class="mono">/jit/session/:sessionID/…</span>。4.1–4.6 已写出字段的端点不在本节重复。别名只是另一条路由，不改变处理函数。</p>
+    </section>
+
+    <!-- ============ 05 响应状态与错误码 ============ -->
+    <section class="doc-section" id="s5">
+      <h2 class="doc-h2" id="h-s5"><span class="doc-num">05</span>响应状态与错误码<a class="doc-anchor" href="#s5" aria-label="本节锚点">#</a></h2>
+
+      <h3 class="doc-h3" id="s5-1"><span class="doc-num">5.1</span>HTTP 状态通用语义</h3>
+      <p>下表为本服务实际使用的 HTTP 状态语义，用于接入方建立统一的分支判断。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>HTTP 状态码约定</span><span>按实现归纳</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>状态码</th><th>语义</th><th>接入方处置</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">200</td><td>成功</td><td>解析业务响应</td></tr>
+            <tr><td class="mono">201</td><td>创建成功</td><td>记录返回的资源标识</td></tr>
+            <tr><td class="mono">400</td><td>请求参数缺失或非法</td><td>修正请求，不应重试</td></tr>
+            <tr><td class="mono">401</td><td>未认证 / 令牌无效</td><td>重新获取令牌后重试</td></tr>
+            <tr><td class="mono">403</td><td>无权限 / 令牌作用域不符 / 来源不被允许</td><td>不应重试，检查权限或来源配置</td></tr>
+            <tr><td class="mono">404</td><td>资源不存在或尚未就绪</td><td>确认标识；若为分片/产物未就绪，可按退避重试</td></tr>
+            <tr><td class="mono">405</td><td>方法不被允许</td><td>修正请求方法</td></tr>
+            <tr><td class="mono">409</td><td>状态冲突（配额超限、幂等键冲突等）</td><td>按错误码区分处置，不应盲目重试</td></tr>
+            <tr><td class="mono">410</td><td>会话已过期</td><td>重新建立会话</td></tr>
+            <tr><td class="mono">413</td><td>请求体超限</td><td>拆分或改用分片上传</td></tr>
+            <tr><td class="mono">429</td><td>触发限流</td><td>退避后重试</td></tr>
+            <tr><td class="mono">500</td><td>服务端内部错误</td><td>携带 <span class="mono">request_id</span> 反馈，退避后重试</td></tr>
+            <tr><td class="mono">503</td><td>服务不可用 / 产能或容量超限 / 功能被关闭</td><td>按 <span class="mono">retryable</span> 判定是否重试</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="doc-h3" id="s5-2"><span class="doc-num">5.2</span>统一错误信封与错误码表</h3>
+      <p><b>形态 A 错误码</b>（播放协议面，结构见 2.3）</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>播放协议错误码</span><span class="mono">code → HTTP → retryable</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>code</th><th>HTTP</th><th>retryable</th><th>触发条件</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">session_expired</td><td class="mono">410</td><td><span class="no">false</span></td><td>播放会话已过期，需重新建立会话</td></tr>
+            <tr><td class="mono">session_not_found</td><td class="mono">404</td><td><span class="no">false</span></td><td>会话标识不存在</td></tr>
+            <tr><td class="mono">invalid_asset</td><td class="mono">400</td><td><span class="no">false</span></td><td>资源路径、档位或分片标识非法</td></tr>
+            <tr><td class="mono">key_scope_mismatch</td><td class="mono">403</td><td><span class="no">false</span></td><td>密钥作用域与请求来源不匹配</td></tr>
+            <tr><td class="mono">forbidden</td><td class="mono">403</td><td><span class="no">false</span></td><td>缺少或无效的播放令牌</td></tr>
+            <tr><td class="mono">origin_not_allowed</td><td class="mono">403</td><td><span class="no">false</span></td><td>请求来源不在允许列表内</td></tr>
+            <tr><td class="mono">asset_unavailable</td><td class="mono">404</td><td><span class="no">false</span></td><td>清单、初始化段、音轨或分片尚未就绪</td></tr>
+            <tr><td class="mono">segment_not_ready</td><td class="mono">202</td><td><span class="yes">true</span></td><td>分片尚在产出。响应带 <span class="mono">Retry-After: 1</span>，<span class="mono">details</span> 含 <span class="mono">session_id</span> 与 <span class="mono">retry_after_seconds=1</span>。即时转码会话还会带 <span class="mono">expires_in</span>。按 1 秒退避重试，不要当成失败</td></tr>
+            <tr><td class="mono">key_service_unavailable</td><td class="mono">503</td><td><span class="yes">true</span></td><td>密钥服务暂不可用，可退避重试</td></tr>
+            <tr><td class="mono">capacity_exceeded</td><td class="mono">503</td><td><span class="yes">true</span></td><td>转码产能或缓存容量超限，可退避重试</td></tr>
+            <tr><td class="mono">invalid_idempotency_key</td><td class="mono">400</td><td><span class="no">false</span></td><td>幂等键格式非法（须 8–128 位）</td></tr>
+            <tr><td class="mono">invalid_request_body</td><td class="mono">400</td><td><span class="no">false</span></td><td>请求体无法读取</td></tr>
+            <tr><td class="mono">request_body_too_large</td><td class="mono">413</td><td><span class="no">false</span></td><td>幂等请求体超过 1 MiB</td></tr>
+            <tr><td class="mono">idempotency_key_conflict</td><td class="mono">409</td><td><span class="no">false</span></td><td>同一幂等键被用于不同请求体</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <p><b>形态 B 业务 reason 码</b>（结构见 2.3，<span class="mono">error</span> 为人读信息）</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>业务 reason 码</span><span>按域归类</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>域</th><th>reason 码</th><th>典型触发</th></tr></thead>
+          <tbody>
+            <tr><td>鉴权与令牌</td><td class="mono">invalid_token</td><td>令牌无效或已失效</td></tr>
+            <tr><td></td><td class="mono">user_token_rejected</td><td>用户令牌被策略拒绝</td></tr>
+            <tr><td></td><td class="mono">origin_mismatch</td><td>来源不匹配</td></tr>
+            <tr><td></td><td class="mono">policy_denied</td><td>被安全策略拒绝</td></tr>
+            <tr><td></td><td class="mono">method_not_allowed</td><td>方法不被允许</td></tr>
+            <tr><td></td><td class="mono">maintenance</td><td>系统维护中</td></tr>
+            <tr><td>分享</td><td class="mono">share_disabled</td><td>分享功能被管理员关闭</td></tr>
+            <tr><td></td><td class="mono">share_not_allowed_for_api_client</td><td>机器令牌不允许创建分享</td></tr>
+            <tr><td></td><td class="mono">share_quota_exceeded</td><td>该媒体活跃分享数超上限</td></tr>
+            <tr><td></td><td class="mono">share_not_found</td><td>分享不存在</td></tr>
+            <tr><td></td><td class="mono">share_not_updatable</td><td>分享状态不可更新</td></tr>
+            <tr><td></td><td class="mono">note_too_long</td><td>备注超过 50 字符</td></tr>
+            <tr><td>分享有效期</td><td class="mono">invalid_expires_in</td><td>有效期别名取值非法</td></tr>
+            <tr><td></td><td class="mono">invalid_expires_at</td><td>到期时刻非法</td></tr>
+            <tr><td></td><td class="mono">expire_hours_out_of_range</td><td>有效期小时数越界</td></tr>
+            <tr><td></td><td class="mono">expires_exceeds_max_days</td><td>有效期超过允许的最大天数</td></tr>
+            <tr><td></td><td class="mono">allow_never_expiry_disabled</td><td>「永不过期」未被允许</td></tr>
+            <tr><td></td><td class="mono">first_view_out_of_range</td><td>首访有效期取值越界</td></tr>
+            <tr><td>访问口令</td><td class="mono">code_required</td><td>需要口令但未提供</td></tr>
+            <tr><td></td><td class="mono">code_invalid</td><td>口令非法</td></tr>
+            <tr><td></td><td class="mono">code_locked</td><td>口令因多次失败被锁定</td></tr>
+            <tr><td></td><td class="mono">invalid_access_code</td><td>访问口令校验失败</td></tr>
+            <tr><td>下载与能力</td><td class="mono">download_disabled</td><td>该分享未开放下载</td></tr>
+            <tr><td></td><td class="mono">download_capability_required</td><td>该媒体类型必须开放下载</td></tr>
+            <tr><td>媒体与资源</td><td class="mono">media_missing</td><td>媒体不存在</td></tr>
+            <tr><td></td><td class="mono">media_mismatch</td><td>媒体与分享不匹配</td></tr>
+            <tr><td></td><td class="mono">nothing_shareable_for_type</td><td>该类型无可分享入口</td></tr>
+            <tr><td></td><td class="mono">unsupported_media_type</td><td>媒体类型不受支持</td></tr>
+            <tr><td></td><td class="mono">drm_asset_not_ready</td><td>受保护资源尚未就绪</td></tr>
+            <tr><td>系统</td><td class="mono">rate_limited</td><td>触发限流</td></tr>
+            <tr><td></td><td class="mono">not_in_build</td><td>当前构建未包含该能力</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p class="small muted">上表为实现中已出现的 reason 码全集，随版本演进可能新增；未列出的 reason 一律按不可重试的调用方错误处理并反馈。<span class="mono">reason</span> 为空字符串的返回表示未附带机器可读短码，仅读 <span class="mono">error</span>。</p>
+
+      <h3 class="doc-h3" id="s5-3"><span class="doc-num">5.3</span>错误处理与排查约定</h3>
+      <ul class="doc-list">
+        <li><b>先分流、后判重试</b>：解析出 <span class="mono">code</span> / <span class="mono">reason</span> 后，按 2.5 的重试约定分流；只有 <span class="mono">retryable = true</span>、<span class="mono">429</span> 与 <span class="mono">5xx</span> 参与重试。</li>
+        <li><b>幂等保护</b>：所有重试请求必须携带<b>同一个</b> <span class="mono">Idempotency-Key</span> 与<b>完全一致的请求体</b>，否则会触发 <span class="mono">idempotency_key_conflict</span>。</li>
+        <li><b>追踪对齐</b>：错误响应中的 <span class="mono">request_id</span> 与服务端访问日志一一对应。反馈问题时必须附带该标识与调用时刻。</li>
+        <li><b>缓存禁令</b>：播放协议面错误响应强制 <span class="mono">Cache-Control: private, no-store</span>，接入方不得缓存。</li>
+        <li><b>口令锁定</b>：分享口令连续校验失败会触发锁定（<span class="mono">code_locked</span>），须由分享方通过解锁接口恢复。</li>
+        <li><b>恢复</b>：<span class="mono">401</span> 重新登录或换票；<span class="mono">403</span> 的授权码改授权或降级功能，不重试；<span class="mono">202 segment_not_ready</span> 等待 <span class="mono">Retry-After</span> 后取同一分片；<span class="mono">429</span> 服从 <span class="mono">Retry-After</span>；<span class="mono">409</span> 先查询当前资源再决定是否换幂等键。形态 A 用响应里的 <span class="mono">request_id</span> 对齐访问日志。没有值班联系人或处理时效；反馈使用第 8 节的公开联系方式，并附文档版本、章节与 <span class="mono">request_id</span>。</li>
+      </ul>
+    </section>
+
+    <!-- ============ 06 系统对接说明 ============ -->
+    <section class="doc-section" id="s6">
+      <h2 class="doc-h2" id="h-s6"><span class="doc-num">06</span>系统对接说明<a class="doc-anchor" href="#s6" aria-label="本节锚点">#</a></h2>
+
+      <h3 class="doc-h3" id="s6-0"><span class="doc-num">6.0</span>通用对接框架</h3>
+      <p>每个对接场景按同一组维度描述，便于评审与验收时逐项核对：</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>七维对接框架</span><span>每场景必答</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>维度</th><th>要回答的问题</th></tr></thead>
+          <tbody>
+            <tr><td>系统边界</td><td>哪些职责由 PowerMedia 承担，哪些由集成方承担，交界在哪</td></tr>
+            <tr><td>数据流向</td><td>数据从哪来、经过哪些环节、最终落到哪</td></tr>
+            <tr><td>触发条件</td><td>什么动作触发处理，前置状态是什么</td></tr>
+            <tr><td>状态回调</td><td>如何得知处理完成或失败，回调与查询如何配合</td></tr>
+            <tr><td>异常处理</td><td>失败后如何判定、重试、补偿与告警</td></tr>
+            <tr><td>幂等</td><td>重复提交是否安全，如何避免重复副作用</td></tr>
+            <tr><td>安全校验</td><td>鉴权、授权、来源校验、审计留痕如何落地</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="doc-h3" id="s6-1"><span class="doc-num">6.1</span>上传对接</h3>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>上传对接 · 七维</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>维度</th><th>约定</th></tr></thead>
+          <tbody>
+            <tr><td>系统边界</td><td>PowerMedia 负责落盘、校验、探测、登记与后续处理编排；集成方负责文件来源、业务归类（目标库/目录）与标题等业务属性</td></tr>
+            <tr><td>数据流向</td><td>集成方 → 上传接口 → 上传暂存/分片目录 → 目标目录落盘 → 媒体记录登记 → 打包 /（视频）即时转码预处理 / 入库后处理</td></tr>
+            <tr><td>触发条件</td><td>上传成功即自动触发，无需集成方二次调起；视频类型额外触发即时转码预处理</td></tr>
+            <tr><td>状态回调</td><td>上传接口同步返回媒体标识；后续处理进度通过任务状态查询与 Webhook 获取（见 6.2、6.5）</td></tr>
+            <tr><td>异常处理</td><td>缺文件 <span class="mono">400</span>、存储失败 <span class="mono">500</span>。上传接口未挂幂等中间件，失败后应先查重再重传。分片用同一 <span class="mono">upload_id</span> 覆盖缺失序号即可续传；合并成功才删除分片目录，未合并的目录没有定时清理</td></tr>
+            <tr><td>幂等</td><td>上传接口<b>未挂载</b>幂等中间件；同名重复上传会产生多条媒体记录。建议集成方先调 <span class="mono">/upload/dedupe-check</span> 查重，或自行做业务侧去重</td></tr>
+            <tr><td>安全校验</td><td>管理通道 JWT + 管理员角色。没有上传字节上限，扩展名只用于分类、不用于拒绝。详见 4.1</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="doc-h3" id="s6-2"><span class="doc-num">6.2</span>转码对接</h3>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>转码对接 · 七维</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>维度</th><th>约定</th></tr></thead>
+          <tbody>
+            <tr><td>系统边界</td><td>PowerMedia 负责转码编排、档位产出、集群调度与产物清理；集成方负责提交时机、档位选择与结果消费</td></tr>
+            <tr><td>数据流向</td><td>媒体记录 → 转码任务 → 档位作业 → 播放产物 → 播放/分享消费</td></tr>
+            <tr><td>触发条件</td><td>入库后自动触发后处理；亦可经 <span class="mono">/transcode/async</span> 或预转码组接口显式提交</td></tr>
+            <tr><td>状态回调</td><td>Webhook 事件 <span class="mono">rendition.completed</span> / <span class="mono">rendition.failed</span> / <span class="mono">task.completed</span> / <span class="mono">task.failed</span> / <span class="mono">run.completed</span> / <span class="mono">run.failed</span>；兜底走 <span class="mono">/transcode/task/:id/status</span> 与 <span class="mono">/admin/transcode/tasks/:id/renditions</span></td></tr>
+            <tr><td>异常处理</td><td>本地步骤默认 1 次尝试，刮削默认 3 次，以行上的 <span class="mono">max_attempts</span> 为准；耗尽后状态为 <span class="mono">failed</span>，由 <span class="mono">reset</span> 或队列 retry 端点重新入队，没有固定秒级退避。播放侧产能不足返回 <span class="mono">capacity_exceeded</span>（<span class="mono">retryable=true</span>），应退避重试。见 4.3</td></tr>
+            <tr><td>幂等</td><td>转码提交接口<b>未挂载</b>幂等中间件；重复提交可能产生重复任务。集成方须自行去重，或改用统一任务控制面核对既有任务</td></tr>
+            <tr><td>安全校验</td><td>提交走管理通道；状态查询走播放通道。集群管理与预设管理属授权门槛</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="doc-h3" id="s6-3"><span class="doc-num">6.3</span>分享对接</h3>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>分享对接 · 七维</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>维度</th><th>约定</th></tr></thead>
+          <tbody>
+            <tr><td>系统边界</td><td>PowerMedia 负责分享凭证生成、有效期与口令校验、访问审计、下载开关与分享面 DRM 许可；集成方负责分享发起时机、受众管理与链接分发</td></tr>
+            <tr><td>数据流向</td><td>媒体记录 → 分享记录（令牌 / 口令 / 策略）→ 匿名访问面消费 → 访问日志</td></tr>
+            <tr><td>触发条件</td><td>由已认证用户显式创建；<b>机器令牌不可创建</b>。单媒体活跃分享数受限（默认 20）</td></tr>
+            <tr><td>状态回调</td><td>33 个 Webhook 事件里没有分享事件。回传途径是 <span class="mono">/shares/:id/access-log</span> 与审计导出 <span class="mono">/shares/audit.csv</span></td></tr>
+            <tr><td>异常处理</td><td>口令错误累积到阈值（默认 5 次）后锁定（默认 15 分钟，<span class="mono">code_locked</span>），由分享方调用解锁接口恢复。撤销与令牌轮换写入数据库后，下一次匿名请求即失效，没有额外延迟</td></tr>
+            <tr><td>幂等</td><td>分享创建接口<b>未挂载</b>幂等中间件；重复调用会产生多条分享记录（并计入配额）。集成方须以媒体 + 受众为键自行去重</td></tr>
+            <tr><td>安全校验</td><td>创建走标准用户组 JWT；访问走分享令牌 + 可选口令；下载受分享开关约束；受保护内容经分享面 DRM 端点取许可</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="doc-h3" id="s6-4"><span class="doc-num">6.4</span>AI 媒体处理对接</h3>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>AI 处理对接 · 七维</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>维度</th><th>约定</th></tr></thead>
+          <tbody>
+            <tr><td>系统边界</td><td>PowerMedia 负责任务编排、引擎调用与结果落位（字幕 / 人脸 / 分类 / 文档解析等）；集成方负责提供方配置、额度管理与结果业务化</td></tr>
+            <tr><td>数据流向</td><td>媒体 → AI 任务 → 引擎处理（<b>可能出域</b>）→ 结果落位 → 查询/回传</td></tr>
+            <tr><td>触发条件</td><td>入库后自动触发部分处理（如元数据、字幕）；亦可经管理端接口显式触发</td></tr>
+            <tr><td>状态回调</td><td>Webhook 事件含 <span class="mono">subtitle.obtained/failed</span>、<span class="mono">subtitle_recognize.obtained</span>、<span class="mono">metadata.obtained</span> 等；兜底走任务查询端点</td></tr>
+            <tr><td>异常处理</td><td>失败事件与重试端点齐备（如 <span class="mono">/subtitle/task/:mediaId/retry</span>）。尝试次数与入库步骤相同：本地默认 1 次，刮削默认 3 次，见 4.3</td></tr>
+            <tr><td>幂等</td><td>AI 任务提交接口<b>未挂载</b>幂等中间件；重复触发会重复计费与重复处理。集成方须自行去重</td></tr>
+            <tr><td>安全校验</td><td>触发与配置走管理通道；提供方凭据保存在系统配置中，不通过接口回传。出域合规见 4.5 说明</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <h3 class="doc-h3" id="s6-5"><span class="doc-num">6.5</span>Webhook 事件订阅</h3>
+      <p>服务端支持向集成方登记的回调地址主动推送处理事件，是状态回传的<b>主通道</b>。</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>回调请求约定</span><span class="mono">POST &lt;登记的回调地址&gt;</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>项目</th><th>约定</th></tr></thead>
+          <tbody>
+            <tr><td>请求方法</td><td class="mono">POST</td></tr>
+            <tr><td>请求体</td><td>固定五个键：<span class="mono">event</span>、<span class="mono">knoxMediaId</span>、<span class="mono">endpointId</span>（当前恒为 <span class="mono">null</span>）、<span class="mono">media</span>（事件数据）、<span class="mono">event_id</span>。没有 <span class="mono">timestamp</span> 字段</td></tr>
+            <tr><td>事件标识</td><td><span class="mono">event_id</span> 是不含自身的四字段信封的 SHA-256 前 16 字节，十六进制。同一投递的重试字节不变，接收方据此去重</td></tr>
+            <tr><td>媒体标识</td><td>入库步骤事件的 <span class="mono">knoxMediaId</span> 是媒体 id。任务与档位调度器发出的 <span class="mono">task.completed</span> / <span class="mono">task.failed</span> / <span class="mono">rendition.*</span> 把任务 id 放在该字段，同时在 <span class="mono">media.task_id</span> 再写一次</td></tr>
+            <tr><td>签名请求头</td><td class="mono">X-Knox-Signature: sha256=&lt;hex&gt;</td></tr>
+            <tr><td>签名算法</td><td>HMAC-SHA256，以登记的密钥对<b>请求体原文</b>签名，十六进制小写并加 <span class="mono">sha256=</span> 前缀</td></tr>
+            <tr><td>投递方式</td><td>异步投递</td></tr>
+            <tr><td>重试策略</td><td>首次立即投递，非 2xx 或网络错误后再试 3 次，间隔 1 秒、4 秒、16 秒。单次请求超时 10 秒。队列容量 4096、4 个投递协程；队列满时丢掉同一回调、同一事件的最旧一条</td></tr>
+            <tr><td>配置与日志</td><td>管理端可登记、测试、更新、删除回调地址并查阅投递日志（<span class="mono">/admin/settings/pretranscode-webhooks…</span>）</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p><b>接收方要求</b></p>
+      <ul class="doc-list">
+        <li>校验 <span class="mono">X-Knox-Signature</span>：用登记密钥对收到的请求体原文做 HMAC-SHA256，与请求头中的十六进制值做<b>恒定时间比较</b>；不匹配即丢弃并返回非 2xx。</li>
+        <li>按 <span class="mono">event_id</span> 幂等去重：同一 <span class="mono">event_id</span> 只处理一次，重复投递返回 2xx 即可。</li>
+        <li>尽快返回 2xx：耗时处理应先入队再返回，避免触发服务端重试导致重复投递。</li>
+        <li>对未知事件类型静默忽略并返回 2xx，便于向后兼容新增事件。</li>
+        <li>回调地址建议使用 HTTPS 并置于服务端可达网络内；回调请求本身不携带用户身份。</li>
+      </ul>
+      <p><b>事件类型清单</b>（33 项，按域归类）</p>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>事件类型</span><span class="mono">type</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>域</th><th>事件类型</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="3">测试与媒体</td><td class="mono">test</td><td>回调连通性测试</td></tr>
+            <tr><td class="mono">media.added</td><td>新媒体入库</td></tr>
+            <tr><td class="mono">media.visible</td><td>媒体对用户可见</td></tr>
+            <tr><td rowspan="2">任务</td><td class="mono">task.completed</td><td>任务完成</td></tr>
+            <tr><td class="mono">task.failed</td><td>任务失败</td></tr>
+            <tr><td rowspan="2">元数据与封面</td><td class="mono">metadata.obtained</td><td>元数据提取完成</td></tr>
+            <tr><td class="mono">poster.obtained</td><td>封面生成完成</td></tr>
+            <tr><td rowspan="2">缩略与预览</td><td class="mono">thumbnail.obtained</td><td>缩略图生成完成</td></tr>
+            <tr><td class="mono">preview.obtained</td><td>预览生成完成</td></tr>
+            <tr><td rowspan="2">雪碧图与关键帧</td><td class="mono">sprite.obtained</td><td>雪碧图生成完成</td></tr>
+            <tr><td class="mono">keyframe.obtained</td><td>关键帧提取完成</td></tr>
+            <tr><td rowspan="2">字幕</td><td class="mono">subtitle.obtained</td><td>字幕生成完成</td></tr>
+            <tr><td class="mono">subtitle_recognize.obtained</td><td>字幕识别完成</td></tr>
+            <tr><td>音轨</td><td class="mono">atrack.obtained</td><td>音轨提取完成</td></tr>
+            <tr><td>加密</td><td class="mono">encrypt.obtained</td><td>资源加密完成</td></tr>
+            <tr><td rowspan="2">预转码</td><td class="mono">pretranscode.completed</td><td>预转码完成</td></tr>
+            <tr><td class="mono">pretranscode.failed</td><td>预转码失败</td></tr>
+            <tr><td rowspan="2">档位</td><td class="mono">rendition.completed</td><td>档位产出完成</td></tr>
+            <tr><td class="mono">rendition.failed</td><td>档位产出失败</td></tr>
+            <tr><td>打包</td><td class="mono">package.obtained</td><td>打包完成</td></tr>
+            <tr><td>刮削</td><td class="mono">scrape.obtained</td><td>刮削完成</td></tr>
+            <tr><td rowspan="2">批次</td><td class="mono">run.completed</td><td>批次运行完成</td></tr>
+            <tr><td class="mono">run.failed</td><td>批次运行失败</td></tr>
+            <tr><td rowspan="6">失败类</td><td class="mono">poster.failed</td><td>封面生成失败</td></tr>
+            <tr><td class="mono">thumbnail.failed</td><td>缩略图生成失败</td></tr>
+            <tr><td class="mono">preview.failed</td><td>预览生成失败</td></tr>
+            <tr><td class="mono">keyframe.failed</td><td>关键帧提取失败</td></tr>
+            <tr><td class="mono">subtitle.failed</td><td>字幕生成失败</td></tr>
+            <tr><td class="mono">atrack.failed</td><td>音轨提取失败</td></tr>
+            <tr><td rowspan="3">失败类（续）</td><td class="mono">encrypt.failed</td><td>资源加密失败</td></tr>
+            <tr><td class="mono">keyframe_extract.failed</td><td>关键帧提取阶段失败</td></tr>
+            <tr><td class="mono">subtitle_extract.failed</td><td>字幕提取阶段失败</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <ul class="doc-list">
+        <li>另有 <span class="mono">atrack_extract.failed</span>（音轨提取阶段失败），合计 33 个事件类型。</li>
+        <li><b>media 对象</b>：入库步骤完成时含 <span class="mono">run_id</span>、<span class="mono">step</span>、<span class="mono">status</span>、<span class="mono">finished_at</span>，以及非空的 <span class="mono">width</span>、<span class="mono">height</span>、<span class="mono">bitrate</span>、<span class="mono">duration</span>、<span class="mono">format</span>。失败时把 <span class="mono">error</span> 放进同一对象，不再附媒体尺寸。<span class="mono">media.added</span> 含 <span class="mono">run_id</span>、<span class="mono">title</span> 与上述尺寸字段。<span class="mono">run.completed</span> / <span class="mono">run.failed</span> 含 <span class="mono">run_id</span>、<span class="mono">status</span>、<span class="mono">error</span>。档位完成含 <span class="mono">task_id</span>、<span class="mono">job_id</span>、<span class="mono">rendition_name</span>；档位失败再加错误文本。</li>
+        <li>没有回调条数上限，也没有来源 IP 白名单。未配置 <span class="mono">secret</span> 时不发送 <span class="mono">X-Knox-Signature</span>。单次超时 10 秒，见上表。</li>
+      </ul>
+    </section>
+
+    <!-- ============ 07 版本与更新记录 ============ -->
+    <section class="doc-section" id="s7">
+      <h2 class="doc-h2" id="h-s7"><span class="doc-num">07</span>版本与更新记录<a class="doc-anchor" href="#s7" aria-label="本节锚点">#</a></h2>
+      <div class="doc-template">
+        <div class="doc-template-h"><span>更新记录</span><span>倒序</span></div>
+        <div class="table-scroll">
+        <table class="compare">
+          <thead><tr><th>版本</th><th>日期</th><th>状态</th><th>主要变更</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="mono">v0.3.2</td><td class="mono">2026-11-06</td><td>源码核对版</td>
+              <td>去掉阅读前须知、核对标记与「已确认 · 源码」。正文不再引用源码文件路径</td>
+            </tr>
+            <tr>
+              <td class="mono">v0.3.1</td><td class="mono">2026-11-06</td><td>源码核对版</td>
+              <td>去掉核对清单，版本记录与反馈顺延为第 7、第 8 节。补上此前只用省略号带过的端点：收藏与播放列表、资料浏览、播放资源、分享别名与匿名 DRM、任务维护、系统日志具体路径、预转码细项。商业模块未加载时不注册许可证、DRM 与上传工作室路由。另列播放通道上的 Redis 旧即时转码路由 <span class="mono">/jit/master</span>、<span class="mono">/jit/playlist</span>、<span class="mono">/jit/segment</span> 与无会话号的暂停/恢复/结束/跳转；独立进程默认 8300 提供同一组处理函数且不挂鉴权，播放计划仅在 <span class="mono">jit.legacy_fallback_enabled</span> 打开时指向它们。库内播放在进程内会话选择 DASH 时 <span class="mono">mode</span> 为 <span class="mono">jit_dash</span>。API 客户端吊销更正为 <span class="mono">DELETE /api/v1/admin/api-clients/:id</span></td>
+            </tr>
+            <tr>
+              <td class="mono">v0.3.0</td><td class="mono">2026-11-06</td><td>源码核对版 · 待补充项已关闭</td>
+              <td>按实现关闭 TBD-001 至 TBD-017：补充分片、入库与任务状态、静态前缀、播放字段、分享创建与匿名面、登录与分页、端点限额、授权 403、Webhook 信封。修正 <span class="mono">segment_not_ready</span> 为 <span class="mono">202</span> 且可重试；删除载荷中并不存在的 <span class="mono">timestamp</span>。写明源码未定义保留期限、处理时效与值班联系人</td>
+            </tr>
+            <tr>
+              <td class="mono">v0.2.0</td><td class="mono">2026-11-06</td><td>草案 · 源码核对版</td>
+              <td>依据服务端实现全面重写：新增鉴权四通道与令牌属性（2.2）、两套错误响应形态（2.3）、限流阈值（2.4）、幂等语义与专属错误码（2.5）；API 参考改为按鉴权通道 + 功能域索引，写实 6 域端点并补全上传、分享创建、外部播放计划的请求/响应字段（4.1 / 4.2 / 4.4）；错误码表按实现归纳形态 A 全表与形态 B reason 全集（5.2）；新增 Webhook 事件订阅章节含签名、重试与 33 项事件清单（6.5）；对接七维标注已核对与待确认项；待补充清单重整为 17 条</td>
+            </tr>
+            <tr>
+              <td class="mono">v0.1.0</td><td class="mono">2026-11-06</td><td>草案 · 框架版</td>
+              <td>建立文档结构与填写规范：九章骨架、目录导航、版本标识、占位标记约定、API 条目七维规范、对接七维框架、待补充清单与更新记录模板。全部接口与流程以占位标注，不作推测</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 08 反馈与文档获取 ============ -->
+    <section class="doc-section" id="s8">
+      <h2 class="doc-h2" id="h-s8"><span class="doc-num">08</span>反馈与文档获取<a class="doc-anchor" href="#s8" aria-label="本节锚点">#</a></h2>
+      <p>本页为公开核对版，已关闭条目可直接对接。每个端点的完整调用示例仍以交付版文档包为准。反馈时请注明文档版本、章节编号，并附上错误响应中的 <span class="mono">request_id</span>（形态 B 没有该字段时改附请求路径与时间）。</p>
+      <div class="doc-contact">
+        <div><span class="k">电话</span><b>010-62129317</b></div>
+        <div><span class="k">邮箱</span><b>marketing@powercom.net.cn</b></div>
+        <div><span class="k">官网</span><b>www.powercom.net.cn</b></div>
+      </div>
+      <div class="doc-actions">
+        <a class="btn btn--primary" href="contact.html">索取交付版文档包</a>
+        <a class="btn btn--ghost" href="tech.html">查看技术规格</a>
+      </div>
+      <p class="small muted">没有规定勘误处理时效、对接窗口或内部责任分工。反馈使用上面的公开联系方式；本页不另写组织承诺。</p>
+    </section>
+
+  </article>
+</div>
+
+</main>
+
+<!-- ======================= 页脚 ======================= -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="index.html" aria-label="PowerMedia 首页">
+          <img class="brand-mark" src="assets/img/logo.svg" alt="" width="34" height="34">
+          <span class="brand-text">
+            <span class="brand-name">PowerMedia</span>
+            <span class="brand-sub">智能媒体服务器</span>
+          </span>
+        </a>
+        <p>面向在线教育、企业培训与内容平台的智能媒体服务器。即传即播、智能预热、私有加密，支持私有化与信创环境部署。</p>
+      </div>
+      <div class="footer-col">
+        <h5>产品</h5>
+        <a href="features.html">产品能力</a>
+        <a href="security.html">内容保护</a>
+        <a href="tech.html">技术规格</a>
+        <a href="docs.html">开发者文档</a>
+      </div>
+      <div class="footer-col">
+        <h5>方案与购买</h5>
+        <a href="solutions.html">解决方案</a>
+        <a href="editions.html">版本与授权</a>
+        <a href="contact.html">预约演示</a>
+        <a href="contact.html#faq">常见问题</a>
+      </div>
+      <div class="footer-col">
+        <h5>联系</h5>
+        <div class="footer-contact">
+          电话：<b>010-62129317</b><br>
+          邮箱：<b>marketing@powercom.net.cn</b><br>
+          官网：<b>www.powercom.net.cn</b>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> 宝丽通 PowerCOM · PowerMedia 智能媒体服务器</span>
+      <span><a href="docs.html">开发者文档</a> · <a href="tech.html">技术规格</a> · <a href="contact.html">联系我们</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
